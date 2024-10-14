@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/14 18:02:14 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/14 18:05:09 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE = -I $(INC_DIR)/
 # Directories:
 
 MLX_DIR = ./MLX42 #MLX of Codam
-LIB_DIR = ./Libft #My Libft
+LIB_DIR = ./New_Libft #My Libft
 
 OBJ_DIR = ./obj
 INC_DIR = ./inc
