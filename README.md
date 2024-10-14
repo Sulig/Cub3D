@@ -20,7 +20,7 @@ Your goal will be to make a dynamic view inside a maze, in which you’ll have t
 - [MinilibX Codam](https://github.com/codam-coding-college/MLX42)
 - [Subject English](https://github.com/Sulig/Cub3D/blob/master/Cub3D_subject-en.pdf)
 
-[!WARNING/]
+> [!WARNING]\
 > This repository is just started! Don't expect to encounter so much thing right now...
 
 ***
