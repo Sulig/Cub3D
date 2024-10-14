@@ -1,25 +1,27 @@
-# New_Libft
+# Cub3D
 
-[![Stars](https://img.shields.io/github/stars/Sulig/New_Libft?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/New_Libft)
-[![Size](https://img.shields.io/github/repo-size/Sulig/New_Libft?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/New_Libft)
-[![Activity](https://img.shields.io/github/last-commit/Sulig/New_Libft?color=orange&label=Last%20Commit&style=flat)](https://github.com/Sulig/New_Libft)
+~ Started on: 14/10/2024 ~ *** ~ Ended on: IN PROGRESS
 
-***
-## Resumen: 
-Quien ha dicho que debas quedarte con la Libft actual? -----------------------> <br/>
-Libft Mejorada! Se han añadido nuevas funciones y mejorado algunas ya vigentes! <br/>
-Tambien incluye algunas funciones de la anterior libreria
+[![Stars](https://img.shields.io/github/stars/Sulig/Cub3D?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/Cub3D)
+[![Size](https://img.shields.io/github/repo-size/Sulig/Cub3D?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/Cub3D)
+[![Activity](https://img.shields.io/github/last-commit/Sulig/Cub3D?color=orange&label=Last%20Commit&style=flat)](https://github.com/Sulig/Cub3D)
 
 ***
-## Contenido del repositorio:
-- Libft
-- ft_printf + ft_printf_fd
-- get_next_line
-- Otras utilidades interesantes
+## Summary: 
+My first RayCaster with miniLibX -----------------------> <br/>
 
-Puedes utilizar este repositorio:
+This project is inspired by the world-famous Wolfenstein 3D game, which was the first FPS ever. <br />
+It will enable you to explore ray-casting. <br />
+Your goal will be to make a dynamic view inside a maze, in which you’ll have to find your way.
 
-    git clone https://github.com/Sulig/New_Libft.git
+***
+## Content of this repository:
+- [The New_Libft](https://github.com/Sulig/New_Libft)
+- [MinilibX Codam](https://github.com/codam-coding-college/MLX42)
+- Subject English
+
+[!WARNING/]
+> This repository is just started! Don't expect to encounter so much thing right now...
 
 ***
 ~ Made by sadoming ~ 
