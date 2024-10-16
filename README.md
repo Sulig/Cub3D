@@ -1,4 +1,4 @@
-# Cub3D
+# Cub3D  <img align="center" src="textures/png/error-tile_anim/error-tile.gif" height="35" alt="error tile"/>
 
 ~ Started on: 14/10/2024 ~ *** ~ Ended on: IN PROGRESS
 
