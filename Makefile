@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/14 18:05:09 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/16 14:44:24 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,20 @@ NAME = cub3D
 # Flags:
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g  -Wunreachable-code -Ofast#-fsanitize=address
+FML = $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
 DEP_FLAGS = -MMD -MP
-INCLUDE = -I $(INC_DIR)/
+
+HEADERS	:= -I ./inc -I $(LIBMLX)/include -I $(LIB_DIR)/inc
+
+DEBUG_F = -DDEBUG=1
 # ------------------ #
 # Directories:
 
-MLX_DIR = ./MLX42 #MLX of Codam
-LIB_DIR = ./New_Libft #My Libft
+LIBMLX = ./MLX42 #MLX of Codam
+LIB_DIR	= ./New_Libft #My Libft
+
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 OBJ_DIR = ./obj
 INC_DIR = ./inc
@@ -34,20 +40,19 @@ SRC_DIR = ./src
 # Sorces:
 MAK = Makefile #This Makefile
 
-HDR = $(INC_DIR)/ # HEADERS
+ARL = ./New_Libft/libft.a
+ARML = ./MLX42/build/libmlx42.a
 
-ARL = $(LIB_DIR)/libft.a
-ARML = $(MLX_DIR)/build/libmlx42.a
+SRC_SRC = cub3d_main.c
 
-
-#SRC := $(addprefix $(#ADDIR)/, $(ADDSRC))
+SRC := $(addprefix $(SRC_DIR)/, $(SRC_SRC))
 
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
 -include $(DEPS)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
-all: $(NAME)
+all: libmlx $(NAME)
 #-------------------------------------------------------------#
 #-------------------------------------------------------------#
 help:
@@ -83,22 +88,25 @@ norm:
 
 #Libft
 $(ARL):
-	@echo "\033[1;93m\n * Compiling Libft -->\033[1;97m\n"
+	@echo "\033[0;93m\n * Compiling Libft -->\033[1;97m\n"
 	@make -C $(LIB_DIR)
-	@echo "\033[1;37m\n~ **************************************** ~\n"
+	@echo "\033[0;37m\n~ **************************************** ~\n"
 #-------------------------------------------------------------#
 
-#Cub3D objs
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDR) $(MAK)
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(DEP_FLAGS) $(INCLUDE) -c $< -o $@
+#MLX Codam
+libmlx:
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-#@$(CC) $(ARL) $(OBJ) $(ARML) -Iinclude -ldl -lglfw -pthread -lm -o $(NAME)
+#Cub3D objs
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(MAK)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(DEP_FLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<)"
+
 #Cub3D
-$(NAME): $(MAK) $(ARL) $(HDR) $(OBJ)
+$(NAME): $(MAK) $(ARL) $(OBJ)
 	@echo "\033[1;37m\n~ **************************************** ~\n"
 	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
-	@$(CC) $(ARL) $(OBJ) -o $(NAME)
+	@$(CC) $(ARL) $(OBJ) $(LIBS) $(HEADERS) -o $(NAME)
 	@echo "\033[1;35m\n~ **************************************** ~\n"
 	@echo "  ~\t     $(NAME) is ready!\t\t ~\n"
 	@echo "~ **************************************** ~\n"
@@ -123,5 +131,5 @@ clear: fclean
 
 re: fclean all
 # -------------------- #
-.PHONY: all author clean clear fclean help norm re
+.PHONY: all author clean clear fclean help norm re libmlx00
 # ********************************************************************************** #
