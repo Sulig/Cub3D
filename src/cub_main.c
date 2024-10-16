@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_main.c                                       :+:      :+:    :+:   */
+/*   cub_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/16 13:52:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:24:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../New_Libft/inc/libft.h"
 
-int	main(int argc, char **args)
+int main(int argc, char **args)
 {
 	if (argc != 2 || !args)
 	{
@@ -22,4 +22,5 @@ int	main(int argc, char **args)
 		exit(1);
 	}
 	exit(0);
+	return (0);
 }
