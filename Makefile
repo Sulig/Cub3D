@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/16 14:44:24 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/16 19:22:36 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,21 @@ NAME = cub3D
 # Flags:
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g  -Wunreachable-code -Ofast#-fsanitize=address
-FML = $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
-DEP_FLAGS = -MMD -MP
-
-HEADERS	:= -I ./inc -I $(LIBMLX)/include -I $(LIB_DIR)/inc
-
-DEBUG_F = -DDEBUG=1
+CFLAGS := -Wall -Wextra -Werror -g #-fsanitize=address # -Wunreachable-code -Ofast
+LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
+DEP_FLAGS	:= -MMD -MP
+HEADERS		:= -I ./inc -I $(LIBMLX)/include -I $(LIB_DIR)/inc
+FML			:= $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
+MLX_FLAGS	:= -B
+DEBUG_F		= -DDEBUG=1
 # ------------------ #
 # Directories:
 
-LIBMLX = ./MLX42 #MLX of Codam
+MLX_DIR			= ./MLX42 #MLX of Codam
+MLX_BUILD_DIR	:= ./MLX42/build/
 LIB_DIR	= ./New_Libft #My Libft
 
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBS	:= ./MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 OBJ_DIR = ./obj
 INC_DIR = ./inc
@@ -41,18 +42,20 @@ SRC_DIR = ./src
 MAK = Makefile #This Makefile
 
 ARL = ./New_Libft/libft.a
-ARML = ./MLX42/build/libmlx42.a
+MLX_LIB	:=	./MLX42/build/libmlx42.a
 
-SRC_SRC = cub3d_main.c
+HDR = $(INC_DIR)/
 
-SRC := $(addprefix $(SRC_DIR)/, $(SRC_SRC))
+SRC_SRC = cub_main.c
+
+SRC := $(addprefix ./src/, $(SRC_SRC))
 
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
 -include $(DEPS)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
-all: libmlx $(NAME)
+all: $(NAME) $(ARL) #$(MLX_LIB)
 #-------------------------------------------------------------#
 #-------------------------------------------------------------#
 help:
@@ -91,19 +94,20 @@ $(ARL):
 	@echo "\033[0;93m\n * Compiling Libft -->\033[1;97m\n"
 	@make -C $(LIB_DIR)
 	@echo "\033[0;37m\n~ **************************************** ~\n"
-#-------------------------------------------------------------#
 
 #MLX Codam
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+$(MLX_LIB):
+	@cmake $(MLX_DIR) $(MLX_FLAGS) $(MLX_BUILD_DIR)
+	@make -C $(MLX_BUILD_DIR) -j4
 
+#-------------------------------------------------------------#
 #Cub3D objs
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(MAK)
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(MAK) $(HDR)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(DEP_FLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<)"
 
 #Cub3D
-$(NAME): $(MAK) $(ARL) $(OBJ)
+$(NAME): $(MAK) $(ARL) $(OBJ) $(HDR)
 	@echo "\033[1;37m\n~ **************************************** ~\n"
 	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
 	@$(CC) $(ARL) $(OBJ) $(LIBS) $(HEADERS) -o $(NAME)
