@@ -6,57 +6,68 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/16 19:22:36 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/17 14:18:09 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3D
+NAME		:=	cub3D
+
+MAP_NAME	:=	level0.cub
 # ------------------ #
 # Flags:
 
-CC = gcc
-CFLAGS := -Wall -Wextra -Werror -g #-fsanitize=address # -Wunreachable-code -Ofast
+MAKF 		+=	--silent
+MLX_FLAGS	:=	-B
+
+CC			= gcc
+CFLAGS		:=	-Wall -Werror -Wextra -g -c
 LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
+
 DEP_FLAGS	:= -MMD -MP
-HEADERS		:= -I ./inc -I $(LIBMLX)/include -I $(LIB_DIR)/inc
-FML			:= $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
-MLX_FLAGS	:= -B
-DEBUG_F		= -DDEBUG=1
+# ------------------ #
+# Colors
+
+COLOR_GREEN	:=	\033[0;32m
+COLOR_RED	:=	\033[0;31m
+COLOR_BLUE	:=	\033[0;34m
+COLOR_END	:=	\033[0m
 # ------------------ #
 # Directories:
 
-MLX_DIR			= ./MLX42 #MLX of Codam
-MLX_BUILD_DIR	:= ./MLX42/build/
-LIB_DIR	= ./New_Libft #My Libft
+INC_DIR		:=	./inc
+SRC_DIR		:=	./src/
+OBJ_DIR		:=	./obj
+BIN_DIR		:=	bin/
+RES_DIR		:=	res/
 
-LIBS	:= ./MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIB_DIR		:=	./New_Libft
+LIB_INC		:=	./New_Libft/inc
+LIB_LIB		:=	./New_Libft/libft.a
 
-OBJ_DIR = ./obj
-INC_DIR = ./inc
-
-# SRC Directories:
-SRC_DIR = ./src
-
-# ------------------- #
+MLX_DIR		:=	./MLX42/
+MLX_INC		:=	./MLX42/include/MLX42
+MLX_LIB		:=	./MLX42/build/libmlx42.a
+MLX_BUILD_DIR	:=	./MLX42/build/
+# ------------------ #
 # Sorces:
-MAK = Makefile #This Makefile
 
-ARL = ./New_Libft/libft.a
-MLX_LIB	:=	./MLX42/build/libmlx42.a
-
-HDR = $(INC_DIR)/
-
-SRC_SRC = cub_main.c
+SRC_SRC	:=	cub_main.c
 
 SRC := $(addprefix ./src/, $(SRC_SRC))
 
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
 -include $(DEPS)
+
+vpath %.h $(INC_DIR) $(MLX_INC) $(LIB_INC)
+vpath %.c $(SRC_DIR) $(TST_DIR) $(_DM_DIR) $(_MM_DIR) $(_BG_DIR) $(_UT_DIR) $(_PL_DIR) $(_RC_DIR) $(_WALL_DIR) $(_PIX_DIR)
+vpath %.o $(OBJ_DIR)
+vpath % $(BIN_DIR)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
-all: $(NAME) $(ARL) #$(MLX_LIB)
-#-------------------------------------------------------------#
+all: $(NAME) $(LIB_LIB) $(MLX_LIB)
+	@make -C $(LIB_DIR)
+	@make -C $(MLX_BUILD_DIR) -j4
 #-------------------------------------------------------------#
 help:
 	@echo "\033[1;37m\n ~ Posible comands:\n"
@@ -70,12 +81,10 @@ help:
 	@make -s author
 
 #-------------------------------------------------------------#
-#-------------------------------------------------------------#
 author:
 	@echo "\033[1;34m\n~ **************************************** ~\n"
 	@echo "\n   ~ \t      Made by Sadoming \t        ~\n"
 	@echo "\n~ **************************************** ~\n\n"
-#-------------------------------------------------------------#
 #-------------------------------------------------------------#
 norm:
 	@echo "\n\033[1;93m~ Norminette:\n"
@@ -85,15 +94,15 @@ norm:
 	@echo "\033[1;32m\n ~ Norminette:\t~ OK\n"
 	@echo "~~~~~~~~~~~~~~~~~~~~~~\n"
 #-------------------------------------------------------------#
+run: all
+	@./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
 #-------------------------------------------------------------#
 # ******************************************************************************* #
 # Compiling Region:
 
 #Libft
-$(ARL):
-	@echo "\033[0;93m\n * Compiling Libft -->\033[1;97m\n"
+$(LIB_LIB):
 	@make -C $(LIB_DIR)
-	@echo "\033[0;37m\n~ **************************************** ~\n"
 
 #MLX Codam
 $(MLX_LIB):
@@ -102,25 +111,32 @@ $(MLX_LIB):
 
 #-------------------------------------------------------------#
 #Cub3D objs
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(MAK) $(HDR)
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(DEP_FLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<)"
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDRS) $(MAK) $(LIB_LIB) $(MLX_LIB)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_INC) -I $(LIB_INC) $(LIB_FLAGS) $< -o $@
+	@echo "$(COLOR_GREEN)write file: $(OBJ_DIR)$@ $(COLOR_END)"
 
 #Cub3D
-$(NAME): $(MAK) $(ARL) $(OBJ) $(HDR)
-	@echo "\033[1;37m\n~ **************************************** ~\n"
-	@echo "\033[1;93m * Making $(NAME) -->\033[1;97m\n"
-	@$(CC) $(ARL) $(OBJ) $(LIBS) $(HEADERS) -o $(NAME)
-	@echo "\033[1;35m\n~ **************************************** ~\n"
-	@echo "  ~\t     $(NAME) is ready!\t\t ~\n"
-	@echo "~ **************************************** ~\n"
+$(NAME): $(OBJS) $(LIB_LIB) $(MLX_LIB)
+	@mkdir -p $(BIN_DIR)
+	@$(CC) $(OBJS) $(MLX_LIB) $(LIB_LIB) -o $(BIN_DIR)$(NAME) $(LIB_FLAGS)
+	@echo "$(COLOR_GREEN)write file: $(BIN_DIR)$(NAME)$(COLOR_END)"
 #-------------------------------------------------------------#
+# ********************************************************************************* #
+# Debug region
+
+val: $(NAME)
+	@valgrind --leak-check=full --track-origins=yes ./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
+
+val_s: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
 
 # ********************************************************************************* #
 # Clean region
 
 clean:
 	@/bin/rm -frd $(OBJ_DIR)
+	@/bin/rm -frd ./bin
 	@make -s clean -C $(LIB_DIR)
 	@echo "\033[1;34m\n All objs & deps removed\033[1;97m\n"
 
@@ -135,5 +151,5 @@ clear: fclean
 
 re: fclean all
 # -------------------- #
-.PHONY: all author clean clear fclean help norm re libmlx00
+.PHONY: all clean fclean re
 # ********************************************************************************** #
