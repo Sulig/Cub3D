@@ -6,13 +6,14 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/21 17:50:19 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:06:16 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTS_H
 # define CONSTS_H
 
+/*		 ## TEXTURES ##		*/
 /* PATH TO TEXTURES */
 # define TX_ERROR	"./assets/textures/png/error-tile.png"
 # define TX_ERA		"./assets/textures/png/error-tile_ALPHA.png"
@@ -21,7 +22,7 @@
 # define TX_ERC		"./assets/textures/png/error-tile_CYAN.png"
 # define TX_ERY		"./assets/textures/png/error-tile_YELOW.png"
 # define TX_ERGR	"./assets/textures/png/error-tile_GREY.png"
-
+/* --- */
 
 /* THE TEXTURES TO USE */
 # define NO TX_ERR
@@ -29,5 +30,6 @@
 # define WE TX_ERROR
 # define SO TX_ERA
 /* ----------------- */
+/*		## TEXTURES END ##	*/
 
 #endif
