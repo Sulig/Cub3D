@@ -6,13 +6,14 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/17 14:18:09 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/21 14:06:46 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
-MAP_NAME	:=	level0.cub
+MAP_NAME	:=	example-map1.cub
+RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
 
@@ -27,18 +28,23 @@ DEP_FLAGS	:= -MMD -MP
 # ------------------ #
 # Colors
 
-COLOR_GREEN	:=	\033[0;32m
-COLOR_RED	:=	\033[0;31m
-COLOR_BLUE	:=	\033[0;34m
-COLOR_END	:=	\033[0m
+R	:=	\033[0;31m
+G	:=	\033[0;32m
+Y	:=	\033[0;33m
+B	:=	\033[0;34m
+P	:=	\033[0;35m
+C	:=	\033[0;36m
+W	:=	\033[0;37m
+DEF	:=	\033[0m
 # ------------------ #
 # Directories:
 
 INC_DIR		:=	./inc
 SRC_DIR		:=	./src/
 OBJ_DIR		:=	./obj
-BIN_DIR		:=	bin/
-RES_DIR		:=	res/
+
+ASSETS_DIR	:=	./assets/
+MAPS		:=	$(ASSETS_DIR)maps/
 
 LIB_DIR		:=	./New_Libft
 LIB_INC		:=	./New_Libft/inc
@@ -62,7 +68,6 @@ DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
 vpath %.h $(INC_DIR) $(MLX_INC) $(LIB_INC)
 vpath %.c $(SRC_DIR) $(TST_DIR) $(_DM_DIR) $(_MM_DIR) $(_BG_DIR) $(_UT_DIR) $(_PL_DIR) $(_RC_DIR) $(_WALL_DIR) $(_PIX_DIR)
 vpath %.o $(OBJ_DIR)
-vpath % $(BIN_DIR)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
 all: $(NAME) $(LIB_LIB) $(MLX_LIB)
@@ -82,20 +87,24 @@ help:
 
 #-------------------------------------------------------------#
 author:
-	@echo "\033[1;34m\n~ **************************************** ~\n"
-	@echo "\n   ~ \t      Made by Sadoming \t        ~\n"
-	@echo "\n~ **************************************** ~\n\n"
+	@echo "$(P)\n~ **************************************** ~\n"
+	@echo "   ~ \t      Made by Sadoming \t        ~"
+	@echo "\n~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 norm:
-	@echo "\n\033[1;93m~ Norminette:\n"
-	@norminette -R CheckForbiddenSourceHeader
+	@echo "\n$(Y)~ Norminette:\n"
+	@make -s norm -C $(LIBFT)
+	@norminette -R CheckForbiddenSourceHeader $(INC_DIR) $(SRC_DIR)
 	@echo "\n~~~~~~~~~~~~~~~~~~~~~~\n"
-	@norminette
-	@echo "\033[1;32m\n ~ Norminette:\t~ OK\n"
-	@echo "~~~~~~~~~~~~~~~~~~~~~~\n"
+	@norminette $(INC_DIR) $(SRC_DIR)
+	@echo "$(G)\n ~ Norminette:\t~ OK\n"
+	@echo "~~~~~~~~~~~~~~~~~~~~~~$(DEF)\n"
 #-------------------------------------------------------------#
-run: all
-	@./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
+run: $(NAME)
+	@echo "$(C)\n~ **************************************** ~\n"
+	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
+	@echo "\n~ **************************************** $(DEF)~\n"
+	@./$(NAME) $(RUN_MAP_NAME)
 #-------------------------------------------------------------#
 # ******************************************************************************* #
 # Compiling Region:
@@ -118,33 +127,31 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDRS) $(MAK) $(LIB_LIB) $(MLX_LIB)
 
 #Cub3D
 $(NAME): $(OBJS) $(LIB_LIB) $(MLX_LIB)
-	@mkdir -p $(BIN_DIR)
-	@$(CC) $(OBJS) $(MLX_LIB) $(LIB_LIB) -o $(BIN_DIR)$(NAME) $(LIB_FLAGS)
-	@echo "$(COLOR_GREEN)write file: $(BIN_DIR)$(NAME)$(COLOR_END)"
+	@$(CC) $(OBJS) $(MLX_LIB) $(LIB_LIB) -o $(NAME) $(LIB_FLAGS)
+	@echo "$(COLOR_GREEN)write file: $(NAME)$(COLOR_END)"
 #-------------------------------------------------------------#
 # ********************************************************************************* #
 # Debug region
 
 val: $(NAME)
-	@valgrind --leak-check=full --track-origins=yes ./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
+	@valgrind --leak-check=full --track-origins=yes ./$(NAME) $(RUN_MAP_NAME)
 
 val_s: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all ./$(BIN_DIR)$(NAME) $(RES_DIR)$(RUN_MAP_NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(RUN_MAP_NAME)
 
 # ********************************************************************************* #
 # Clean region
 
 clean:
 	@/bin/rm -frd $(OBJ_DIR)
-	@/bin/rm -frd ./bin
 	@make -s clean -C $(LIB_DIR)
-	@echo "\033[1;34m\n All objs & deps removed\033[1;97m\n"
+	@echo "$(B)\n All objs & deps removed$(DEF)\n"
 
 fclean: clean
 	@make -s fclean -C $(LIB_DIR)
 	@/bin/rm -f $(NAME)
 	@/bin/rm -frd $(NAME).dSYM
-	@echo "\033[1;34m All cleaned succesfully\033[1;97m\n"
+	@echo "$(B)\n All cleaned succesfully$(DEF)\n"
 
 clear: fclean
 	@clear
