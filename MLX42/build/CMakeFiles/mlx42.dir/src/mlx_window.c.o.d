@@ -1,7 +1,7 @@
 CMakeFiles/mlx42.dir/src/mlx_window.c.o: \
-  /home/sadoming/42_Projects/Cub3D/MLX42/src/mlx_window.c \
-  /home/sadoming/42_Projects/Cub3D/MLX42/include/MLX42/MLX42_Int.h \
-  /home/sadoming/42_Projects/Cub3D/MLX42/include/MLX42/MLX42.h \
+  /home/andmart2/Documents/Cube3D/MLX42/src/mlx_window.c \
+  /home/andmart2/Documents/Cube3D/MLX42/include/MLX42/MLX42_Int.h \
+  /home/andmart2/Documents/Cube3D/MLX42/include/MLX42/MLX42.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/stddef.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/__stddef_max_align_t.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/stdint.h \
@@ -21,10 +21,10 @@ CMakeFiles/mlx42.dir/src/mlx_window.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/stdbool.h \
-  /home/sadoming/42_Projects/Cub3D/MLX42/include/lodepng/lodepng.h \
+  /home/andmart2/Documents/Cube3D/MLX42/include/lodepng/lodepng.h \
   /usr/include/string.h \
-  /home/sadoming/42_Projects/Cub3D/MLX42/include/glad/glad.h \
-  /home/sadoming/42_Projects/Cub3D/MLX42/include/KHR/khrplatform.h \
+  /home/andmart2/Documents/Cube3D/MLX42/include/glad/glad.h \
+  /home/andmart2/Documents/Cube3D/MLX42/include/KHR/khrplatform.h \
   /usr/include/GLFW/glfw3.h /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \

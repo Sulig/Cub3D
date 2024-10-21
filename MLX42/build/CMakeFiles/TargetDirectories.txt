@@ -1,7 +1,7 @@
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/mlx42.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/edit_cache.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/rebuild_cache.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/list_install_components.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/install.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/install/local.dir
-/home/sadoming/42_Projects/Cub3D/MLX42/build/CMakeFiles/install/strip.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/mlx42.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/edit_cache.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/rebuild_cache.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/list_install_components.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/install.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/install/local.dir
+/home/andmart2/Documents/Cube3D/MLX42/build/CMakeFiles/install/strip.dir
