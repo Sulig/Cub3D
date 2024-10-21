@@ -15,6 +15,7 @@
 #include "../inc/consts.h"
 
 /* TESTING ZONE! */
+/*andrea test*/
 static void error(void)
 {
 	ft_printf_fd(2, mlx_strerror(mlx_errno));
