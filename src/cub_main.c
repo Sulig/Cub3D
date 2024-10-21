@@ -6,11 +6,17 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/16 19:24:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:26:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../New_Libft/inc/libft.h"
+#include "../MLX42/include/MLX42/MLX42.h"
+
+/* TESTING ZONE! */
+
+
+/* ############# */
 
 int main(int argc, char **args)
 {
