@@ -6,54 +6,57 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/21 13:57:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:54:45 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../New_Libft/inc/libft.h"
 #include "../MLX42/include/MLX42/MLX42.h"
+#include "../inc/consts.h"
 
 /* TESTING ZONE! */
-
-#define WIDTH 666
-#define HEIGHT 666
-
-// Exit the program as failure.
-static void ft_error(void)
+static void error(void)
 {
-	ft_printf_fd(2, "%s", mlx_strerror(mlx_errno));
+	ft_printf_fd(2, mlx_strerror(mlx_errno));
 	exit(EXIT_FAILURE);
 }
 
-// Print the window width and height.
-static void ft_hook(void* param)
+void ft_hook(void* param)
 {
-	const mlx_t* mlx = param;
+	mlx_t* mlx = param;
 
-	ft_printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
 }
 
 int	start(void)
 {
-	//mlx_set_setting(MLX_MAXIMIZED, true); //Full mode
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
-	if (!mlx)
-		ft_error();
+	mlx_t* mlx;
 
-	// Create and display the image.
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		ft_error();
+	// Gotta error check this stuff
+	if (!(mlx = mlx_init(666, 666, "MLX42", true)))
+	{
+		ft_printf(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	mlx_texture_t* texture = mlx_load_png(TX_ERROR);
+	if (!texture)
+        error();
 
-	// Even after the image is being displayed, we can still modify the buffer.
-	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
+	// Convert texture to a displayable image
+	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+	if (!img)
+        error();
 
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
+	// Display the image
+	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
+        error();
+
 	mlx_loop_hook(mlx, ft_hook, mlx);
+
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /* ############# */
@@ -67,5 +70,9 @@ int main(int argc, char **args)
 		ft_printf_fd(2, " like this example:\n./cub3D map.cub %s \n", D);
 		exit(1);
 	}
+	/* ADD File && Map control condition */
+	/* +++++ */
+
+	/* +++++ */
 	return (start());
 }
