@@ -7,4 +7,8 @@
 	cmake -B build # build here refers to the outputfolder.
 	cmake --build build -j4 # or do make -C build -j4
 
+	** RESOLVED!! Mark as DONE!
+
 ***
+
+
