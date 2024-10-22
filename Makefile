@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/22 12:28:34 by sadoming         ###   ########.fr        #
+#    Updated: 2024/10/22 13:52:03 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,7 @@ norm:
 	@echo "$(G)\n ~ Norminette:\t~ OK\n"
 	@echo "~~~~~~~~~~~~~~~~~~~~~~$(DEF)\n"
 #-------------------------------------------------------------#
-run: $(NAME)
+run: all
 	@echo "$(C)\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
 	@echo "\n~ **************************************** $(DEF)~\n"
@@ -174,7 +174,11 @@ fclean: clean
 clear: fclean
 	@clear
 
+prepare-push: clear
+	@rm -rf MLX42
+	@echo "$(C)\tReady!$(DEF)\n"
+
 re: fclean all
 # -------------------- #
-.PHONY: all author clean fclean norm re run val val_s
+.PHONY: all author clean fclean mlx42 norm re run val val_s
 # ********************************************************************************** #

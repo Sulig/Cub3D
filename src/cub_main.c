@@ -6,13 +6,11 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/21 17:54:45 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:52:18 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../New_Libft/inc/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../inc/consts.h"
+#include "../inc/game.h"
 
 /* TESTING ZONE! */
 static void error(void)
@@ -29,17 +27,14 @@ void ft_hook(void* param)
 		mlx_close_window(mlx);
 }
 
-int	start(void)
+void	start(void)
 {
 	mlx_t* mlx;
 
-	// Gotta error check this stuff
-	if (!(mlx = mlx_init(666, 666, "MLX42", true)))
-	{
-		ft_printf(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	mlx_texture_t* texture = mlx_load_png(TX_ERROR);
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
+		error();
+
+	mlx_texture_t* texture = mlx_load_png(BAT);
 	if (!texture)
         error();
 
@@ -56,7 +51,6 @@ int	start(void)
 
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
 }
 
 /* ############# */
@@ -72,7 +66,12 @@ int main(int argc, char **args)
 	}
 	/* ADD File && Map control condition */
 	/* +++++ */
-
+		/* Put this to run if map is correct -> */
+			start(/*t_map*/); // The idea will be passing the map into a struct
+		/* I will change (exit) to respective function,
+		*  so exit failure ocours if something went wrong,
+		*  instead of function returning "EXIT_FAILURE"
+		*/
 	/* +++++ */
-	return (start());
+	return (0);
 }
