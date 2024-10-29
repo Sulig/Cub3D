@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/29 13:51:21 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/29 19:38:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
 # define HEIGHT	1080
 /*		## SCREEN END ##	*/
 
+/*		 ## MATH CONSTS ##		*/
+# define PI 3.14159265358
+/*		## MATH CONSTS END ##	*/
+
 /*		 ## IMAGES ##		*/
-/* THE SO-LONG BAT */
-# define BAT    "./assets/Bat/Bat.png"
+# define BAT		"./assets/sprites/Bat/Bat.png"
+# define TRIANGLE	"./assets/sprites/Triangle_Pl.png"
+# define DIAMOND	"./assets/sprites/diamond.png"
 /* ----------------- */
 /*		## IMAGES END ##	*/
 
