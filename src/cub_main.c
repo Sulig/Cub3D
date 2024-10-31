@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/31 17:13:55 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:53:05 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,48 @@ void	printmap(mlx_t *mlx)
 	}
 }
 
+/*
+ * Raytracing
+*/
+/*
+void	drawrays(mlx_t *mlx)
+{
+	int r, mx, my, mp, dof;
+	float rx, ry, ra, xo, yo;
+
+	ra=pa; //Angle vision
+	for (r = 0; r < 1; r++)
+	{
+		//check horizontal lines
+		dof = 0;
+		float aTan = -1 / tan(ra);
+
+		// looking up
+		if (ra > PI)
+		{
+			ry = (((int)py>>6)<<6) -0.0001;
+			rx = (py-ry) * aTan + px;
+			yo -= 64;
+			xo = -yo * aTan;
+			ft_printf("\n\n Ray looking upward ^");
+		}
+
+		// looking down
+		if (ra < PI)
+		{
+			ry = (((int)py>>6)<<6) + 64;
+			rx = (py-ry) * aTan + px;
+			yo = 64;
+			xo = -yo * aTan;
+			ft_printf("\n\n Ray looking upward ^");
+		}
+	}
+}
+*/
+
 /*this function will be called for every frame
 * this is for detecting key_inputs
+* Player movement and pointer is calculed here
 */
 void ft_hook(void* param)
 {
@@ -106,18 +146,18 @@ void ft_hook(void* param)
 		pdx = cos(pa) * 5;
 		pdy = sin(pa) * 5;
 	}
-
 	bat->instances[0].x = px;
 	bat->instances[0].y = py;
-
+	/* Radial Movement for pointer */
 	ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
 	ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
 
+	/**/
 	ft_printf(CLEAN);
 	ft_printf("\nPlayer location: X[%u] Y[%u]\n", bat->instances[0].x, bat->instances[0].y);
 	ft_printf("Pointer location: X[%u] Y[%u]\n\n", ptr->instances[0].x, ptr->instances[0].y);
 	printf("px: %f | py: %f || pdx: %f | pdy: %f ||| pa: %f\n", px, py, pdx, pdy, pa);
-
+	/**/
 }
 
 void	start(void)
