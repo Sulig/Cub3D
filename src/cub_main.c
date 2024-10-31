@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/29 19:43:16 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:13:55 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ float px, py, pdx, pdy, pa;
 */
 
 static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr;
-static int			vel = 7;
 
 static int mapS = 64;
 static int map[]=
@@ -83,35 +82,40 @@ void ft_hook(void* param)
 	{
 		px += pdx;
 		py += pdy;
-		bat->instances[0].y -= vel;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
 	{
 		px -= pdx;
 		py -= pdy;
-		bat->instances[0].y += vel;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
+		/* Move angle vision "<-" */
 		pa -= 0.1f;
 		if (pa < 0)
 			pa += 2 * PI;
 		pdx = cos(pa) * 5;
 		pdy = sin(pa) * 5;
-		bat->instances[0].x -= vel;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 	{
+		/* Move angle vision "->" */
 		pa += 0.1f;
 		if (pa > 2 * PI)
 			pa -= 2 * PI;
 		pdx = cos(pa) * 5;
 		pdy = sin(pa) * 5;
-		bat->instances[0].x += vel;
 	}
 
+	bat->instances[0].x = px;
+	bat->instances[0].y = py;
+
+	ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
+	ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
+
 	ft_printf(CLEAN);
-	ft_printf("\nPlayer location: X[%u] Y[%u] Z[%u]\n", bat->instances[0].x, bat->instances[0].y, bat->instances[0].z);
+	ft_printf("\nPlayer location: X[%u] Y[%u]\n", bat->instances[0].x, bat->instances[0].y);
+	ft_printf("Pointer location: X[%u] Y[%u]\n\n", ptr->instances[0].x, ptr->instances[0].y);
 	printf("px: %f | py: %f || pdx: %f | pdy: %f ||| pa: %f\n", px, py, pdx, pdy, pa);
 
 }
@@ -124,7 +128,7 @@ void	start(void)
 		error();
 
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
-	mlx_texture_t* texture = mlx_load_png(BAT);
+	mlx_texture_t* texture = mlx_load_png(DIAMOND);
 	if (!texture)
         error();
 	// Convert texture to a displayable image
@@ -159,8 +163,8 @@ void	start(void)
 
 
 	/*init*/
-	px = 300;
-	py = 300;
+	px = 200;
+	py = 200;
 	pdx = cos(pa) * 5;
 	pdy = sin(pa) * 5;
 	/*----*/
@@ -172,7 +176,7 @@ void	start(void)
 	if (mlx_image_to_window(mlx, bat, px, py) < 0)
         error();
 	// this is the "actual pointer"
-	if (mlx_image_to_window(mlx, ptr, px, py) < 0)
+	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
 		error();
 
 	/********************************/

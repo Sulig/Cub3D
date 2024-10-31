@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/29 19:38:35 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:05:57 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define CONSTS_H
 
 /*		 ## SCREEN ##		*/
-# define WIDTH	1920
-# define HEIGHT	1080
+# define WIDTH		666
+# define HEIGHT		666
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/
-# define PI 3.14159265358
+# define PI			3.14159265358
+# define DIST		66
+# define VEL		7
 /*		## MATH CONSTS END ##	*/
 
 /*		 ## IMAGES ##		*/
@@ -38,6 +40,7 @@
 # define TX_ERC		"./assets/textures/error-tile-colors/error-tile_CYAN.png"
 # define TX_ERY		"./assets/textures/error-tile-colors/error-tile_YELOW.png"
 # define TX_ERGR	"./assets/textures/error-tile-colors/error-tile_GREY.png"
+# define TX_ERRRGB	"./assets/textures/error-tile_anim/error-tile_0.png"
 /* --- */
 
 /* TEST TEXTURES */
