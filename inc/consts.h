@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/31 17:05:57 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:55:32 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 
 /*		 ## MATH CONSTS ##		*/
 # define PI			3.14159265358
+# define P2			1.570796327
+# define P3			4.71238898
+# define DR			0.0174533
 # define DIST		66
 # define VEL		7
 /*		## MATH CONSTS END ##	*/

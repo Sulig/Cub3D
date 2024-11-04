@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/31 18:53:05 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:27:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,14 @@ float px, py, pdx, pdy, pa;
 	**	pdy
 */
 
-static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr;
+static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr, *tx_Xray, *tx_Yray;
 
-static int mapS = 64;
+/*
+*	mapX -> max lenght of map
+*	mapY -> max height of map
+*	mapS -> Size of map
+*/
+static int mapX = 8, mapY = 8, mapS = 64;
 static int map[]=
 {
 	1,1,1,1,1,1,1,1,
@@ -69,20 +74,34 @@ void	printmap(mlx_t *mlx)
 	}
 }
 
-/*
- * Raytracing
+
+/* Calculate distance
+*	between player and rays endpoint
+*		** Use Pythagorean theorem --
 */
-/*
-void	drawrays(mlx_t *mlx)
+float	dist(float ax, float ay, float bx, float by, float ang)
+{
+	(void)ang;
+	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+}
+
+/* Raycasting */
+void	drawrays(void)
 {
 	int r, mx, my, mp, dof;
 	float rx, ry, ra, xo, yo;
 
-	ra=pa; //Angle vision
+	ra = pa - DR * 30; //Angle vision
+	ra = pa;
+	if (ra < 0)
+		ra += 2 * PI;
+	if (ra > 2 * PI)
+		ra -= 2 * PI;
 	for (r = 0; r < 1; r++)
 	{
-		//check horizontal lines
+		// -- Check Horizontal lines -- //
 		dof = 0;
+		float distH = 1000000, hx = px, hy = py;
 		float aTan = -1 / tan(ra);
 
 		// looking up
@@ -90,9 +109,8 @@ void	drawrays(mlx_t *mlx)
 		{
 			ry = (((int)py>>6)<<6) -0.0001;
 			rx = (py-ry) * aTan + px;
-			yo -= 64;
+			yo = -64;
 			xo = -yo * aTan;
-			ft_printf("\n\n Ray looking upward ^");
 		}
 
 		// looking down
@@ -102,11 +120,115 @@ void	drawrays(mlx_t *mlx)
 			rx = (py-ry) * aTan + px;
 			yo = 64;
 			xo = -yo * aTan;
-			ft_printf("\n\n Ray looking upward ^");
 		}
+
+		// Forward vision
+		if (ra == 0 || ra == PI)
+		{
+			rx = px;
+			ry = py;
+			dof = 8;
+		}
+
+		while (dof < 8)
+		{
+			mx = (int)(rx)>>6;
+			my = (int)(ry)>>6;
+			mp = my * mapX + mx;
+
+			// if the ray hits a wall
+			if (mp > 0 && mp < mapX * mapY && map[mp] == 1)
+			{
+				hx = rx;
+				hy = ry;
+				distH = dist(px, py, hx, hy, ra);
+				dof = 8;
+			}
+			else
+			{
+				//let the ray continue
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+		}
+
+		// -- Check Vertical lines -- //
+		dof = 0;
+		float distV = 1000000, vx = px, vy = py;
+		float nTan = -tan(ra);
+
+		// looking left
+		if (ra > P2 && ra < P3)
+		{
+			rx = (((int)px>>6)<<6) -0.0001;
+			ry = (px-rx) * nTan + py;
+			xo = -64;
+			yo = -xo * nTan;
+		}
+
+		// looking right
+		if (ra < P2 || ra > P3)
+		{
+			rx = (((int)px>>6)<<6) + 64;
+			ry = (px-rx) * nTan + py;
+			xo = 64;
+			yo = -xo * nTan;
+		}
+
+		// up-down
+		if (ra == 0 || ra == PI)
+		{
+			rx = px;
+			ry = py;
+			dof = 8;
+		}
+
+		while (dof < 8)
+		{
+			mx = (int)(rx)>>6;
+			my = (int)(ry)>>6;
+			mp = my * mapX + mx;
+
+			// if the ray hits a wall
+			if (mp > 0 && mp < mapX * mapY && map[mp] == 1)
+			{
+				vx = rx;
+				vy = ry;
+				distV = dist(px, py, vx, vy, ra);
+				dof = 8;
+			}
+			else
+			{
+				//let the ray continue
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+		}
+
+		/* Check what ray is in minnor distance */
+		if (distV < distH)
+		{
+			rx = vx;
+			ry = vy;
+		}
+		if (distV > distH)
+		{
+			rx = hx;
+			ry = hy;
+		}
+
+		tx_Xray->instances[0].x = rx;
+		tx_Xray->instances[0].y = ry;
+		ra += DR;
+		if (ra < 0)
+			ra += 2 * PI;
+		if (ra > 2 * PI)
+			ra -= 2 * PI;
 	}
 }
-*/
+/**/
 
 /*this function will be called for every frame
 * this is for detecting key_inputs
@@ -152,11 +274,14 @@ void ft_hook(void* param)
 	ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
 	ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
 
+	/* Cast ray */
+	drawrays();
+
 	/**/
 	ft_printf(CLEAN);
 	ft_printf("\nPlayer location: X[%u] Y[%u]\n", bat->instances[0].x, bat->instances[0].y);
-	ft_printf("Pointer location: X[%u] Y[%u]\n\n", ptr->instances[0].x, ptr->instances[0].y);
-	printf("px: %f | py: %f || pdx: %f | pdy: %f ||| pa: %f\n", px, py, pdx, pdy, pa);
+	ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 	/**/
 }
 
@@ -199,6 +324,22 @@ void	start(void)
 	ptr = mlx_texture_to_image(mlx, tex);
 	if (!ptr)
         error();
+	/**/
+	mlx_texture_t* tx = mlx_load_png(TX_ERR);
+	if (!tx)
+        error();
+	// Convert texture to a displayable image
+	tx_Xray = mlx_texture_to_image(mlx, tx);
+	if (!tx_Xray)
+        error();
+	/**/
+	mlx_texture_t* t = mlx_load_png(TX_ERG);
+	if (!t)
+        error();
+	// Convert texture to a displayable image
+	tx_Yray = mlx_texture_to_image(mlx, t);
+	if (!tx_Yray)
+        error();
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 
@@ -217,6 +358,9 @@ void	start(void)
         error();
 	// this is the "actual pointer"
 	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
+		error();
+	// this is the "actual ray-pointer"
+	if (mlx_image_to_window(mlx, tx_Xray, px + DIST, py + DIST) < 0)
 		error();
 
 	/********************************/
