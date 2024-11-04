@@ -20,3 +20,9 @@
 	- 2* Use the "mlx_put_pixel(screen, x, y, color)"
 		** This function will be inside of a while
 		** I supose this will work with "lineH" && "lineO"
+***
+
+> [!WARNING]\
+> Add exit(EXIT_FAILURE) on a error (*Probably ya doned... but still revision)
+
+***
