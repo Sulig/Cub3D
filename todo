@@ -7,8 +7,16 @@
 	cmake -B build # build here refers to the outputfolder.
 	cmake --build build -j4 # or do make -C build -j4
 
-	** RESOLVED!! Mark as DONE!
+	** RESOLVED!! Marked as DONE!
 
 ***
 
+* Convert Raycast into 3D:
 
+ + The Idea:
+	- 1* Create an image with the withd & heith of screen
+		*(Use the "mlx_new_image"
+			&& mlx_image_to_window(mlx, screen, 0, 0))
+	- 2* Use the "mlx_put_pixel(screen, x, y, color)"
+		** This function will be inside of a while
+		** I supose this will work with "lineH" && "lineO"

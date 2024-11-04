@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/04 18:27:21 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:25:10 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,14 @@ float	dist(float ax, float ay, float bx, float by, float ang)
 void	drawrays(void)
 {
 	int r, mx, my, mp, dof;
-	float rx, ry, ra, xo, yo;
+	float rx, ry, ra, xo, yo, disT;
 
 	ra = pa - DR * 30; //Angle vision
-	ra = pa;
 	if (ra < 0)
 		ra += 2 * PI;
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
-	for (r = 0; r < 1; r++)
+	for (r = 0; r < 60; r++)
 	{
 		// -- Check Horizontal lines -- //
 		dof = 0;
@@ -212,15 +211,45 @@ void	drawrays(void)
 		{
 			rx = vx;
 			ry = vy;
+			disT = distV;
 		}
 		if (distV > distH)
 		{
 			rx = hx;
 			ry = hy;
+			disT = distH;
 		}
 
 		tx_Xray->instances[0].x = rx;
 		tx_Xray->instances[0].y = ry;
+
+		// -- Let the 3D beggins!
+		float ca = pa - ra;
+
+		if (ca < 0)
+			ca += 2 * PI;
+		if (ca > 2 * PI)
+			ca -= 2 * PI;
+		disT = disT * cos(ca); // Fix fisheye
+
+		float lineH = (mapS * WIDTH) / disT;	// (mapSize * window width) / disT	// line height
+		float lineO = HEIGHT - lineH / 2;		// (window height)					// line offset
+
+		if (lineH > WIDTH)
+			lineH = WIDTH;
+
+		ft_printf("lineH = %u\t lineO = %u\n", lineH, lineO);
+
+		/* ** Need to think how i will put this into mlx
+		*
+		*	+ Idea:
+		*		- 1* Create an image with the withd & heith of screen
+		*			*(Use the "mlx_new_image" && mlx_image_to_window(mlx, image, 0, 0))
+		*		- 2* Use the "mlx_put_pixel(image, x, y, color)"
+		*			** This function will be inside of a while
+		*			** I supose this will work with "lineH" && "lineO"
+		*/
+
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;
