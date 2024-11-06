@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/06 14:22:37 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/06 19:56:33 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	drawrays()
 	float rx, ry, ra, xo, yo, disT;
 	float lineH, lineO;
 
+	ft_printf(CLEAN);
 	ra = pa - DR * 30; //Angle vision
 	if (ra < 0)
 		ra += 2 * PI;
@@ -221,7 +222,7 @@ void	drawrays()
 			ry = vy;
 			disT = distV;
 			//More darker
-			color = ft_pixel((int32_t)255, (int32_t)20, (int32_t)20, (int32_t)255);
+			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
 		}
 		if (distV > distH)
 		{
@@ -229,14 +230,7 @@ void	drawrays()
 			ry = hy;
 			disT = distH;
 			//More brighter
-			color = ft_pixel((int32_t)255, (int32_t)55, (int32_t)55, (int32_t)255);
-		}
-		//color = ft_pixel((int32_t)disT, (int32_t)disT, (int32_t)disT, (int32_t)255);
-
-		if (r == 30)
-		{
-			//tx_ray->instances[0].x = rx;
-			//tx_ray->instances[0].y = ry;
+			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
 		}
 
 		// -- Let the 3D beggins!
@@ -271,11 +265,33 @@ void	drawrays()
 
 		for (int ty = 0; ty < HEIGHT; ty++)
 			for (int tx = 0; tx < WIDTH; tx++)
-				mlx_put_pixel(screen, tx, ty, 0);
+				mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
 
-		for (int jy = 0; jy < lineH + lineO; jy++)
-			for (int jx = 0; jx < lineH + lineO; jx++)
-			mlx_put_pixel(screen, jx, jy, color);
+		for (int sx = 0; sx < lineH + lineO; sx++)
+			mlx_put_pixel(screen, sx, r, color);
+		for (int sy = 0; sy < lineH + lineO; sy++)
+			mlx_put_pixel(screen, r, sy, color);
+
+		ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		printf("lineH = %f\t // lineO = %f\n", lineH, lineO);
+		printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+		printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+		ft_printf("\t\t\t\t V%s", D);
+
+		mlx_put_pixel(screen, 0, disT, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
+		mlx_put_pixel(screen, disT, 0, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
+		mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
+
+		/* // These actually renders one 2D cub
+		for (int sx = 0; sx < lineH + lineO; sx++)
+			for (int sy = 0; sy < lineH + lineO; sy++)
+				mlx_put_pixel(screen, sx, sy, ft_pixel((int32_t)22, (int32_t)66, (int32_t)22, (int32_t)255));
+		*/
+
+		for (int ay = r; ay < ry; ay++)
+			for (int ax = r; ax < rx; ax++)
+				mlx_put_pixel(screen, ax, ay, ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255));
 
 		ra += DR;
 		if (ra < 0)
@@ -334,10 +350,10 @@ void ft_hook(void* param)
 	drawrays(NULL);
 
 	/**/
-	ft_printf(CLEAN);
-	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+	//ft_printf(CLEAN);
+	//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
 	//ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 	/**/
 }
 
@@ -414,7 +430,7 @@ void	start(void)
 		//error();
 
 	// The screen
-	if (mlx_image_to_window(mlx, screen, 0, 0) < 0)
+	if (mlx_image_to_window(mlx, screen, START_PX, START_PY) < 0)
 		error();
 
 	/*

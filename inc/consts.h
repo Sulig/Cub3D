@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/04 17:55:32 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:42:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 /*		 ## SCREEN ##		*/
 # define WIDTH		666
 # define HEIGHT		666
+
+# define START_PX	7
+# define START_PY	66
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/
