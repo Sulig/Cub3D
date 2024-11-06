@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/06 14:11:00 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:22:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ float px, py, pdx, pdy, pa;
 */
 
 static mlx_image_t *screen;
-static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr, *tx_Xray, *tx_Yray;
+//static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /*
 *	mapX -> max lenght of map
@@ -49,6 +49,7 @@ static int map[]=
 	1,1,1,1,1,1,1,1
 };
 
+
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
@@ -60,6 +61,7 @@ static void error(void)
 	exit(EXIT_FAILURE);
 }
 
+/* Print Map
 void	printmap(mlx_t *mlx)
 {
 	int y = 0, x = 0;
@@ -79,23 +81,23 @@ void	printmap(mlx_t *mlx)
 			y++;
 		}
 	}
-}
+}*/
 
 /* Calculate distance
 *	between player and rays endpoint
 *		** Use Pythagorean theorem --
 */
-float	dist(float ax, float ay, float bx, float by, float ang)
+float	dist(float ax, float ay, float bx, float by)
 {
-	(void)ang;
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
 /* Raycasting */
-void	drawrays(void)
+void	drawrays()
 {
 	int r, mx, my, mp, dof;
 	float rx, ry, ra, xo, yo, disT;
+	float lineH, lineO;
 
 	ra = pa - DR * 30; //Angle vision
 	if (ra < 0)
@@ -146,7 +148,7 @@ void	drawrays(void)
 			{
 				hx = rx;
 				hy = ry;
-				distH = dist(px, py, hx, hy, ra);
+				distH = dist(px, py, hx, hy);
 				dof = 8;
 			}
 			else
@@ -200,7 +202,7 @@ void	drawrays(void)
 			{
 				vx = rx;
 				vy = ry;
-				distV = dist(px, py, vx, vy, ra);
+				distV = dist(px, py, vx, vy);
 				dof = 8;
 			}
 			else
@@ -229,12 +231,13 @@ void	drawrays(void)
 			//More brighter
 			color = ft_pixel((int32_t)255, (int32_t)55, (int32_t)55, (int32_t)255);
 		}
+		//color = ft_pixel((int32_t)disT, (int32_t)disT, (int32_t)disT, (int32_t)255);
 
-		if ((rx > 0 && ry > 0) && (rx < WIDTH && ry < HEIGHT))
-			mlx_put_pixel(screen, rx, ry, color);
-
-		tx_Xray->instances[0].x = rx;
-		tx_Xray->instances[0].y = ry;
+		if (r == 30)
+		{
+			//tx_ray->instances[0].x = rx;
+			//tx_ray->instances[0].y = ry;
+		}
 
 		// -- Let the 3D beggins!
 		float ca = pa - ra;
@@ -245,13 +248,12 @@ void	drawrays(void)
 			ca -= 2 * PI;
 		disT = disT * cos(ca); // Fix fisheye
 
-		float lineH = (mapS * WIDTH) / disT;	// (mapSize * window width) / disT	// line height
-		float lineO = HEIGHT - lineH / 2;		// (window height)					// line offset
-
+		lineH = (mapS * WIDTH) / disT;	// (mapSize * window width) / disT	// line height
 		if (lineH > WIDTH)
 			lineH = WIDTH;
+		lineO = 160 - lineH / 2;		// (window height) - lineH / 2		// line offset
 
-		ft_printf("lineH = %u\t lineO = %u\n", lineH, lineO);
+		//ft_printf("lineH = %i\t lineO = %i\n", lineH, lineO);
 
 		/* ** Need to think how i will put this into mlx
 		*
@@ -261,7 +263,19 @@ void	drawrays(void)
 		*		- 2* Use the "mlx_put_pixel(image, x, y, color)"
 		*			** This function will be inside of a while
 		*			** I supose this will work with "lineH" && "lineO"
+		*				-* lineH + lineO
 		*/
+		// ->
+
+		//mlx_put_pixel(screen, rx, ry, color); // 2D ray impact
+
+		for (int ty = 0; ty < HEIGHT; ty++)
+			for (int tx = 0; tx < WIDTH; tx++)
+				mlx_put_pixel(screen, tx, ty, 0);
+
+		for (int jy = 0; jy < lineH + lineO; jy++)
+			for (int jx = 0; jx < lineH + lineO; jx++)
+			mlx_put_pixel(screen, jx, jy, color);
 
 		ra += DR;
 		if (ra < 0)
@@ -310,19 +324,19 @@ void ft_hook(void* param)
 		pdx = cos(pa) * 5;
 		pdy = sin(pa) * 5;
 	}
-	bat->instances[0].x = px;
-	bat->instances[0].y = py;
+	//bat->instances[0].x = px;
+	//bat->instances[0].y = py;
 	/* Radial Movement for pointer */
-	ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
-	ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
+	//ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
+	//ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
 
 	/* Cast ray */
-	drawrays();
+	drawrays(NULL);
 
 	/**/
 	ft_printf(CLEAN);
-	ft_printf("\nPlayer location: X[%u] Y[%u]\n", bat->instances[0].x, bat->instances[0].y);
-	ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+	//ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
 	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 	/**/
 }
@@ -334,60 +348,50 @@ void	start(void)
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
 		error();
 
-	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 	screen = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!screen)
 		error();
-	/**/
-	mlx_texture_t* texture = mlx_load_png(DIAMOND);
-	if (!texture)
-        error();
-	// Convert texture to a displayable image
-	bat = mlx_texture_to_image(mlx, texture);
-	if (!bat)
-        error();
-	/**/
-	mlx_texture_t* textur = mlx_load_png(TX_ERGR);
-	if (!textur)
-        error();
-	// Convert texture to a displayable image
-	tx_floor = mlx_texture_to_image(mlx, textur);
-	if (!tx_floor)
-        error();
-	/**/
-	mlx_texture_t* textu = mlx_load_png(TX_ERROR);
-	if (!textu)
-        error();
-	// Convert texture to a displayable image
-	tx_wall = mlx_texture_to_image(mlx, textu);
-	if (!tx_wall)
-        error();
-	/**/
-	mlx_texture_t* tex = mlx_load_png(DIAMOND);
-	if (!tex)
-        error();
-	// Convert texture to a displayable image
-	ptr = mlx_texture_to_image(mlx, tex);
-	if (!ptr)
-        error();
-	/**/
-	mlx_texture_t* tx = mlx_load_png(TX_ERR);
-	if (!tx)
-        error();
-	// Convert texture to a displayable image
-	tx_Xray = mlx_texture_to_image(mlx, tx);
-	if (!tx_Xray)
-        error();
-	/**/
-	mlx_texture_t* t = mlx_load_png(TX_ERG);
-	if (!t)
-        error();
-	// Convert texture to a displayable image
-	tx_Yray = mlx_texture_to_image(mlx, t);
-	if (!tx_Yray)
-        error();
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
-
+	//mlx_texture_t* texture = mlx_load_png(DIAMOND);
+	//if (!texture)
+	//	error();
+	// Convert texture to a displayable image
+	//bat = mlx_texture_to_image(mlx, texture);
+	//if (!bat)
+	//	error();
+	/**/
+	//mlx_texture_t* textur = mlx_load_png(TX_ERGR);
+	//if (!textur)
+	//	error();
+	// Convert texture to a displayable image
+	//tx_floor = mlx_texture_to_image(mlx, textur);
+	//if (!tx_floor)
+	//	error();
+	/**/
+	//mlx_texture_t* textu = mlx_load_png(TX_ERROR);
+	//if (!textu)
+	//	error();
+	// Convert texture to a displayable image
+	//tx_wall = mlx_texture_to_image(mlx, textu);
+	//if (!tx_wall)
+	//	error();
+	/**/
+	//mlx_texture_t* tex = mlx_load_png(DIAMOND);
+	//if (!tex)
+	//	error();
+	// Convert texture to a displayable image
+	//ptr = mlx_texture_to_image(mlx, tex);
+	//if (!ptr)
+	//	error();
+	/**/
+	//mlx_texture_t* tx = mlx_load_png(TX_ERR);
+	//if (!tx)
+	//	error();
+	// Convert texture to a displayable image
+	//tx_ray = mlx_texture_to_image(mlx, tx);
+	//if (!tx_ray)
+	//	error();
+	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
 	px = 200;
@@ -397,21 +401,27 @@ void	start(void)
 	/*----*/
 
 	//print map
-	printmap(mlx);
+	//printmap(mlx);
 
-	// Put bat into window
-	if (mlx_image_to_window(mlx, bat, px, py) < 0)
-        error();
+	// Put player into window
+	//if (mlx_image_to_window(mlx, bat, px, py) < 0)
+		//error();
 	// this is the "actual pointer"
-	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
-		error();
+	//if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
+		//error();
 	// this is the "actual ray-pointer"
-	if (mlx_image_to_window(mlx, tx_Xray, px + DIST, py + DIST) < 0)
-		error();
+	//if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+		//error();
 
 	// The screen
 	if (mlx_image_to_window(mlx, screen, 0, 0) < 0)
 		error();
+
+	/*
+	for (int x = 0; x < (int)screen->width; x++)
+		for(int y= 0; y < (int)screen->height; y++)
+			mlx_put_pixel(screen, x, y, rand() % RAND_MAX);
+	*/
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);

@@ -20,6 +20,8 @@
 	- 2* Use the "mlx_put_pixel(screen, x, y, color)"
 		** This function will be inside of a while
 		** I supose this will work with "lineH" && "lineO"
+
+	-* lineH + lineO
 ***
 
 > [!WARNING]\
