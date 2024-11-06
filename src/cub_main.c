@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/04 19:25:10 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:11:00 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /* TESTING ZONE! */
 #include <stdio.h>
 
+int32_t color;
 float px, py, pdx, pdy, pa;
 /*
 	-> px	-> Player X Position
@@ -27,6 +28,7 @@ float px, py, pdx, pdy, pa;
 	**	pdy
 */
 
+static mlx_image_t *screen;
 static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr, *tx_Xray, *tx_Yray;
 
 /*
@@ -46,6 +48,11 @@ static int map[]=
 	1,0,0,0,0,0,0,1,
 	1,1,1,1,1,1,1,1
 };
+
+int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
 
 static void error(void)
 {
@@ -73,7 +80,6 @@ void	printmap(mlx_t *mlx)
 		}
 	}
 }
-
 
 /* Calculate distance
 *	between player and rays endpoint
@@ -212,13 +218,20 @@ void	drawrays(void)
 			rx = vx;
 			ry = vy;
 			disT = distV;
+			//More darker
+			color = ft_pixel((int32_t)255, (int32_t)20, (int32_t)20, (int32_t)255);
 		}
 		if (distV > distH)
 		{
 			rx = hx;
 			ry = hy;
 			disT = distH;
+			//More brighter
+			color = ft_pixel((int32_t)255, (int32_t)55, (int32_t)55, (int32_t)255);
 		}
+
+		if ((rx > 0 && ry > 0) && (rx < WIDTH && ry < HEIGHT))
+			mlx_put_pixel(screen, rx, ry, color);
 
 		tx_Xray->instances[0].x = rx;
 		tx_Xray->instances[0].y = ry;
@@ -322,6 +335,10 @@ void	start(void)
 		error();
 
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
+	screen = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!screen)
+		error();
+	/**/
 	mlx_texture_t* texture = mlx_load_png(DIAMOND);
 	if (!texture)
         error();
@@ -390,6 +407,10 @@ void	start(void)
 		error();
 	// this is the "actual ray-pointer"
 	if (mlx_image_to_window(mlx, tx_Xray, px + DIST, py + DIST) < 0)
+		error();
+
+	// The screen
+	if (mlx_image_to_window(mlx, screen, 0, 0) < 0)
 		error();
 
 	/********************************/
