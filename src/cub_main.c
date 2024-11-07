@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 14:48:47 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:03:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void error(void)
 
 void ralph(void)
 {
-	ft_printf_fd(2, "\033[1;31m I'M GONNA BREAK IT!\n");
+	ft_printf_fd(2, "\033[1;31m I'M GONNA WREAK IT!\n");
 }
 
 // Print Map
@@ -97,6 +97,14 @@ float	dist(float ax, float ay, float bx, float by)
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
+/* Prints a Rectangle */
+void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, int32_t r_color)
+{
+	for (int sy = 0; sy < r_height; sy++)
+		for (int sx = 0; sx < r_width; sx++)
+			mlx_put_pixel(paint, r_x + sx, r_y + sy, r_color);
+}
+
 /* Raycasting */
 void	drawrays()
 {
@@ -110,7 +118,12 @@ void	drawrays()
 		ra += 2 * PI;
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
-	for (r = 0; r < 60; r++)
+
+	// Clear the screen (Well actually paint it to dark-blue)
+	for (int ty = 0; ty < SCR_HEIGHT; ty++)
+		for (int tx = 0; tx < SCR_WIDTH; tx++)
+			mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
+	for (r = 0; r < RAYS; r++)
 	{
 		// -- Check Horizontal lines -- //
 		dof = 0;
@@ -241,8 +254,8 @@ void	drawrays()
 		}
 
 		// Rays into 2D map
-		tx_ray->instances[r].x = rx;
-		tx_ray->instances[r].y = ry;
+		//tx_ray->instances[r].x = rx;
+		//tx_ray->instances[r].y = ry;
 
 		// -- Let the 3D beggins!
 		float ca = pa - ra;
@@ -254,8 +267,8 @@ void	drawrays()
 		disT = disT * cos(ca); // Fix fisheye
 
 		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT	// line height
-		if (lineH > SCR_WIDTH)
-			lineH = SCR_WIDTH;
+		if (lineH > SCR_HEIGHT)
+			lineH = SCR_HEIGHT;
 		lineO = 160 - lineH / 2;		// (window height) - lineH / 2		// line offset
 
 		/* ** Need to think how i will put this into mlx
@@ -278,16 +291,19 @@ void	drawrays()
 		printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 		ft_printf("\t\t\t\t V%s", D);
 
-		// Clear the screen (Well actually paint it to dark-blue)
-		for (int ty = 0; ty < SCR_HEIGHT; ty++)
-			for (int tx = 0; tx < SCR_WIDTH; tx++)
-				mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
+		// Attemp with i don't know how to meantion it...
+		printRect(screen, r, r, lineH + lineO, lineH + lineO, wallc);
 
-		/* // These actually renders one 2D cub
-		for (int sx = 0; sx < lineH + lineO; sx++)
-			for (int sy = 0; sy < lineH + lineO; sy++)
-				mlx_put_pixel(screen, sx, sy, ft_pixel((int32_t)22, (int32_t)66, (int32_t)22, (int32_t)255));
-		*/
+		// Attemp with lineH and position of Rays - disT
+		//for (int sx = 0; sx < lineH + lineO; sx++)
+		//	for (int sy = 0; sy < lineH + lineO; sy++)
+		//		mlx_put_pixel(screen, parseRays(disT, rx) + sx, parseRays(disT, ry) + sy, wallc);
+
+		// Attemp with the position of rays && lineH
+		for (int sx = 0; sx < rx; sx++)
+			mlx_put_pixel(screen, sx, lineH + lineO, color);
+		for (int sy = 0; sy < ry; sy++)
+			mlx_put_pixel(screen, lineH + lineO, sy, color);
 
 		// Attempt with the position of rays
 		for (int ay = 0; ay < ry; ay++)
@@ -301,18 +317,12 @@ void	drawrays()
 		for (int sy = 0; sy < lineH + lineO; sy++)
 			mlx_put_pixel(screen, rx, sy, color);
 
-		// Attemp with the position of rays && lineH
-		for (int sx = 0; sx < rx; sx++)
-			mlx_put_pixel(screen, sx, lineH + lineO, color);
-		for (int sy = 0; sy < ry; sy++)
-			mlx_put_pixel(screen, lineH + lineO, sy, color);
-
 		// Represent the disT with a yellow line
-		for (int dy = 0; dy < disT; dy++)
-			mlx_put_pixel(screen, 0, dy, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
-		for (int dx = 0; dx < disT; dx++)
-			mlx_put_pixel(screen, dx, 0, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
-		mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		//for (int dy = 0; dy < disT; dy++)
+		//	mlx_put_pixel(screen, 0, dy, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		//for (int dx = 0; dx < disT; dx++)
+		//	mlx_put_pixel(screen, dx, 0, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		//mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
 
 		ra += DR;
 		if (ra < 0)
@@ -445,9 +455,9 @@ void	start(void)
 		error();
 
 	// this is the "actual ray-pointer"
-	for (int i = 0; i < 60; i++)
-		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-			error();
+	//for (int i = 0; i < 60; i++)
+	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+	//		error();
 
 	// Sky ->
 	sky = mlx_new_image(mlx, SCR_WIDTH, START_PX);
@@ -456,9 +466,7 @@ void	start(void)
 	if (mlx_image_to_window(mlx, sky, START_PX, 0) < 0)
 		error();
 
-	for (int sy = 0; sy < START_PY; sy++)
-		for (int sx = 0; sx < SCR_WIDTH; sx++)
-			mlx_put_pixel(sky, sx, sy, ft_pixel((int32_t)20, (int32_t)66, (int32_t)255, (int32_t)255));
+	printRect(sky, 0, 0, SCR_WIDTH, START_PY, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 
 	// The screen
 	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);

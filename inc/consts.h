@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 14:30:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:57:57 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define P2			1.570796327
 # define P3			4.71238898
 # define DR			0.0174533
+# define RAYS		60
 # define DIST		66
 # define VEL		7
 /*		## MATH CONSTS END ##	*/
