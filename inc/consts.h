@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/06 18:42:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:30:54 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 # define CONSTS_H
 
 /*		 ## SCREEN ##		*/
-# define WIDTH		666
-# define HEIGHT		666
+# define WIN_WIDTH	1580
+# define WIN_HEIGHT	1080
 
-# define START_PX	7
-# define START_PY	66
+# define SCR_WIDTH	666
+# define SCR_HEIGHT	666
+
+# define START_PX	515
+# define START_PY	128
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/

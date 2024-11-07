@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/06 19:56:33 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:48:47 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* TESTING ZONE! */
 #include <stdio.h>
 
-int32_t color;
+int32_t color, wallc;
 float px, py, pdx, pdy, pa;
 /*
 	-> px	-> Player X Position
@@ -28,8 +28,8 @@ float px, py, pdx, pdy, pa;
 	**	pdy
 */
 
-static mlx_image_t *screen;
-//static mlx_image_t *bat, *tx_floor, *tx_wall, *ptr, *tx_ray;
+static mlx_image_t *screen, *sky;
+static mlx_image_t *player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /*
 *	mapX -> max lenght of map
@@ -61,7 +61,12 @@ static void error(void)
 	exit(EXIT_FAILURE);
 }
 
-/* Print Map
+void ralph(void)
+{
+	ft_printf_fd(2, "\033[1;31m I'M GONNA BREAK IT!\n");
+}
+
+// Print Map
 void	printmap(mlx_t *mlx)
 {
 	int y = 0, x = 0;
@@ -81,7 +86,7 @@ void	printmap(mlx_t *mlx)
 			y++;
 		}
 	}
-}*/
+}
 
 /* Calculate distance
 *	between player and rays endpoint
@@ -223,6 +228,7 @@ void	drawrays()
 			disT = distV;
 			//More darker
 			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
+			wallc = ft_pixel((int32_t)200, (int32_t)200, (int32_t)200, (int32_t)200);
 		}
 		if (distV > distH)
 		{
@@ -231,7 +237,12 @@ void	drawrays()
 			disT = distH;
 			//More brighter
 			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
+			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
 		}
+
+		// Rays into 2D map
+		tx_ray->instances[r].x = rx;
+		tx_ray->instances[r].y = ry;
 
 		// -- Let the 3D beggins!
 		float ca = pa - ra;
@@ -242,12 +253,10 @@ void	drawrays()
 			ca -= 2 * PI;
 		disT = disT * cos(ca); // Fix fisheye
 
-		lineH = (mapS * WIDTH) / disT;	// (mapSize * window width) / disT	// line height
-		if (lineH > WIDTH)
-			lineH = WIDTH;
+		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT	// line height
+		if (lineH > SCR_WIDTH)
+			lineH = SCR_WIDTH;
 		lineO = 160 - lineH / 2;		// (window height) - lineH / 2		// line offset
-
-		//ft_printf("lineH = %i\t lineO = %i\n", lineH, lineO);
 
 		/* ** Need to think how i will put this into mlx
 		*
@@ -258,19 +267,9 @@ void	drawrays()
 		*			** This function will be inside of a while
 		*			** I supose this will work with "lineH" && "lineO"
 		*				-* lineH + lineO
+		*			** Maybe a floodfill?
 		*/
 		// ->
-
-		//mlx_put_pixel(screen, rx, ry, color); // 2D ray impact
-
-		for (int ty = 0; ty < HEIGHT; ty++)
-			for (int tx = 0; tx < WIDTH; tx++)
-				mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
-
-		for (int sx = 0; sx < lineH + lineO; sx++)
-			mlx_put_pixel(screen, sx, r, color);
-		for (int sy = 0; sy < lineH + lineO; sy++)
-			mlx_put_pixel(screen, r, sy, color);
 
 		ft_printf("\n ~ \e[38;5;215m Some values: \n");
 		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
@@ -279,9 +278,10 @@ void	drawrays()
 		printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 		ft_printf("\t\t\t\t V%s", D);
 
-		mlx_put_pixel(screen, 0, disT, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
-		mlx_put_pixel(screen, disT, 0, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
-		mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)0, (int32_t)0, (int32_t)255));
+		// Clear the screen (Well actually paint it to dark-blue)
+		for (int ty = 0; ty < SCR_HEIGHT; ty++)
+			for (int tx = 0; tx < SCR_WIDTH; tx++)
+				mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
 
 		/* // These actually renders one 2D cub
 		for (int sx = 0; sx < lineH + lineO; sx++)
@@ -289,9 +289,30 @@ void	drawrays()
 				mlx_put_pixel(screen, sx, sy, ft_pixel((int32_t)22, (int32_t)66, (int32_t)22, (int32_t)255));
 		*/
 
-		for (int ay = r; ay < ry; ay++)
-			for (int ax = r; ax < rx; ax++)
-				mlx_put_pixel(screen, ax, ay, ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255));
+		// Attempt with the position of rays
+		for (int ay = 0; ay < ry; ay++)
+			mlx_put_pixel(screen, rx, ay, wallc);
+		for (int ax = 0; ax < rx; ax++)
+			mlx_put_pixel(screen, ax, ry, wallc);
+
+		// Attempt with lineH && position of rays
+		for (int sx = 0; sx < lineH + lineO; sx++)
+			mlx_put_pixel(screen, sx, ry, color);
+		for (int sy = 0; sy < lineH + lineO; sy++)
+			mlx_put_pixel(screen, rx, sy, color);
+
+		// Attemp with the position of rays && lineH
+		for (int sx = 0; sx < rx; sx++)
+			mlx_put_pixel(screen, sx, lineH + lineO, color);
+		for (int sy = 0; sy < ry; sy++)
+			mlx_put_pixel(screen, lineH + lineO, sy, color);
+
+		// Represent the disT with a yellow line
+		for (int dy = 0; dy < disT; dy++)
+			mlx_put_pixel(screen, 0, dy, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		for (int dx = 0; dx < disT; dx++)
+			mlx_put_pixel(screen, dx, 0, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
 
 		ra += DR;
 		if (ra < 0)
@@ -340,11 +361,11 @@ void ft_hook(void* param)
 		pdx = cos(pa) * 5;
 		pdy = sin(pa) * 5;
 	}
-	//bat->instances[0].x = px;
-	//bat->instances[0].y = py;
+	player->instances[0].x = px;
+	player->instances[0].y = py;
 	/* Radial Movement for pointer */
-	//ptr->instances[0].x = bat->instances[0].x + cos(pa) * DIST;
-	//ptr->instances[0].y = bat->instances[0].y + sin(pa) * DIST;
+	ptr->instances[0].x = player->instances[0].x + cos(pa) * DIST;
+	ptr->instances[0].y = player->instances[0].y + sin(pa) * DIST;
 
 	/* Cast ray */
 	drawrays(NULL);
@@ -361,52 +382,49 @@ void	start(void)
 {
 	mlx_t* mlx;
 
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
+	if (!(mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true)))
 		error();
 
-	screen = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!screen)
-		error();
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
-	//mlx_texture_t* texture = mlx_load_png(DIAMOND);
-	//if (!texture)
-	//	error();
+	mlx_texture_t* texture = mlx_load_png(DIAMOND);
+	if (!texture)
+		error();
 	// Convert texture to a displayable image
-	//bat = mlx_texture_to_image(mlx, texture);
-	//if (!bat)
-	//	error();
+	player = mlx_texture_to_image(mlx, texture);
+	if (!player)
+		error();
 	/**/
-	//mlx_texture_t* textur = mlx_load_png(TX_ERGR);
-	//if (!textur)
-	//	error();
+	mlx_texture_t* textur = mlx_load_png(TX_ERGR);
+	if (!textur)
+		error();
 	// Convert texture to a displayable image
-	//tx_floor = mlx_texture_to_image(mlx, textur);
-	//if (!tx_floor)
-	//	error();
+	tx_floor = mlx_texture_to_image(mlx, textur);
+	if (!tx_floor)
+		error();
 	/**/
-	//mlx_texture_t* textu = mlx_load_png(TX_ERROR);
-	//if (!textu)
-	//	error();
+	mlx_texture_t* textu = mlx_load_png(TX_ERROR);
+	if (!textu)
+		error();
 	// Convert texture to a displayable image
-	//tx_wall = mlx_texture_to_image(mlx, textu);
-	//if (!tx_wall)
-	//	error();
+	tx_wall = mlx_texture_to_image(mlx, textu);
+	if (!tx_wall)
+		error();
 	/**/
-	//mlx_texture_t* tex = mlx_load_png(DIAMOND);
-	//if (!tex)
-	//	error();
+	mlx_texture_t* tex = mlx_load_png(DIAMOND);
+	if (!tex)
+		error();
 	// Convert texture to a displayable image
-	//ptr = mlx_texture_to_image(mlx, tex);
-	//if (!ptr)
-	//	error();
+	ptr = mlx_texture_to_image(mlx, tex);
+	if (!ptr)
+		error();
 	/**/
-	//mlx_texture_t* tx = mlx_load_png(TX_ERR);
-	//if (!tx)
-	//	error();
+	mlx_texture_t* tx = mlx_load_png(TX_ERR);
+	if (!tx)
+		error();
 	// Convert texture to a displayable image
-	//tx_ray = mlx_texture_to_image(mlx, tx);
-	//if (!tx_ray)
-	//	error();
+	tx_ray = mlx_texture_to_image(mlx, tx);
+	if (!tx_ray)
+		error();
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
@@ -417,28 +435,37 @@ void	start(void)
 	/*----*/
 
 	//print map
-	//printmap(mlx);
+	printmap(mlx);
 
 	// Put player into window
-	//if (mlx_image_to_window(mlx, bat, px, py) < 0)
-		//error();
+	if (mlx_image_to_window(mlx, player, px, py) < 0)
+		error();
 	// this is the "actual pointer"
-	//if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
-		//error();
-	// this is the "actual ray-pointer"
-	//if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-		//error();
-
-	// The screen
-	if (mlx_image_to_window(mlx, screen, START_PX, START_PY) < 0)
+	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
 		error();
 
-	/*
-	for (int x = 0; x < (int)screen->width; x++)
-		for(int y= 0; y < (int)screen->height; y++)
-			mlx_put_pixel(screen, x, y, rand() % RAND_MAX);
-	*/
+	// this is the "actual ray-pointer"
+	for (int i = 0; i < 60; i++)
+		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+			error();
 
+	// Sky ->
+	sky = mlx_new_image(mlx, SCR_WIDTH, START_PX);
+	if (!sky)
+		error();
+	if (mlx_image_to_window(mlx, sky, START_PX, 0) < 0)
+		error();
+
+	for (int sy = 0; sy < START_PY; sy++)
+		for (int sx = 0; sx < SCR_WIDTH; sx++)
+			mlx_put_pixel(sky, sx, sy, ft_pixel((int32_t)20, (int32_t)66, (int32_t)255, (int32_t)255));
+
+	// The screen
+	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);
+	if (!screen)
+		error();
+	if (mlx_image_to_window(mlx, screen, START_PX, START_PY) < 0)
+		error();
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
 
