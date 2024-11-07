@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 19:03:07 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:03:55 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h>
 
 int32_t color, wallc;
+float scale = SCR_WIDTH / RAYS;
 float px, py, pdx, pdy, pa;
 /*
 	-> px	-> Player X Position
@@ -28,7 +29,7 @@ float px, py, pdx, pdy, pa;
 	**	pdy
 */
 
-static mlx_image_t *screen, *sky;
+static mlx_image_t *screen, *sc_floor;
 static mlx_image_t *player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /*
@@ -119,10 +120,10 @@ void	drawrays()
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 
-	// Clear the screen (Well actually paint it to dark-blue)
-	for (int ty = 0; ty < SCR_HEIGHT; ty++)
-		for (int tx = 0; tx < SCR_WIDTH; tx++)
-			mlx_put_pixel(screen, tx, ty, ft_pixel((int32_t)22, (int32_t)22, (int32_t)66, (int32_t)255));
+	// Clear the screen (Well actually paint it to light-blue)
+	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
+
+	// RAYCAST
 	for (r = 0; r < RAYS; r++)
 	{
 		// -- Check Horizontal lines -- //
@@ -253,10 +254,6 @@ void	drawrays()
 			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
 		}
 
-		// Rays into 2D map
-		//tx_ray->instances[r].x = rx;
-		//tx_ray->instances[r].y = ry;
-
 		// -- Let the 3D beggins!
 		float ca = pa - ra;
 
@@ -292,37 +289,12 @@ void	drawrays()
 		ft_printf("\t\t\t\t V%s", D);
 
 		// Attemp with i don't know how to meantion it...
-		printRect(screen, r, r, lineH + lineO, lineH + lineO, wallc);
-
-		// Attemp with lineH and position of Rays - disT
-		//for (int sx = 0; sx < lineH + lineO; sx++)
-		//	for (int sy = 0; sy < lineH + lineO; sy++)
-		//		mlx_put_pixel(screen, parseRays(disT, rx) + sx, parseRays(disT, ry) + sy, wallc);
-
-		// Attemp with the position of rays && lineH
-		for (int sx = 0; sx < rx; sx++)
-			mlx_put_pixel(screen, sx, lineH + lineO, color);
-		for (int sy = 0; sy < ry; sy++)
-			mlx_put_pixel(screen, lineH + lineO, sy, color);
-
-		// Attempt with the position of rays
-		for (int ay = 0; ay < ry; ay++)
-			mlx_put_pixel(screen, rx, ay, wallc);
-		for (int ax = 0; ax < rx; ax++)
-			mlx_put_pixel(screen, ax, ry, wallc);
-
-		// Attempt with lineH && position of rays
-		for (int sx = 0; sx < lineH + lineO; sx++)
-			mlx_put_pixel(screen, sx, ry, color);
-		for (int sy = 0; sy < lineH + lineO; sy++)
-			mlx_put_pixel(screen, rx, sy, color);
-
-		// Represent the disT with a yellow line
-		//for (int dy = 0; dy < disT; dy++)
-		//	mlx_put_pixel(screen, 0, dy, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
-		//for (int dx = 0; dx < disT; dx++)
-		//	mlx_put_pixel(screen, dx, 0, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
-		//mlx_put_pixel(screen, disT, disT, ft_pixel((int32_t)225, (int32_t)255, (int32_t)0, (int32_t)255));
+		// With rays position
+		//printRect(screen, rx, ry, lineH + lineO, lineH + lineO, color);
+		// With r
+		//printRect(screen, r, r, lineH + lineO, lineH + lineO, wallc);
+		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
+		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
 		ra += DR;
 		if (ra < 0)
@@ -459,21 +431,21 @@ void	start(void)
 	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
 	//		error();
 
-	// Sky ->
-	sky = mlx_new_image(mlx, SCR_WIDTH, START_PX);
-	if (!sky)
-		error();
-	if (mlx_image_to_window(mlx, sky, START_PX, 0) < 0)
-		error();
-
-	printRect(sky, 0, 0, SCR_WIDTH, START_PY, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
-
 	// The screen
 	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);
 	if (!screen)
 		error();
-	if (mlx_image_to_window(mlx, screen, START_PX, START_PY) < 0)
+	if (mlx_image_to_window(mlx, screen, START_PX, 0) < 0)
 		error();
+
+	// Floor ->
+	sc_floor = mlx_new_image(mlx, SCR_WIDTH, START_PY);
+	if (!sc_floor)
+		error();
+	if (mlx_image_to_window(mlx, sc_floor, START_PX, SCR_HEIGHT) < 0)
+		error();
+
+	printRect(sc_floor, 0, 0, SCR_WIDTH, START_PY, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
 

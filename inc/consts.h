@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 18:57:57 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:00:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define SCR_HEIGHT	666
 
 # define START_PX	515
-# define START_PY	128
+# define START_PY	256
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/
