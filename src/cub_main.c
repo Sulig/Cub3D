@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 20:03:55 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:57:12 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ float px, py, pdx, pdy, pa;
 	**	pdy
 */
 
-static mlx_image_t *screen, *sc_floor;
+static mlx_image_t *screen;
 static mlx_image_t *player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /*
@@ -120,10 +120,11 @@ void	drawrays()
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 
-	// Clear the screen (Well actually paint it to light-blue)
+	// Clear the screen (Do the "sky" and "floor")
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
+	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 
-	// RAYCAST
+	// --------------------- RAYCAST ---------------------------->
 	for (r = 0; r < RAYS; r++)
 	{
 		// -- Check Horizontal lines -- //
@@ -240,18 +241,18 @@ void	drawrays()
 			rx = vx;
 			ry = vy;
 			disT = distV;
-			//More darker
-			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
-			wallc = ft_pixel((int32_t)200, (int32_t)200, (int32_t)200, (int32_t)200);
+			//More brighter
+			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
+			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
 		}
 		if (distV > distH)
 		{
 			rx = hx;
 			ry = hy;
 			disT = distH;
-			//More brighter
-			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
-			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
+			//More darker
+			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
+			wallc = ft_pixel((int32_t)200, (int32_t)200, (int32_t)200, (int32_t)200);
 		}
 
 		// -- Let the 3D beggins!
@@ -263,23 +264,10 @@ void	drawrays()
 			ca -= 2 * PI;
 		disT = disT * cos(ca); // Fix fisheye
 
-		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT	// line height
+		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT		// line height
 		if (lineH > SCR_HEIGHT)
 			lineH = SCR_HEIGHT;
-		lineO = 160 - lineH / 2;		// (window height) - lineH / 2		// line offset
-
-		/* ** Need to think how i will put this into mlx
-		*
-		*	+ Idea:
-		*		- 1* Create an image with the withd & heith of screen
-		*			*(Use the "mlx_new_image" && mlx_image_to_window(mlx, image, 0, 0))
-		*		- 2* Use the "mlx_put_pixel(image, x, y, color)"
-		*			** This function will be inside of a while
-		*			** I supose this will work with "lineH" && "lineO"
-		*				-* lineH + lineO
-		*			** Maybe a floodfill?
-		*/
-		// ->
+		lineO = 160 - lineH / 2;			// 160 - lineH / 2	// line offset
 
 		ft_printf("\n ~ \e[38;5;215m Some values: \n");
 		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
@@ -288,11 +276,6 @@ void	drawrays()
 		printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 		ft_printf("\t\t\t\t V%s", D);
 
-		// Attemp with i don't know how to meantion it...
-		// With rays position
-		//printRect(screen, rx, ry, lineH + lineO, lineH + lineO, color);
-		// With r
-		//printRect(screen, r, r, lineH + lineO, lineH + lineO, wallc);
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
 		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
@@ -438,14 +421,8 @@ void	start(void)
 	if (mlx_image_to_window(mlx, screen, START_PX, 0) < 0)
 		error();
 
-	// Floor ->
-	sc_floor = mlx_new_image(mlx, SCR_WIDTH, START_PY);
-	if (!sc_floor)
-		error();
-	if (mlx_image_to_window(mlx, sc_floor, START_PX, SCR_HEIGHT) < 0)
-		error();
-
-	printRect(sc_floor, 0, 0, SCR_WIDTH, START_PY, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
+	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
+	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
 

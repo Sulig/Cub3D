@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/07 20:00:17 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:57:00 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define WIN_WIDTH	1580
 # define WIN_HEIGHT	1080
 
-# define SCR_WIDTH	666
-# define SCR_HEIGHT	666
+# define SCR_WIDTH	900
+# define SCR_HEIGHT	900
 
 # define START_PX	515
 # define START_PY	256
