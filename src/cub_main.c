@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/11 17:57:12 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:25:36 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,12 +298,22 @@ void ft_hook(void* param)
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
+	{
+		px -= pdx * pa;
+		py += pdy + pdx;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
+	{
+		px += pdx * pa;
+		py -= pdy + pdx;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 	{
 		px += pdx;
 		py += pdy;
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
 	{
 		px -= pdx;
 		py -= pdy;

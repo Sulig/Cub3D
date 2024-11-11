@@ -12,16 +12,11 @@
 ***
 
 * Convert Raycast into 3D:
+	** Needs improvement but is also done!
+***
 
- + The Idea:
-	- 1* Create an image with the withd & heith of screen
-		*(Use the "mlx_new_image"
-			&& mlx_image_to_window(mlx, screen, 0, 0))
-	- 2* Use the "mlx_put_pixel(screen, x, y, color)"
-		** This function will be inside of a while
-		** I supose this will work with "lineH" && "lineO"
-
-	-* lineH + lineO
+* Apply textures
+	IN PROGRESS ~
 ***
 
 > [!WARNING]\
