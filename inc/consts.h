@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/11 17:57:00 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:46:22 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define DR			0.0174533
 # define RAYS		60
 # define DIST		66
-# define VEL		7
+# define VEL		5
 /*		## MATH CONSTS END ##	*/
 
 /*		 ## IMAGES ##		*/

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/12 12:39:16 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:20:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,12 +269,12 @@ void	drawrays()
 			lineH = SCR_HEIGHT;
 		lineO = 160 - lineH / 2;			// 160 - lineH / 2	// line offset
 
-		ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		printf("lineH = %f\t // lineO = %f\n", lineH, lineO);
-		printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-		printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-		ft_printf("\t\t\t\t V%s", D);
+		//ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		//printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		//printf("lineH = %f\t // lineO = %f\n", lineH, lineO);
+		//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+		//printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+		//ft_printf("\t\t\t\t V%s", D);
 
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
 		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
@@ -296,27 +296,50 @@ void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
 
+	// ----- Wall collision -----
+	int xo = 0, yo = 0;
+
+	if (pdx < 0)
+		xo = -20;
+	else
+		xo = 20;
+	if (pdy < 0)
+		yo = -20;
+	else
+		yo = 20;
+
+	//* Apuntese de que "64" se tendra que cambiar a la escala del mapa
+	int ipx = px / 64.0, ipx_add_xo = (px+xo) / 64.0, ipx_sub_xo = (px - xo) / 64.0;
+	int ipy = py / 64.0, ipx_add_yo = (py+yo) / 64.0, ipx_sub_yo = (py - yo) / 64.0;
+	//***********************//
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
+		// Todo -> Wall collision in double array  *Use ipx && ipy
 		px += -1 * VEL * cos(pa + P2);
 		py += -1 * VEL * sin(pa + P2);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
+		// Todo -> Wall collision in double array  *Use ipx && ipy
 		px += 1 * VEL * cos(pa + P2);
 		py += 1 * VEL * sin(pa + P2);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 	{
-		px += pdx;
-		py += pdy;
+		if (map[ipy * mapX + ipx_add_xo] == 0)
+			px += pdx;
+		if (map[ipx_add_yo * mapX + ipx] == 0)
+			py += pdy;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
 	{
-		px -= pdx;
-		py -= pdy;
+		// In double array it will be ipx && ipy
+		if (map[ipy * mapX + ipx_sub_xo] == 0)
+			px -= pdx;
+		if (map[ipx_sub_yo * mapX + ipx] == 0)
+			py -= pdy;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
@@ -324,8 +347,8 @@ void ft_hook(void* param)
 		pa -= 0.1f;
 		if (pa < 0)
 			pa += 2 * PI;
-		pdx = cos(pa) * 5;
-		pdy = sin(pa) * 5;
+		pdx = cos(pa) * VEL;
+		pdy = sin(pa) * VEL;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 	{
@@ -333,9 +356,10 @@ void ft_hook(void* param)
 		pa += 0.1f;
 		if (pa > 2 * PI)
 			pa -= 2 * PI;
-		pdx = cos(pa) * 5;
-		pdy = sin(pa) * 5;
+		pdx = cos(pa) * VEL;
+		pdy = sin(pa) * VEL;
 	}
+	//*//
 	player->instances[0].x = px;
 	player->instances[0].y = py;
 	/* Radial Movement for pointer */
@@ -346,10 +370,16 @@ void ft_hook(void* param)
 	drawrays(NULL);
 
 	/**/
-	//ft_printf(CLEAN);
-	//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-	//ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+	ft_printf(CLEAN);
+	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+	ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+	printf("Collision: ipx = %i | ipy = %i\n", ipx, ipy);
+	printf("*****************\n");
+	printf("ipy * mapX + ipx_add_xo = %i\t", ipy * mapX + ipx_add_xo);
+	printf("ipx_add_yo * mapX + ipx = %i\n-------\n", ipx_add_yo * mapX + ipx);
+	printf("ipx_sub_yo * mapX + ipx = %i\t", ipx_sub_yo * mapX + ipx);
+	printf("ipx_sub_yo * mapX + ipx = %i\n", ipx_sub_yo * mapX + ipx);
 	/**/
 }
 

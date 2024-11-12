@@ -1,6 +1,7 @@
-* Issue p1:
+* Issue p0:
  The "A" && "D" commands are not working as intended
-	Still thinking how to do it for forward movement
+
+	** DONE!
 ***
 
 * Convert Raycast into 3D:
