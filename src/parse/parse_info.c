@@ -67,9 +67,6 @@ int find_info(t_data *data, t_map *m, int j, int line_len)
     return(j);
 }
 
-
-
-
 void    ft_parse_info(t_data *data, t_map *m)
 {
     int     i;
