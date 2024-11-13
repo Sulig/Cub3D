@@ -10,6 +10,10 @@
 
 * Apply textures
 	IN PROGRESS ~
+
+	** Need to think how to apply the correct ttexture to the wall
+	*~ I have implemented a little if - elseif - else (Brujula)
+		but the NO && SO is not working
 ***
 
 > [!WARNING]\

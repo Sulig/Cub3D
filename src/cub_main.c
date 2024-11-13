@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/12 14:20:51 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:56:41 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 int32_t color, wallc;
 float scale = SCR_WIDTH / RAYS;
 float px, py, pdx, pdy, pa;
+
+char *texture;
 /*
 	-> px	-> Player X Position
 	-> py	-> Player Y Position
@@ -132,7 +134,7 @@ void	drawrays()
 		float distH = 1000000, hx = px, hy = py;
 		float aTan = -1 / tan(ra);
 
-		// looking up
+		// looking down
 		if (ra > PI)
 		{
 			ry = (((int)py>>6)<<6) -0.0001;
@@ -141,7 +143,7 @@ void	drawrays()
 			xo = -yo * aTan;
 		}
 
-		// looking down
+		// looking up
 		if (ra < PI)
 		{
 			ry = (((int)py>>6)<<6) + 64;
@@ -150,7 +152,7 @@ void	drawrays()
 			xo = -yo * aTan;
 		}
 
-		// Forward vision
+		// looking Forward
 		if (ra == 0 || ra == PI)
 		{
 			rx = px;
@@ -269,15 +271,39 @@ void	drawrays()
 			lineH = SCR_HEIGHT;
 		lineO = 160 - lineH / 2;			// 160 - lineH / 2	// line offset
 
-		//ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		//printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		//printf("lineH = %f\t // lineO = %f\n", lineH, lineO);
-		//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-		//printf("Vision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-		//ft_printf("\t\t\t\t V%s", D);
-
+		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
 		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
+
+		// Texture to apply ->
+		if (ra < P2 || ra > P3)			// =>
+			texture = EA;
+		else if (ra > P2 && ra < P3)	// <=
+			texture = WE;
+		else if (ra == P3)				// V
+			texture = SO;
+		else
+			texture = NO;				// ^
+
+		ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
+		printf("\n   Line printed info ---->\n");
+		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
+		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
+		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, color);
+		printf(" Texture to apply: %s\n", texture);
+		ft_printf("\t\t\t\t  V%s\n", D);
+		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
+
+		//----------> Texture it ----------------->
+		//float ty = 0;
+
+		// Draw pixel by pixel
+		//for (int y = 0; y < lineH; y++)
+		//{
+		//}
+		//******************************************
 
 		ra += DR;
 		if (ra < 0)
@@ -370,16 +396,11 @@ void ft_hook(void* param)
 	drawrays(NULL);
 
 	/**/
-	ft_printf(CLEAN);
-	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-	ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-	printf("Collision: ipx = %i | ipy = %i\n", ipx, ipy);
-	printf("*****************\n");
-	printf("ipy * mapX + ipx_add_xo = %i\t", ipy * mapX + ipx_add_xo);
-	printf("ipx_add_yo * mapX + ipx = %i\n-------\n", ipx_add_yo * mapX + ipx);
-	printf("ipx_sub_yo * mapX + ipx = %i\t", ipx_sub_yo * mapX + ipx);
-	printf("ipx_sub_yo * mapX + ipx = %i\n", ipx_sub_yo * mapX + ipx);
+	//ft_printf(CLEAN);
+	//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+	//ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+	//printf("Collision: ipx = %i | ipy = %i\n", ipx, ipy);
 	/**/
 }
 

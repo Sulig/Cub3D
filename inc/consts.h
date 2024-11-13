@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/12 12:46:22 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:05:36 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 /*		 ## MATH CONSTS ##		*/
 # define PI			3.14159265358
-# define P2			1.570796327
-# define P3			4.71238898
-# define DR			0.0174533
+# define P2			1.570796327		// PI / 2
+# define P3			4.71238898		//
+# define DR			0.0174533		// Value of a Dregree
 # define RAYS		60
 # define DIST		66
 # define VEL		5
