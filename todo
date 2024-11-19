@@ -1,0 +1,62 @@
+# Cub3D TODO LIST
+
+## Todo list for my partner:
+*~ Meanwhile i'm working onto Raycast and textures, there are some points i figured i will need.
+
+/*Check these first*/
+I implemented a better way to clone and make the repo of MLX42, I push-it to master (And removed the MLX42 repo).
+
+** Mark with "x" into the [] to see as DONE
+
+### GENERAL THINGS
+- [] Implement the new Makefile things into yours
+- [] Free all memory before exit(1) on error in program
+- [] Norminette (for now only to your files)
+
+### MAP PARSER DATA -
+** Details: All the variables of map, it would be fine to got it all into a struct (*/t_map/*)
+
+- [] I need the max_width && height of map saved in vars (like: map_w & map_h)
+	** Get the max line strlenght for the width!
+
+- [] I need map parsed into a 2D array (*like: [0][0] = 1)
+
+- [?] The path to textures shall be saved into a *char
+	* like = no_path = "./assets/textures/error-tile-colors/error-tile.png"
+
+- [] The 3 values of color of Ceiling && Floor, should be saved into an int array
+	* Save a tmp with the line obtained with gnl
+	* Use ft_split(tmp, ',') to save into a tmp array
+	* Use atoi and save the values into a int array
+	(for example: *c_flr, c_sky[0] = 225, c_sky[1] = 224, c_sky[2] = 255)
+
+- [] The start position of player && orientation
+	* Orientation can be literally N, S, W or E
+
+		-------------------------
+
+### FILE && MAP ERROR HANDLING
+
+- [] Error file.type atached to program display a custom error
+- [x] Error in permisions display a error
+
+- [] In reading on file, if something is missing (like one character, one texture, etc..) display a custom error
+	! For now, the textures might be in these format: .png (I think .png is the only image format suported in MLX42)
+
+- [] The same as previous, but in case of duplicate data (** Only with player spawning and double character)
+	* If is the same path texture, but into differrent wall asisignment, don't count that as error (i will set the same texture into thoose wall orientation)
+	-- like:
+
+	WE ./assets/textures/xpm/error-tile.xpm
+	EA ./assets/textures/xpm/error-tile.xpm
+
+- [] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
+
+	 1
+	1N1		// This would be an OK map
+	 1
+
+	[] ** Spaces/Tabs inside map it should be considerated as '0'
+
+		-----------------------
+***
