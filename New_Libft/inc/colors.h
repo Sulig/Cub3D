@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:02:46 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/14 16:55:26 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/10/29 19:26:54 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@
 
 /* DEFFAULT */
 # define D "\033[0m"
+
+/* CLEAN SCREEN */
+# define CLEAN "\033[2J\033[H"
 
 #endif
