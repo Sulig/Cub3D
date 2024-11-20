@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/13 18:05:36 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:04:54 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define RAYS		60
 # define DIST		66
 # define VEL		5
-/*		## MATH CONSTS END ##	*/
+/*	## MATH CONSTS END ##	*/
 
 /*		 ## IMAGES ##		*/
 # define BAT		"./assets/sprites/Bat/Bat.png"

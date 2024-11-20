@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/11/12 13:40:31 by sadoming         ###   ########.fr        #
+#    Updated: 2024/11/12 17:08:56 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 MAKF 		+=	--silent
 MLX_FLAGS	:=	-B
 
-CC			= gcc
+CC			=	gcc
 CFLAGS		:=	-Wall -Werror -Wextra -g -c
 LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
 

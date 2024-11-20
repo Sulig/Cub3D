@@ -1,3 +1,5 @@
+# Cub3D TODO LIST
+
 * Issue p0:
  The "A" && "D" commands are not working as intended
 
@@ -11,9 +13,22 @@
 * Apply textures
 	IN PROGRESS ~
 
-	** Need to think how to apply the correct ttexture to the wall
-	*~ I have implemented a little if - elseif - else (Brujula)
-		but the NO && SO is not working
+	* Issue p1 -> The texture to apply it is not been asigned correctly.
+
+	* ~ Idea for apply diferent textures:
+	Now i have these:
+	```
+		mlx_resize_image(img_rays[r], scale, lineH + lineO);
+		img_rays[r]->instances[0].x = START_PX + r * scale;
+		img_rays[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+	```
+
+	To change the texture, maybe i will need:
+		- img_rays_n
+		- img_rays_s
+		- img_rays_e
+		- img_rays_w
+	And make them ->instances[0].*enabled // or disabled
 ***
 
 > [!WARNING]\

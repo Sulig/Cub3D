@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/13 19:56:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:30:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 /* TESTING ZONE! */
 #include <stdio.h>
 
+static	mlx_t*	mlx;
+
 int32_t color, wallc;
+/* Scale = SCR_WIDTH / RAYS */
 float scale = SCR_WIDTH / RAYS;
 float px, py, pdx, pdy, pa;
-
-char *texture;
 /*
 	-> px	-> Player X Position
 	-> py	-> Player Y Position
@@ -31,8 +32,13 @@ char *texture;
 	**	pdy
 */
 
-static mlx_image_t *screen;
-static mlx_image_t *player, *tx_floor, *tx_wall, *ptr, *tx_ray;
+static mlx_image_t	*screen;
+static mlx_image_t	*img_rays[60];
+static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
+
+/* The actual texture to apply to the wall */
+static mlx_texture_t	*actual;
+static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea;
 
 /*
 *	mapX -> max lenght of map
@@ -246,6 +252,12 @@ void	drawrays()
 			//More brighter
 			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
 			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
+
+			// Texture to apply ->
+			if (ra > 0 && ra < PI)
+				actual = tx_so;
+			else
+				actual = tx_no;
 		}
 		if (distV > distH)
 		{
@@ -255,6 +267,12 @@ void	drawrays()
 			//More darker
 			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
 			wallc = ft_pixel((int32_t)200, (int32_t)200, (int32_t)200, (int32_t)200);
+
+			// Texture to apply ->
+			if (ra < P2 || ra > P3)	// =>
+				actual = tx_ea;
+			else					// <=
+				actual = tx_we;
 		}
 
 		// -- Let the 3D beggins!
@@ -273,18 +291,21 @@ void	drawrays()
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
+		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, wallc);
 
-		// Texture to apply ->
-		if (ra < P2 || ra > P3)			// =>
-			texture = EA;
-		else if (ra > P2 && ra < P3)	// <=
-			texture = WE;
-		else if (ra == P3)				// V
-			texture = SO;
-		else
-			texture = NO;				// ^
+		//------------------> Texture it -------------------->
+		// --- Color it by Pixel per Pixel ---
+		//for (int t = 0; t < scale; t++)
+		//	printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, t, lineH + lineO, textu->pixels[t]);
 
+		// Another tipe of idea
+		mlx_resize_image(img_rays[r], scale, lineH + lineO);
+		img_rays[r]->instances[0].x = START_PX + r * scale;
+		img_rays[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		//****************************************************
+
+		ft_printf(CLEAN);
 		ft_printf("\n ~ \e[38;5;215m Some values: \n");
 		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
 		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
@@ -292,18 +313,8 @@ void	drawrays()
 		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
 		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
 		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, color);
-		printf(" Texture to apply: %s\n", texture);
 		ft_printf("\t\t\t\t  V%s\n", D);
 		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
-
-		//----------> Texture it ----------------->
-		//float ty = 0;
-
-		// Draw pixel by pixel
-		//for (int y = 0; y < lineH; y++)
-		//{
-		//}
-		//******************************************
 
 		ra += DR;
 		if (ra < 0)
@@ -406,8 +417,6 @@ void ft_hook(void* param)
 
 void	start(void)
 {
-	mlx_t* mlx;
-
 	if (!(mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true)))
 		error();
 
@@ -451,6 +460,21 @@ void	start(void)
 	tx_ray = mlx_texture_to_image(mlx, tx);
 	if (!tx_ray)
 		error();
+
+	//// ---- Set the NO-SO-WE-EA textures
+	tx_no = mlx_load_png(NO);
+	if (!tx_no)
+		error();
+	tx_so = mlx_load_png(SO);
+	if (!tx_so)
+		error();
+	tx_we = mlx_load_png(WE);
+	if (!tx_we)
+		error();
+	tx_ea = mlx_load_png(EA);
+	if (!tx_ea)
+		error();
+	////----------------------
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
@@ -484,9 +508,20 @@ void	start(void)
 
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
+
+	// Rays textures
+	for (int i = 0; i < 60; i++)
+	{
+		img_rays[i] = mlx_texture_to_image(mlx, textu);
+		if (!img_rays[i])
+			error();
+		if (mlx_image_to_window(mlx, img_rays[i], 0, 0) < 0)
+			error();
+	}
+	/*////////////////////////*/
+
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
-
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 }
@@ -502,6 +537,7 @@ int main(int argc, char **args)
 		ft_printf_fd(2, " like this example:\n./cub3D map.cub %s \n", D);
 		exit(1);
 	}
+
 	/* ADD File && Map control condition */
 	/* +++++ */
 		/* Put this to run if map is correct -> */
@@ -511,5 +547,6 @@ int main(int argc, char **args)
 		*  instead of function returning "EXIT_FAILURE"
 		*/
 	/* +++++ */
+	/* -- When done, perform memory liberation */
 	return (0);
 }

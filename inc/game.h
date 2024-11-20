@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/29 16:55:55 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:12:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../New_Libft/inc/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 
+# include <fcntl.h>
 # include <math.h>
 
 # include "consts.h"
