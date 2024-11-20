@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/20 13:04:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:57:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define RAYS		60
 # define DIST		66
 # define VEL		5
+
+# define CUBS_CNT	60
+# define CUB_SCALE	64
 /*	## MATH CONSTS END ##	*/
 
 /*		 ## IMAGES ##		*/
@@ -62,7 +65,7 @@
 # define NO TX_ERR
 # define EA TX_ERG
 # define WE TX_ERROR
-# define SO TX_ERA
+# define SO TX_ERGR
 /* ----------------- */
 /*		## TEXTURES END ##	*/
 

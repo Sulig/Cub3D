@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/20 14:30:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:14:01 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ float px, py, pdx, pdy, pa;
 */
 
 static mlx_image_t	*screen;
-static mlx_image_t	*img_rays[60];
+static mlx_image_t	*img_rays_n[CUBS_CNT], *img_rays_s[CUBS_CNT], *img_rays_w[CUBS_CNT], *img_rays_e[CUBS_CNT];
 static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /* The actual texture to apply to the wall */
-static mlx_texture_t	*actual;
 static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea;
 
 /*
@@ -251,28 +250,59 @@ void	drawrays()
 			disT = distV;
 			//More brighter
 			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
-			wallc = ft_pixel((int32_t)255, (int32_t)255, (int32_t)225, (int32_t)255);
 
 			// Texture to apply ->
 			if (ra > 0 && ra < PI)
-				actual = tx_so;
+			{
+				for (int rr = 0; rr < CUBS_CNT; rr++)
+				{
+					img_rays_n[rr]->instances[0].enabled = 0;
+					img_rays_s[rr]->instances[0].enabled = 0;
+				}
+				img_rays_s[r]->instances[0].enabled = 1;
+				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
+			}
 			else
-				actual = tx_no;
+			{
+				for (int rr = 0; rr < CUBS_CNT; rr++)
+				{
+					img_rays_n[rr]->instances[0].enabled = 0;
+					img_rays_s[rr]->instances[0].enabled = 0;
+				}
+				img_rays_n[r]->instances[0].enabled = 1;
+				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
+			}
 		}
 		if (distV > distH)
 		{
 			rx = hx;
 			ry = hy;
 			disT = distH;
+
 			//More darker
 			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
-			wallc = ft_pixel((int32_t)200, (int32_t)200, (int32_t)200, (int32_t)200);
 
 			// Texture to apply ->
 			if (ra < P2 || ra > P3)	// =>
-				actual = tx_ea;
+			{
+				for (int rr = 0; rr < CUBS_CNT; rr++)
+				{
+					img_rays_w[rr]->instances[0].enabled = 0;
+					img_rays_e[rr]->instances[0].enabled = 0;
+				}
+				img_rays_e[r]->instances[0].enabled = 1;
+				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
+			}
 			else					// <=
-				actual = tx_we;
+			{
+				for (int rr = 0; rr < CUBS_CNT; rr++)
+				{
+					img_rays_w[rr]->instances[0].enabled = 0;
+					img_rays_e[rr]->instances[0].enabled = 0;
+				}
+				img_rays_w[r]->instances[0].enabled = 1;
+				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
+			}
 		}
 
 		// -- Let the 3D beggins!
@@ -294,14 +324,22 @@ void	drawrays()
 		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, wallc);
 
 		//------------------> Texture it -------------------->
-		// --- Color it by Pixel per Pixel ---
-		//for (int t = 0; t < scale; t++)
-		//	printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, t, lineH + lineO, textu->pixels[t]);
-
 		// Another tipe of idea
-		mlx_resize_image(img_rays[r], scale, lineH + lineO);
-		img_rays[r]->instances[0].x = START_PX + r * scale;
-		img_rays[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
+		img_rays_n[r]->instances[0].x = START_PX + r * scale;
+		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
+		img_rays_s[r]->instances[0].x = START_PX + r * scale;
+		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
+		img_rays_w[r]->instances[0].x = START_PX + r * scale;
+		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
+		img_rays_e[r]->instances[0].x = START_PX + r * scale;
+		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
 		//****************************************************
 
@@ -312,7 +350,7 @@ void	drawrays()
 		printf("\n   Line printed info ---->\n");
 		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
 		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
-		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, color);
+		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
 		ft_printf("\t\t\t\t  V%s\n", D);
 		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
 
@@ -484,21 +522,6 @@ void	start(void)
 	pdy = sin(pa) * 5;
 	/*----*/
 
-	//print map
-	printmap(mlx);
-
-	// Put player into window
-	if (mlx_image_to_window(mlx, player, px, py) < 0)
-		error();
-	// this is the "actual pointer"
-	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
-		error();
-
-	// this is the "actual ray-pointer"
-	//for (int i = 0; i < 60; i++)
-	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-	//		error();
-
 	// The screen
 	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);
 	if (!screen)
@@ -510,15 +533,48 @@ void	start(void)
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 
 	// Rays textures
-	for (int i = 0; i < 60; i++)
+	for (int i = 0; i < CUBS_CNT; i++)
 	{
-		img_rays[i] = mlx_texture_to_image(mlx, textu);
-		if (!img_rays[i])
+		img_rays_n[i] = mlx_texture_to_image(mlx, tx_no);
+		if (!img_rays_n[i])
 			error();
-		if (mlx_image_to_window(mlx, img_rays[i], 0, 0) < 0)
+		if (mlx_image_to_window(mlx, img_rays_n[i], 0, 0) < 0)
+			error();
+		//-------
+		img_rays_s[i] = mlx_texture_to_image(mlx, tx_so);
+		if (!img_rays_s[i])
+			error();
+		if (mlx_image_to_window(mlx, img_rays_s[i], 0, 0) < 0)
+			error();
+		//---------
+		img_rays_w[i] = mlx_texture_to_image(mlx, tx_we);
+		if (!img_rays_w[i])
+			error();
+		if (mlx_image_to_window(mlx, img_rays_w[i], 0, 0) < 0)
+			error();
+		//----------
+		img_rays_e[i] = mlx_texture_to_image(mlx, tx_ea);
+		if (!img_rays_e[i])
+			error();
+		if (mlx_image_to_window(mlx, img_rays_e[i], 0, 0) < 0)
 			error();
 	}
 	/*////////////////////////*/
+
+	// Minimap
+	printmap(mlx);
+
+	// Put player into minimap
+	if (mlx_image_to_window(mlx, player, px, py) < 0)
+		error();
+	// this is the "actual pointer" minimap
+	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
+		error();
+
+	// this is the "actual ray-pointer" minimap
+	//for (int i = 0; i < 60; i++)
+	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+	//		error();
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
