@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/20 19:14:01 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:15:02 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ void	drawrays()
 			// Texture to apply ->
 			if (ra > 0 && ra < PI)
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr++)
+				for (int rr = 0; rr < CUBS_CNT; rr += 8)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
@@ -264,7 +264,7 @@ void	drawrays()
 			}
 			else
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr++)
+				for (int rr = 0; rr < CUBS_CNT; rr += 8)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
@@ -285,7 +285,7 @@ void	drawrays()
 			// Texture to apply ->
 			if (ra < P2 || ra > P3)	// =>
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr++)
+				for (int rr = 0; rr < CUBS_CNT; rr += 8)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
@@ -295,7 +295,7 @@ void	drawrays()
 			}
 			else					// <=
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr++)
+				for (int rr = 0; rr < CUBS_CNT; rr += 8)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
