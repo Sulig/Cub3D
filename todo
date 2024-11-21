@@ -1,11 +1,5 @@
 # Cub3D TODO LIST
 
-* Issue p0:
- The "A" && "D" commands are not working as intended
-
-	** DONE!
-***
-
 * Convert Raycast into 3D:
 	** Needs improvement but is also done!
 ***

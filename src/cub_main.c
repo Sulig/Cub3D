@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/21 18:45:26 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:50:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,38 +321,42 @@ void	drawrays()
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, wallc);
+		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, wallc);
+
+		// Try to draw wall pixel per pixel
+		for (int y = 0; y < lineH; y++)
+			printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
 
 		//------------------> Texture it -------------------->
 		// Another tipe of idea
-		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
-		img_rays_n[r]->instances[0].x = START_PX + r * scale;
-		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		//mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
+		//img_rays_n[r]->instances[0].x = START_PX + r * scale;
+		//img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
-		img_rays_s[r]->instances[0].x = START_PX + r * scale;
-		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		//mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
+		//img_rays_s[r]->instances[0].x = START_PX + r * scale;
+		//img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
-		img_rays_w[r]->instances[0].x = START_PX + r * scale;
-		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		//mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
+		//img_rays_w[r]->instances[0].x = START_PX + r * scale;
+		//img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
-		img_rays_e[r]->instances[0].x = START_PX + r * scale;
-		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		//mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
+		//img_rays_e[r]->instances[0].x = START_PX + r * scale;
+		//img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
 		//****************************************************
 
-		//ft_printf(CLEAN);
-		//ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		//printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		//printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
-		//printf("\n   Line printed info ---->\n");
-		//printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
-		//printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
-		//ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
-		//ft_printf("\t\t\t\t  V%s\n", D);
-		//printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
+		ft_printf(CLEAN);
+		ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
+		printf("\n   Line printed info ---->\n");
+		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
+		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
+		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
+		ft_printf("\t\t\t\t  V%s\n", D);
+		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
 
 		ra += DR;
 		if (ra < 0)
@@ -375,15 +379,14 @@ void ft_hook(void* param)
 	int xo = 0, yo = 0;
 
 	if (pdx < 0)
-		xo = -20;
+		xo = -COLL_SIZE;
 	else
-		xo = 20;
+		xo = COLL_SIZE;
 	if (pdy < 0)
-		yo = -20;
+		yo = -COLL_SIZE;
 	else
-		yo = 20;
+		yo = COLL_SIZE;
 
-	//* Apuntese de que "64" se tendra que cambiar a la escala del mapa
 	int ipx = px / mapS, ipx_add_xo = (px+xo) / mapS, ipx_sub_xo = (px - xo) / mapS;
 	int ipy = py / mapS, ipy_add_yo = (py+yo) / mapS, ipy_sub_yo = (py - yo) / mapS;
 	//***********************//
@@ -448,15 +451,11 @@ void ft_hook(void* param)
 	drawrays(NULL);
 
 	/**/
-	ft_printf(CLEAN);
-	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-	printf("Player REAL location: X[%i] Y[%i]\n", ipx, ipy);
-	ft_printf("\nPointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-	printf("Value of xo = %i | yo = %i\n", xo, yo);
-	printf("ipy_sub_yo = %i | ipy_add_yo = %i\n", ipy_sub_yo, ipy_add_yo);
-	printf("ipx_sub_xo = %i | ipx_add_xo = %i\n", ipx_sub_xo, ipx_add_xo);
-	ft_printf("Result// map[ipy][ipx] = %i\t map[ipy_sub][ipx_sub] = %i\n", map[ipy][ipx], map[ipy_sub_yo][ipx_sub_xo]);
+	//ft_printf(CLEAN);
+	//printf("\nPlayer location:\t X[%f] Y[%f]\n", px, py);
+	//printf("Player REAL location:\t X[%i] Y[%i]\n", ipx, ipy);
+	//ft_printf("\nPointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
 	/**/
 }
 

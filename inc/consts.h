@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/21 16:56:25 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:43:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define RAYS		60
 # define DIST		66
 # define VEL		5
+
+# define COLL_SIZE	20
 
 # define CUBS_CNT	60
 # define CUB_SCALE	64
