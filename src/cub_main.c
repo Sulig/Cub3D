@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/21 13:15:02 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:45:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea;
 *	mapS -> Size of map
 */
 static int mapX = 8, mapY = 8, mapS = 64;
-static int map[]=
+int map[8][8] =
 {
-	1,1,1,1,1,1,1,1,
-	1,0,1,0,0,0,0,1,
-	1,0,1,0,0,0,0,1,
-	1,0,1,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,0,0,0,1,0,0,1,
-	1,0,0,0,0,0,0,1,
-	1,1,1,1,1,1,1,1
+	{1,1,1,1,1,1,1,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,0,0,0,0,0,1},
+	{1,0,0,0,1,0,0,1},
+	{1,0,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1}
 };
 
 
@@ -79,20 +79,20 @@ void	printmap(mlx_t *mlx)
 {
 	int y = 0, x = 0;
 
-	for (int s = 0; s < mapS; s++)
+	while (y < mapY)
 	{
-		if (map[s] == 0)
-			if (mlx_image_to_window(mlx, tx_floor, x * mapS, y * mapS) < 0)
-        		error();
-		if (map[s] == 1)
-			if (mlx_image_to_window(mlx, tx_wall, x * mapS, y * mapS) < 0)
-        		error();
-		x++;
-		if ((s + 1) % 8 == 0 && s)
+		x = 0;
+		while (x < mapX)
 		{
-			x = 0;
-			y++;
+			if (map[y][x] == 0)
+				if (mlx_image_to_window(mlx, tx_floor, x * tx_floor->width, y * tx_floor->height) < 0)
+        			error();
+			if (map[y][x] == 1)
+				if (mlx_image_to_window(mlx, tx_wall, x * tx_wall->width, y * tx_wall->height) < 0)
+        			error();
+			x++;
 		}
+		y++;
 	}
 }
 
@@ -120,7 +120,7 @@ void	drawrays()
 	float rx, ry, ra, xo, yo, disT;
 	float lineH, lineO;
 
-	ft_printf(CLEAN);
+	//ft_printf(CLEAN);
 	ra = pa - DR * 30; //Angle vision
 	if (ra < 0)
 		ra += 2 * PI;
@@ -165,19 +165,19 @@ void	drawrays()
 			dof = 8;
 		}
 
-		while (dof < 8)
+		while (dof < mapX)
 		{
 			mx = (int)(rx)>>6;
 			my = (int)(ry)>>6;
 			mp = my * mapX + mx;
 
 			// if the ray hits a wall
-			if (mp > 0 && mp < mapX * mapY && map[mp] == 1)
+			if (mp > 0 && mp < mapX * mapY && map[my][mx] == 1)
 			{
 				hx = rx;
 				hy = ry;
 				distH = dist(px, py, hx, hy);
-				dof = 8;
+				dof = mapX;
 			}
 			else
 			{
@@ -219,19 +219,19 @@ void	drawrays()
 			dof = 8;
 		}
 
-		while (dof < 8)
+		while (dof < mapY)
 		{
 			mx = (int)(rx)>>6;
 			my = (int)(ry)>>6;
 			mp = my * mapX + mx;
 
 			// if the ray hits a wall
-			if (mp > 0 && mp < mapX * mapY && map[mp] == 1)
+			if (mp > 0 && mp < mapX * mapY && map[my][mx] == 1)
 			{
 				vx = rx;
 				vy = ry;
 				distV = dist(px, py, vx, vy);
-				dof = 8;
+				dof = mapY;
 			}
 			else
 			{
@@ -254,7 +254,7 @@ void	drawrays()
 			// Texture to apply ->
 			if (ra > 0 && ra < PI)
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr += 8)
+				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
@@ -264,7 +264,7 @@ void	drawrays()
 			}
 			else
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr += 8)
+				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
@@ -285,7 +285,7 @@ void	drawrays()
 			// Texture to apply ->
 			if (ra < P2 || ra > P3)	// =>
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr += 8)
+				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
@@ -295,7 +295,7 @@ void	drawrays()
 			}
 			else					// <=
 			{
-				for (int rr = 0; rr < CUBS_CNT; rr += 8)
+				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
@@ -343,16 +343,16 @@ void	drawrays()
 
 		//****************************************************
 
-		ft_printf(CLEAN);
-		ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
-		printf("\n   Line printed info ---->\n");
-		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
-		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
-		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
-		ft_printf("\t\t\t\t  V%s\n", D);
-		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
+		//ft_printf(CLEAN);
+		//ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		//printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		//printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
+		//printf("\n   Line printed info ---->\n");
+		//printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
+		//printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
+		//ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
+		//ft_printf("\t\t\t\t  V%s\n", D);
+		//printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
 
 		ra += DR;
 		if (ra < 0)
@@ -384,36 +384,39 @@ void ft_hook(void* param)
 		yo = 20;
 
 	//* Apuntese de que "64" se tendra que cambiar a la escala del mapa
-	int ipx = px / 64.0, ipx_add_xo = (px+xo) / 64.0, ipx_sub_xo = (px - xo) / 64.0;
-	int ipy = py / 64.0, ipx_add_yo = (py+yo) / 64.0, ipx_sub_yo = (py - yo) / 64.0;
+	int ipx = px / mapS, ipx_add_xo = (px+xo) / mapS, ipx_sub_xo = (px - xo) / mapS;
+	int ipy = py / mapS, ipy_add_yo = (py+yo) / mapS, ipy_sub_yo = (py - yo) / mapS;
 	//***********************//
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
-		// Todo -> Wall collision in double array  *Use ipx && ipy
-		px += -1 * VEL * cos(pa + P2);
-		py += -1 * VEL * sin(pa + P2);
+		if (map[ipy_sub_yo][ipx_sub_xo] == 0)
+		{
+			px += -1 * VEL * cos(pa + P2);
+			py += -1 * VEL * sin(pa + P2);
+		}
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		// Todo -> Wall collision in double array  *Use ipx && ipy
-		px += 1 * VEL * cos(pa + P2);
-		py += 1 * VEL * sin(pa + P2);
+		if (map[ipy_add_yo][ipx_add_xo] == 0)
+		{
+			px += 1 * VEL * cos(pa + P2);
+			py += 1 * VEL * sin(pa + P2);
+		}
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 	{
-		if (map[ipy * mapX + ipx_add_xo] == 0)
+		if (map[ipy][ipx_add_xo] == 0)
 			px += pdx;
-		if (map[ipx_add_yo * mapX + ipx] == 0)
+		if (map[ipy_add_yo][ipx] == 0)
 			py += pdy;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
 	{
-		// In double array it will be ipx && ipy
-		if (map[ipy * mapX + ipx_sub_xo] == 0)
+		if (map[ipy][ipx_sub_xo] == 0)
 			px -= pdx;
-		if (map[ipx_sub_yo * mapX + ipx] == 0)
+		if (map[ipy_sub_yo][ipx] == 0)
 			py -= pdy;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
@@ -445,11 +448,15 @@ void ft_hook(void* param)
 	drawrays(NULL);
 
 	/**/
-	//ft_printf(CLEAN);
-	//printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
-	//ft_printf("Pointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-	//printf("Collision: ipx = %i | ipy = %i\n", ipx, ipy);
+	ft_printf(CLEAN);
+	printf("\nPlayer location: X[%f] Y[%f]\n", px, py);
+	printf("Player REAL location: X[%i] Y[%i]\n", ipx, ipy);
+	ft_printf("\nPointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
+	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
+	printf("Value of xo = %i | yo = %i\n", xo, yo);
+	printf("ipy_sub_yo = %i | ipy_add_yo = %i\n", ipy_sub_yo, ipy_add_yo);
+	printf("ipx_sub_xo = %i | ipx_add_xo = %i\n", ipx_sub_xo, ipx_add_xo);
+	ft_printf("Result// map[ipy][ipx] = %i\t map[ipy_sub][ipx_sub] = %i\n", map[ipy][ipx], map[ipy_sub_yo][ipx_sub_xo]);
 	/**/
 }
 
@@ -516,8 +523,8 @@ void	start(void)
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
-	px = 200;
-	py = 200;
+	px = 5 * CUB_SCALE;
+	py = 3 * CUB_SCALE;
 	pdx = cos(pa) * 5;
 	pdy = sin(pa) * 5;
 	/*----*/
