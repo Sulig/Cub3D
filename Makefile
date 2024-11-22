@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/10/21 14:06:46 by sadoming         ###   ########.fr        #
+#    Updated: 2024/11/12 17:08:56 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 MAKF 		+=	--silent
 MLX_FLAGS	:=	-B
 
-CC			= gcc
+CC			=	gcc
 CFLAGS		:=	-Wall -Werror -Wextra -g -c
 LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
 
@@ -36,6 +36,8 @@ P	:=	\033[0;35m
 C	:=	\033[0;36m
 W	:=	\033[0;37m
 DEF	:=	\033[0m
+
+RG	:=	\033[1;32m
 # ------------------ #
 # Directories:
 
@@ -59,7 +61,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 
 SRC_SRC	:=	cub_main.c
 
-SRC := $(addprefix ./src/, $(SRC_SRC))
+SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
@@ -70,9 +72,26 @@ vpath %.c $(SRC_DIR) $(TST_DIR) $(_DM_DIR) $(_MM_DIR) $(_BG_DIR) $(_UT_DIR) $(_P
 vpath %.o $(OBJ_DIR)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
-all: $(NAME) $(LIB_LIB) $(MLX_LIB)
+all: mlx42 $(LIB_LIB) $(NAME)
 	@make -C $(LIB_DIR)
 	@make -C $(MLX_BUILD_DIR) -j4
+	@echo "$(RG)\n~ **************************************** ~\n"
+	@echo "  ~\t     $(NAME) is ready!\t\t ~\n"
+	@echo "~ **************************************** ~$(DEF)\n"
+	@make -s author
+
+# ---- #
+mlx42:
+	@echo "$(Y)Checking if MLX42 exist...$(DEF)"
+	@if [ -d "MLX42" ]; then \
+		echo "$(DEF)Dir exists, aborting cloning...\n"; \
+	else \
+		echo "$(B)Clonning ... $(DEF)"; \
+		git clone https://github.com/codam-coding-college/MLX42.git; \
+		cd MLX42; \
+		cmake -B build; \
+		cmake --build build -j4; \
+	fi
 #-------------------------------------------------------------#
 help:
 	@echo "\033[1;37m\n ~ Posible comands:\n"
@@ -87,8 +106,8 @@ help:
 
 #-------------------------------------------------------------#
 author:
-	@echo "$(P)\n~ **************************************** ~\n"
-	@echo "   ~ \t      Made by Sadoming \t        ~"
+	@echo "$(P)~ **************************************** ~\n"
+	@echo "  ~\t     Made by Sadoming \t        ~"
 	@echo "\n~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 norm:
@@ -100,7 +119,7 @@ norm:
 	@echo "$(G)\n ~ Norminette:\t~ OK\n"
 	@echo "~~~~~~~~~~~~~~~~~~~~~~$(DEF)\n"
 #-------------------------------------------------------------#
-run: $(NAME)
+run: re
 	@echo "$(C)\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
 	@echo "\n~ **************************************** $(DEF)~\n"
@@ -122,13 +141,12 @@ $(MLX_LIB):
 #Cub3D objs
 $(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDRS) $(MAK) $(LIB_LIB) $(MLX_LIB)
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_INC) -I $(LIB_INC) $(LIB_FLAGS) $< -o $@
-	@echo "$(COLOR_GREEN)write file: $(OBJ_DIR)$@ $(COLOR_END)"
+	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_INC) -I $(LIB_INC) $(LIB_FLAGS) $< -o $@
 
 #Cub3D
 $(NAME): $(OBJS) $(LIB_LIB) $(MLX_LIB)
 	@$(CC) $(OBJS) $(MLX_LIB) $(LIB_LIB) -o $(NAME) $(LIB_FLAGS)
-	@echo "$(COLOR_GREEN)write file: $(NAME)$(COLOR_END)"
+	@echo "$(G)\n~ $(NAME) Compiled Successfully ~"
 #-------------------------------------------------------------#
 # ********************************************************************************* #
 # Debug region
@@ -156,7 +174,11 @@ fclean: clean
 clear: fclean
 	@clear
 
+prepare-push: clear
+	@rm -rf MLX42
+	@echo "$(C)\tReady!$(DEF)\n"
+
 re: fclean all
 # -------------------- #
-.PHONY: all clean fclean re
+.PHONY: all author clean fclean mlx42 norm re run val val_s
 # ********************************************************************************** #
