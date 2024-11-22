@@ -6,6 +6,12 @@
 
 * Apply textures ~ IN PROGRESS ~
 	* Issue p1 -> The textures are not been represented correctly
+	* Color is changing with RayAngle and it should be with world position
+
+-- See:
+https://stackoverflow.com/questions/77364500/how-can-i-detect-what-side-the-ray-has-hit-a-wall-in-a-raycaster-game-engine
+
+https://gamedev.stackexchange.com/questions/57890/how-to-check-whether-a-ray-cast-hits-a-specific-side-of-an-object
 
 ***
 

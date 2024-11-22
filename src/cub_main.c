@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/21 19:50:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:43:42 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ static void error(void)
 {
 	ft_printf_fd(2, mlx_strerror(mlx_errno));
 	exit(EXIT_FAILURE);
-}
-
-void ralph(void)
-{
-	ft_printf_fd(2, "\033[1;31m I'M GONNA WREAK IT!\n");
 }
 
 // Print Map
@@ -252,24 +247,28 @@ void	drawrays()
 			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
 
 			// Texture to apply ->
-			if (ra > 0 && ra < PI)
+			if ((ra > 0 && ra < PI))	// South
 			{
+
 				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
 				}
 				img_rays_s[r]->instances[0].enabled = 1;
+
 				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
 			}
-			else
+			else						// North
 			{
+
 				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_n[rr]->instances[0].enabled = 0;
 					img_rays_s[rr]->instances[0].enabled = 0;
 				}
 				img_rays_n[r]->instances[0].enabled = 1;
+
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
 			}
 		}
@@ -283,24 +282,28 @@ void	drawrays()
 			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
 
 			// Texture to apply ->
-			if (ra < P2 || ra > P3)	// =>
+			if ((ra < P2 || ra > P3))	// =>
 			{
+
 				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
 				}
 				img_rays_e[r]->instances[0].enabled = 1;
+
 				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
 			}
-			else					// <=
+			else						// <=
 			{
+
 				for (int rr = 0; rr < CUBS_CNT; rr++)
 				{
 					img_rays_w[rr]->instances[0].enabled = 0;
 					img_rays_e[rr]->instances[0].enabled = 0;
 				}
 				img_rays_w[r]->instances[0].enabled = 1;
+
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
 			}
 		}
@@ -321,29 +324,35 @@ void	drawrays()
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, wallc);
-
-		// Try to draw wall pixel per pixel
-		for (int y = 0; y < lineH; y++)
-			printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
+		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
 		//------------------> Texture it -------------------->
+		float ty = 0;
+		float ty_step = (CUB_SCALE / 2) / lineH;
+		// Draw Wall pixel per pixel
+		for (int y = 0; y < lineH; y++)
+		{
+			printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
+			ty += ty_step;
+		}
 		// Another tipe of idea
-		//mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
-		//img_rays_n[r]->instances[0].x = START_PX + r * scale;
-		//img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
-		//img_rays_s[r]->instances[0].x = START_PX + r * scale;
-		//img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
+		img_rays_n[r]->instances[0].x = START_PX + r * scale;
+		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
-		//img_rays_w[r]->instances[0].x = START_PX + r * scale;
-		//img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
+		img_rays_s[r]->instances[0].x = START_PX + r * scale;
+		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
-		//img_rays_e[r]->instances[0].x = START_PX + r * scale;
-		//img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+		mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
+		img_rays_w[r]->instances[0].x = START_PX + r * scale;
+		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
+		img_rays_e[r]->instances[0].x = START_PX + r * scale;
+		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
 
 		//****************************************************
 
