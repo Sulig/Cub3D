@@ -5,8 +5,8 @@
 ***
 
 * Apply textures ~ IN PROGRESS ~
+ - I got the wall direction!
 	* Issue p1 -> The textures are not been represented correctly
-	* Color is changing with RayAngle and it should be with world position
 
 -- See:
 https://stackoverflow.com/questions/77364500/how-can-i-detect-what-side-the-ray-has-hit-a-wall-in-a-raycaster-game-engine

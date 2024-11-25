@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/22 14:43:42 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:34:39 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	drawrays()
 	float rx, ry, ra, xo, yo, disT;
 	float lineH, lineO;
 
-	//ft_printf(CLEAN);
+	ft_printf(CLEAN);
 	ra = pa - DR * 30; //Angle vision
 	if (ra < 0)
 		ra += 2 * PI;
@@ -139,16 +139,16 @@ void	drawrays()
 		{
 			ry = (((int)py>>6)<<6) -0.0001;
 			rx = (py-ry) * aTan + px;
-			yo = -64;
+			yo = -CUB_SCALE;
 			xo = -yo * aTan;
 		}
 
 		// looking up
 		if (ra < PI)
 		{
-			ry = (((int)py>>6)<<6) + 64;
+			ry = (((int)py>>6)<<6) + CUB_SCALE;
 			rx = (py-ry) * aTan + px;
-			yo = 64;
+			yo = CUB_SCALE;
 			xo = -yo * aTan;
 		}
 
@@ -157,7 +157,7 @@ void	drawrays()
 		{
 			rx = px;
 			ry = py;
-			dof = 8;
+			dof = mapX;
 		}
 
 		while (dof < mapX)
@@ -193,16 +193,16 @@ void	drawrays()
 		{
 			rx = (((int)px>>6)<<6) -0.0001;
 			ry = (px-rx) * nTan + py;
-			xo = -64;
+			xo = -CUB_SCALE;
 			yo = -xo * nTan;
 		}
 
 		// looking right
 		if (ra < P2 || ra > P3)
 		{
-			rx = (((int)px>>6)<<6) + 64;
+			rx = (((int)px>>6)<<6) + CUB_SCALE;
 			ry = (px-rx) * nTan + py;
-			xo = 64;
+			xo = CUB_SCALE;
 			yo = -xo * nTan;
 		}
 
@@ -211,7 +211,7 @@ void	drawrays()
 		{
 			rx = px;
 			ry = py;
-			dof = 8;
+			dof = mapY;
 		}
 
 		while (dof < mapY)
@@ -243,70 +243,52 @@ void	drawrays()
 			rx = vx;
 			ry = vy;
 			disT = distV;
+
+			float deltaX = rx - px;
+			float deltaY = ry - py;
+			float theta = atan2(deltaY, deltaX);
+
 			//More brighter
 			color = ft_pixel((int32_t)20, (int32_t)255, (int32_t)20, (int32_t)255);
 
-			// Texture to apply ->
-			if ((ra > 0 && ra < PI))	// South
+			// Check if wall is East or West ->
+			if (theta > -PI / 2 && theta < P2)	// West <=
 			{
-
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_n[rr]->instances[0].enabled = 0;
-					img_rays_s[rr]->instances[0].enabled = 0;
-				}
-				img_rays_s[r]->instances[0].enabled = 1;
-
-				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
+				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
 			}
-			else						// North
+			else								// East =>
 			{
-
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_n[rr]->instances[0].enabled = 0;
-					img_rays_s[rr]->instances[0].enabled = 0;
-				}
-				img_rays_n[r]->instances[0].enabled = 1;
-
-				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
+				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
 			}
 		}
-		if (distV > distH)
+		else
 		{
 			rx = hx;
 			ry = hy;
 			disT = distH;
 
+			float deltaX = rx - px;
+			float deltaY = ry - py;
+			float theta = atan2(deltaY, deltaX);
+
 			//More darker
 			color = ft_pixel((int32_t)20, (int32_t)66, (int32_t)20, (int32_t)255);
 
-			// Texture to apply ->
-			if ((ra < P2 || ra > P3))	// =>
+			// Check if wall is North or South ->
+			if (theta > 0 && theta < PI)	// South
 			{
-
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_w[rr]->instances[0].enabled = 0;
-					img_rays_e[rr]->instances[0].enabled = 0;
-				}
-				img_rays_e[r]->instances[0].enabled = 1;
-
-				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
+				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
 			}
-			else						// <=
+			else							// North
 			{
-
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_w[rr]->instances[0].enabled = 0;
-					img_rays_e[rr]->instances[0].enabled = 0;
-				}
-				img_rays_w[r]->instances[0].enabled = 1;
-
-				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
+				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
 			}
 		}
+
+		// Move the rays textures (into minimap) where ray has collided to a wall
+		tx_ray->instances[r].x = rx;
+		tx_ray->instances[r].y = ry;
+		//..........................
 
 		// -- Let the 3D beggins!
 		float ca = pa - ra;
@@ -336,7 +318,7 @@ void	drawrays()
 			ty += ty_step;
 		}
 		// Another tipe of idea
-
+		/*
 		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
 		img_rays_n[r]->instances[0].x = START_PX + r * scale;
 		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
@@ -352,20 +334,22 @@ void	drawrays()
 		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
 		img_rays_e[r]->instances[0].x = START_PX + r * scale;
 		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
-
+		*/
 
 		//****************************************************
 
+		/*
 		ft_printf(CLEAN);
 		ft_printf("\n ~ \e[38;5;215m Some values: \n");
 		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra);
+		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra * 180 / PI);
 		printf("\n   Line printed info ---->\n");
 		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
 		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
 		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
 		ft_printf("\t\t\t\t  V%s\n", D);
-		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa);
+		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa * 180 / PI);
+		*/
 
 		ra += DR;
 		if (ra < 0)
@@ -587,9 +571,9 @@ void	start(void)
 		error();
 
 	// this is the "actual ray-pointer" minimap
-	//for (int i = 0; i < 60; i++)
-	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-	//		error();
+	for (int i = 0; i < 60; i++)
+		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+			error();
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
