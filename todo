@@ -8,10 +8,10 @@
  - I got the wall direction!
 	* Issue p1 -> The textures are not been represented correctly
 
--- See:
-https://stackoverflow.com/questions/77364500/how-can-i-detect-what-side-the-ray-has-hit-a-wall-in-a-raycaster-game-engine
-
-https://gamedev.stackexchange.com/questions/57890/how-to-check-whether-a-ray-cast-hits-a-specific-side-of-an-object
+// Maybe is a cuestion to "traslade" the texture
+// ?- texel = (wall_witdh / tx_width) * (wall_height / tx_height)
+/// ~ texel will be the scale of texture to move arround the path
+// x & y position + texel
 
 ***
 
