@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/26 14:21:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:40:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 # define COLL_SIZE	20
 
-# define CUBS_CNT	1
+# define CUBS_CNT	60
 # define CUB_SCALE	64
 # define OFFSET_CUB	256
 /*	## MATH CONSTS END ##	*/
