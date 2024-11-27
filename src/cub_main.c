@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/26 19:59:59 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:23:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,38 +109,16 @@ void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, 
 }
 
 /* Templatte for attempt texturing
-* * May i use this => texel = (wall_witdh / tx_width) * (wall_height / tx_height)
+* x & y -> position on texture to start
+* width & heigth -> The scale of rect
+* Maybe i will need to apply the rect to the texture?
 */
 /*
-void	textureWall(int r_x, int r_y, int r_width, int r_height, mlx_image_t *tx)
+void	setTextureRect(mlx_image_t *tx, int r_x, int r_y, int r_width, int r_height)
 {
 	float texel;
-	float txw, tyh;
-	int tt = 0;
-
-	txw = r_width / tx->width;
-	if (!txw)
-		txw = 1;
-	tyh = r_height / tx->height;
-	if (!tyh)
-		tyh = 1;
-	texel = txw * tyh;
-	for (int t = 0; t < tt; t++)
-		if (mlx_image_to_window(mlx, tx, r_x, r_y) < 0)
-			error();
-
-	for (int sy = 0; sy < r_height; sy += texel)
-	{
-		for (int sx = 0; sx < r_width; sx += texel)
-		{
-			tx->instances[0].y = sy;
-			tx->instances[0].x = sx;
-			if (tt < (int)texel)
-				tt++;
-			ft_printf("sy = %i | sx = %i\t||Position of texel: y[%i] x[%i]\n\n", sy, sx, r_y + sy, r_x + sx);
-		}
-	}
-}*/
+}
+*/
 
 /* Raycasting */
 void	drawrays()
@@ -368,7 +346,7 @@ void	drawrays()
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
+		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
 		// Draw Wall pixel per pixel
 		for (int y = 0; y < lineH; y++)
@@ -376,19 +354,19 @@ void	drawrays()
 
 		//------------------> Texture it -------------------->
 		// Another tipe of idea
-		mlx_resize_image(img_rays_n[r], CUB_SCALE, lineH + lineO);
+		mlx_resize_image(img_rays_n[r], scale, lineH + lineO);
 		img_rays_n[r]->instances[0].x = START_PX + r * scale;
 		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_s[r], CUB_SCALE, lineH + lineO);
+		mlx_resize_image(img_rays_s[r], scale, lineH + lineO);
 		img_rays_s[r]->instances[0].x = START_PX + r * scale;
 		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_w[r], CUB_SCALE, lineH + lineO);
+		mlx_resize_image(img_rays_w[r], scale, lineH + lineO);
 		img_rays_w[r]->instances[0].x = START_PX + r * scale;
 		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_e[r], CUB_SCALE, lineH + lineO);
+		mlx_resize_image(img_rays_e[r], scale, lineH + lineO);
 		img_rays_e[r]->instances[0].x = START_PX + r * scale;
 		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 		//****************************************************
@@ -631,6 +609,10 @@ void	start(void)
 	for (int i = 0; i < RAYS; i++)
 		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
 			error();
+
+	// Lets see what stores pixel
+	for (size_t i = 0; i < ft_strlen((char *)img_rays_w[0]->pixels); i++)
+		ft_printf("In pos: [%i] = |%c|\n", i, img_rays_w[0]->pixels[i]);
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);

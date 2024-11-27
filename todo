@@ -8,10 +8,18 @@
  - I got the wall direction!
 	* Issue p1 -> The textures are not been represented correctly
 
-// Maybe is a cuestion to "traslade" the texture
-// ?- texel = (wall_witdh / tx_width) * (wall_height / tx_height)
-/// ~ texel will be the scale of texture to move arround the path
-// x & y position + texel
+~ Is a cuestion to "traslade" the texture
+?- texel = (wall_witdh / tx_width) * (wall_height / tx_height)
+~ texel will be the scale of texture to move arround the path
+
+* x & y -> position on texture to start
+* width & heigth -> The scale of rect
+* Maybe i will need to apply the rect to the texture?
+
+- this is the prototype:
+``` c
+setTextureRect(tx, r_x, r_y, r_width, r_height)
+```
 
 ***
 
