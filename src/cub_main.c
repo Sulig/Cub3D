@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/28 14:36:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:09:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,6 @@ void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, 
 	for (int sy = 0; sy < r_height; sy++)
 		for (int sx = 0; sx < r_width; sx++)
 			mlx_put_pixel(paint, r_x + sx, r_y + sy, r_color);
-}
-
-/* Templatte for attempt texturing
-* tx -> Texture to apply the rect
-* x & y -> position on texture to start
-* width & heigth -> The scale of rect
-* Maybe i will need to apply the rect to the texture?
-*/
-void	setTextureRect(mlx_image_t *tx, int r_x, int r_y, int r_width, int r_height)
-{
-	ft_printf("It's no implemented yet\n");
-	ft_printf("%i x %i || rect => y[%i] x[%i] | %i x %i\n", tx->width, tx->height, r_y, r_x, r_width, r_height);
-	//
 }
 
 /* Raycasting */
@@ -269,21 +256,15 @@ void	drawrays()
 			{
 				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
 
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_w[rr]->instances[0].enabled = 0;
-					img_rays_e[rr]->instances[0].enabled = 1;
-				}
+				img_rays_w[r]->instances[0].enabled = 0;
+				img_rays_e[r]->instances[0].enabled = 1;
 			}
 			else								// West =>
 			{
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
 
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_w[rr]->instances[0].enabled = 1;
-					img_rays_e[rr]->instances[0].enabled = 0;
-				}
+				img_rays_w[r]->instances[0].enabled = 1;
+				img_rays_e[r]->instances[0].enabled = 0;
 			}
 		}
 		else
@@ -304,25 +285,19 @@ void	drawrays()
 			{
 				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
 
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_n[rr]->instances[0].enabled = 0;
-					img_rays_s[rr]->instances[0].enabled = 1;
-					img_rays_e[rr]->instances[0].enabled = 0;
-					img_rays_w[rr]->instances[0].enabled = 0;
-				}
+				img_rays_n[r]->instances[0].enabled = 0;
+				img_rays_s[r]->instances[0].enabled = 1;
+				img_rays_e[r]->instances[0].enabled = 0;
+				img_rays_w[r]->instances[0].enabled = 0;
 			}
 			else							// North
 			{
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
 
-				for (int rr = 0; rr < CUBS_CNT; rr++)
-				{
-					img_rays_n[rr]->instances[0].enabled = 1;
-					img_rays_s[rr]->instances[0].enabled = 0;
-					img_rays_e[rr]->instances[0].enabled = 0;
-					img_rays_w[rr]->instances[0].enabled = 0;
-				}
+				img_rays_n[r]->instances[0].enabled = 1;
+				img_rays_s[r]->instances[0].enabled = 0;
+				img_rays_e[r]->instances[0].enabled = 0;
+				img_rays_w[r]->instances[0].enabled = 0;
 			}
 		}
 
@@ -356,23 +331,22 @@ void	drawrays()
 		//------------------> Texture it -------------------->
 		// Another tipe of idea
 
-		float texel = ry - img_rays_w[r]->width * (ry / img_rays_w[r]->width);
+		float texel = rx * img_rays_w[r]->width * (ry / img_rays_w[r]->width);
+		printf("Texel = %f\n", texel);
 
-		setTextureRect(img_rays_n[r], (int)texel, 0, img_rays_n[r]->width / mapS, img_rays_n[r]->height);
-
-		mlx_resize_image(img_rays_n[r], scale, (lineH + lineO) / tx_no->height);
+		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
 		img_rays_n[r]->instances[0].x = START_PX + r * scale;
 		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_s[r], scale, lineH + lineO);
+		mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
 		img_rays_s[r]->instances[0].x = START_PX + r * scale;
 		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_w[r], scale, lineH + lineO);
+		mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
 		img_rays_w[r]->instances[0].x = START_PX + r * scale;
 		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		//mlx_resize_image(img_rays_e[r], scale, lineH + lineO);
+		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
 		img_rays_e[r]->instances[0].x = START_PX + r * scale;
 		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 		//****************************************************
