@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/27 14:23:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:36:24 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,17 @@ void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, 
 }
 
 /* Templatte for attempt texturing
+* tx -> Texture to apply the rect
 * x & y -> position on texture to start
 * width & heigth -> The scale of rect
 * Maybe i will need to apply the rect to the texture?
 */
-/*
 void	setTextureRect(mlx_image_t *tx, int r_x, int r_y, int r_width, int r_height)
 {
-	float texel;
+	ft_printf("It's no implemented yet\n");
+	ft_printf("%i x %i || rect => y[%i] x[%i] | %i x %i\n", tx->width, tx->height, r_y, r_x, r_width, r_height);
+	//
 }
-*/
 
 /* Raycasting */
 void	drawrays()
@@ -354,19 +355,24 @@ void	drawrays()
 
 		//------------------> Texture it -------------------->
 		// Another tipe of idea
-		mlx_resize_image(img_rays_n[r], scale, lineH + lineO);
+
+		float texel = ry - img_rays_w[r]->width * (ry / img_rays_w[r]->width);
+
+		setTextureRect(img_rays_n[r], (int)texel, 0, img_rays_n[r]->width / mapS, img_rays_n[r]->height);
+
+		mlx_resize_image(img_rays_n[r], scale, (lineH + lineO) / tx_no->height);
 		img_rays_n[r]->instances[0].x = START_PX + r * scale;
 		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_s[r], scale, lineH + lineO);
+		//mlx_resize_image(img_rays_s[r], scale, lineH + lineO);
 		img_rays_s[r]->instances[0].x = START_PX + r * scale;
 		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_w[r], scale, lineH + lineO);
+		//mlx_resize_image(img_rays_w[r], scale, lineH + lineO);
 		img_rays_w[r]->instances[0].x = START_PX + r * scale;
 		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_e[r], scale, lineH + lineO);
+		//mlx_resize_image(img_rays_e[r], scale, lineH + lineO);
 		img_rays_e[r]->instances[0].x = START_PX + r * scale;
 		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 		//****************************************************
