@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/28 20:09:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:55:10 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static mlx_image_t	*img_rays_n[CUBS_CNT], *img_rays_s[CUBS_CNT], *img_rays_w[CUB
 static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /* The actual texture to apply to the wall */
-static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea;
+static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea, *current = NULL;
 
 /*
 *	mapX -> max lenght of map
@@ -58,6 +58,9 @@ int map[8][8] =
 };
 
 
+/* Returns a uint32_t representing the color inserted in this function
+* R [0-255] - G [0-255] - B [0-255] - && ALPHA [0-255]
+*/
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
@@ -100,12 +103,27 @@ float	dist(float ax, float ay, float bx, float by)
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
-/* Prints a Rectangle */
+/* Prints a Rectangle
+* - mlx-img, -- X --, -- Y --, width, height, color
+*/
 void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, int32_t r_color)
 {
 	for (int sy = 0; sy < r_height; sy++)
 		for (int sx = 0; sx < r_width; sx++)
 			mlx_put_pixel(paint, r_x + sx, r_y + sy, r_color);
+}
+
+/**/
+uint32_t get_texture_color(mlx_texture_t *texture, int texel)
+{
+	if (texel < 0 || texel >= (int)texture->height)
+		return (0);
+
+	uint8_t r = texture->pixels[texel];
+    uint8_t g = texture->pixels[texel];
+    uint8_t b = texture->pixels[texel];
+    uint8_t a = texture->pixels[texel];
+	return ((r << 24) | (g << 16) | (b << 8) | a);
 }
 
 /* Raycasting */
@@ -124,7 +142,7 @@ void	drawrays()
 
 	// Clear the screen (Do the "sky" and "floor")
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
-	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)20, (int32_t)20, (int32_t)30, (int32_t)255));
+	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)50, (int32_t)50, (int32_t)66, (int32_t)255));
 
 	// --------------------- RAYCAST ---------------------------->
 	for (r = 0; r < RAYS; r++)
@@ -258,6 +276,9 @@ void	drawrays()
 
 				img_rays_w[r]->instances[0].enabled = 0;
 				img_rays_e[r]->instances[0].enabled = 1;
+				img_rays_n[r]->instances[0].enabled = 0;
+				img_rays_s[r]->instances[0].enabled = 0;
+				current = tx_ea;
 			}
 			else								// West =>
 			{
@@ -265,6 +286,9 @@ void	drawrays()
 
 				img_rays_w[r]->instances[0].enabled = 1;
 				img_rays_e[r]->instances[0].enabled = 0;
+				img_rays_n[r]->instances[0].enabled = 0;
+				img_rays_s[r]->instances[0].enabled = 0;
+				current = tx_we;
 			}
 		}
 		else
@@ -289,6 +313,7 @@ void	drawrays()
 				img_rays_s[r]->instances[0].enabled = 1;
 				img_rays_e[r]->instances[0].enabled = 0;
 				img_rays_w[r]->instances[0].enabled = 0;
+				current = tx_so;
 			}
 			else							// North
 			{
@@ -298,6 +323,7 @@ void	drawrays()
 				img_rays_s[r]->instances[0].enabled = 0;
 				img_rays_e[r]->instances[0].enabled = 0;
 				img_rays_w[r]->instances[0].enabled = 0;
+				current = tx_no;
 			}
 		}
 
@@ -318,37 +344,73 @@ void	drawrays()
 		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT		// line height
 		if (lineH > SCR_HEIGHT)
 			lineH = SCR_HEIGHT;
-		lineO = 160 - lineH / 2;			// 160 - lineH / 2	// line offset
+		lineO = SCR_HEIGHT / 2 - lineH / 2;			// 160 - lineH / 2	// line offset
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
 		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
-		// Draw Wall pixel per pixel
-		for (int y = 0; y < lineH; y++)
-			printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
+		// Draw Wall pixel per pixel with a solid color
+		//for (int y = 0; y < lineH; y++)
+		//	printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
 
 		//------------------> Texture it -------------------->
 		// Another tipe of idea
 
-		float texel = rx * img_rays_w[r]->width * (ry / img_rays_w[r]->width);
-		printf("Texel = %f\n", texel);
-
-		mlx_resize_image(img_rays_n[r], lineH + lineO, lineH + lineO);
+		//mlx_resize_image(img_rays_n[r], 64, 64);
 		img_rays_n[r]->instances[0].x = START_PX + r * scale;
 		img_rays_n[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_s[r], lineH + lineO, lineH + lineO);
+		//mlx_resize_image(img_rays_s[r], 64, 64);
 		img_rays_s[r]->instances[0].x = START_PX + r * scale;
 		img_rays_s[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_w[r], lineH + lineO, lineH + lineO);
+		//mlx_resize_image(img_rays_w[r], 64, 64);
 		img_rays_w[r]->instances[0].x = START_PX + r * scale;
 		img_rays_w[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
 
-		mlx_resize_image(img_rays_e[r], lineH + lineO, lineH + lineO);
+		//mlx_resize_image(img_rays_e[r], 64, 64);
 		img_rays_e[r]->instances[0].x = START_PX + r * scale;
 		img_rays_e[r]->instances[0].y = (SCR_HEIGHT / 2) - (lineH + lineO) / 2;
+
+		//++++++++++++
+		float wallX = (int)rx % CUB_SCALE / (float)CUB_SCALE;
+		int texX = (int)(wallX * current->width);
+
+		if (texX < 0)
+			texX = 0;
+		if (texX >= (int)current->width)
+			texX = current->width - 1;
+
+		// Draw Wall pixel per pixel
+		for (int y = 0; y < lineH; y++)
+		{
+			// Calcular la coordenada de la textura en el eje Y
+			int texY = (int)(((float)y / lineH) * current->height);
+
+			if ((int)texY < 0)
+				texY = 0;
+			if ((int)texY >= (int)current->height)
+				texY = current->height - 1;
+
+			int texel = texY * current->width + texX;
+
+			uint8_t r = current->pixels[texel * 4 + 0];
+			uint8_t g = current->pixels[texel * 4 + 1];
+			uint8_t b = current->pixels[texel * 4 + 2];
+			uint8_t a = current->pixels[texel * 4 + 3];
+
+			uint32_t collor = 0;
+			//collor = (uint32_t)(current->pixels[texel]);
+			collor = (r << 24) | (g << 16) | (b << 8) | a;
+
+			ft_printf(CLEAN);
+			ft_printf("\n ~ \e[38;5;215m Some values: \n");
+			printf("texY %i | texX %i||\t texel = %i\n", texY, texX, texel);
+
+			printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, collor);
+			printRect(screen, START_PX + r * scale, lineO + y, scale, 1, collor);
+		}
 		//****************************************************
 
 		/*
@@ -571,8 +633,6 @@ void	start(void)
 		if (mlx_image_to_window(mlx, img_rays_e[i], 0, 0) < 0)
 			error();
 	}
-
-	//textureWall(SCR_HEIGHT + 30 * scale, (SCR_HEIGHT / 2) - (362) / 2, scale, 362, img_rays_n[0]);
 	/*////////////////////////*/
 
 	// Minimap
@@ -589,10 +649,6 @@ void	start(void)
 	for (int i = 0; i < RAYS; i++)
 		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
 			error();
-
-	// Lets see what stores pixel
-	for (size_t i = 0; i < ft_strlen((char *)img_rays_w[0]->pixels); i++)
-		ft_printf("In pos: [%i] = |%c|\n", i, img_rays_w[0]->pixels[i]);
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
