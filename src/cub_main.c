@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/03 18:56:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:45:14 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ float px, py, pdx, pdy, pa;
  */
 
 static mlx_image_t	*screen;
-static mlx_image_t	*img_rays_n[CUBS_CNT], *img_rays_s[CUBS_CNT], *img_rays_w[CUBS_CNT], *img_rays_e[CUBS_CNT];
 static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 
 /* The actual texture to apply to the wall */
@@ -135,7 +134,6 @@ void	drawrays()
 	float rx, ry, ra, xo, yo, disT;
 	float lineH, lineO;
 
-	//ft_printf(CLEAN);
 	ra = pa - DR * 30; //Angle vision
 	if (ra < 0)
 		ra += 2 * PI;
@@ -310,8 +308,8 @@ void	drawrays()
 		}
 
 		// Move the rays textures (into minimap) where ray has collided to a wall
-		tx_ray->instances[r].x = rx;
-		tx_ray->instances[r].y = ry;
+		//tx_ray->instances[r].x = rx;
+		//tx_ray->instances[r].y = ry;
 		//..........................
 
 		// -- Let the 3D beggins!
@@ -326,11 +324,11 @@ void	drawrays()
 		lineH = (mapS * SCR_WIDTH) / disT;	// (mapSize * window width) / disT		// line height
 		if (lineH > SCR_HEIGHT)
 			lineH = SCR_HEIGHT;
-		lineO = SCR_HEIGHT / 2 - lineH / 2;			// 160 - lineH / 2	// line offset
+		lineO = SCR_HEIGHT / 2 - lineH / 2;	// window height / 2 - lineH / 2	// line offset
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
+		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
 		// Draw Wall pixel per pixel with a solid color
 		// The 2 versions are working correctly
@@ -368,19 +366,6 @@ void	drawrays()
 
 		//****************************************************
 
-		/*
-		   ft_printf(CLEAN);
-		   ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		   printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		   printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra * 180 / PI);
-		   printf("\n   Line printed info ---->\n");
-		   printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
-		   printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
-		   ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
-		   ft_printf("\t\t\t\t  V%s\n", D);
-		   printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa * 180 / PI);
-		   */
-
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;
@@ -388,7 +373,6 @@ void	drawrays()
 			ra -= 2 * PI;
 	}
 }
-/**/
 
 /*this function will be called for every frame
  * this is for detecting key_inputs
@@ -464,11 +448,11 @@ void ft_hook(void* param)
 		pdy = sin(pa) * VEL;
 	}
 	//*//
-	player->instances[0].x = px;
-	player->instances[0].y = py;
+	//player->instances[0].x = px;
+	//player->instances[0].y = py;
 	/* Radial Movement for pointer */
-	ptr->instances[0].x = player->instances[0].x + cos(pa) * DIST;
-	ptr->instances[0].y = player->instances[0].y + sin(pa) * DIST;
+	//ptr->instances[0].x = player->instances[0].x + cos(pa) * DIST;
+	//ptr->instances[0].y = player->instances[0].y + sin(pa) * DIST;
 
 	/* Cast ray */
 	drawrays(NULL);
@@ -545,8 +529,8 @@ void	start(void)
 	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
-	px = 5 * CUB_SCALE;
-	py = 3 * CUB_SCALE;
+	px = 5 * CUB_SCALE; // Player X initial position
+	py = 3 * CUB_SCALE; // Player Y initial position
 	pdx = cos(pa) * 5;
 	pdy = sin(pa) * 5;
 	/*----*/
@@ -561,187 +545,26 @@ void	start(void)
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 
-	// Rays textures
-	for (int i = 0; i < CUBS_CNT; i++)
-	{
-		img_rays_n[i] = mlx_texture_to_image(mlx, tx_no);
-		if (!img_rays_n[i])
-			error();
-		if (mlx_image_to_window(mlx, img_rays_n[i], 0, 0) < 0)
-			error();
-		//-------
-		img_rays_s[i] = mlx_texture_to_image(mlx, tx_so);
-		if (!img_rays_s[i])
-			error();
-		if (mlx_image_to_window(mlx, img_rays_s[i], 0, 0) < 0)
-			error();
-		//---------
-		img_rays_w[i] = mlx_texture_to_image(mlx, tx_we);
-		if (!img_rays_w[i])
-			error();
-		if (mlx_image_to_window(mlx, img_rays_w[i], 0, 0) < 0)
-			error();
-		//----------
-		img_rays_e[i] = mlx_texture_to_image(mlx, tx_ea);
-		if (!img_rays_e[i])
-			error();
-		if (mlx_image_to_window(mlx, img_rays_e[i], 0, 0) < 0)
-			error();
-	}
-	/*////////////////////////*/
-
 	// Minimap
-	printmap(mlx);
+	//printmap(mlx);
 
 	// Put player into minimap
-	if (mlx_image_to_window(mlx, player, px, py) < 0)
-		error();
+	//if (mlx_image_to_window(mlx, player, px, py) < 0)
+	//	error();
 	// this is the "actual pointer" minimap
-	if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
-		error();
+	//if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
+	//	error();
 
 	// this is the "actual ray-pointer" minimap
-	for (int i = 0; i < RAYS; i++)
-		if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-			error();
+	//for (int i = 0; i < RAYS; i++)
+	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
+	//		error();
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 }
-
-/* Only a test for printing the texture in a cub */
-void testmess(void)
-{
-	if (!(mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true)))
-		error();
-
-	// The screen
-	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);
-	if (!screen)
-		error();
-	if (mlx_image_to_window(mlx, screen, 0, 0) < 0)
-		error();
-
-	//// ---- Set the NO-SO-WE-EA textures
-	tx_no = mlx_load_png(NO);
-	if (!tx_no)
-		error();
-	tx_so = mlx_load_png(SO);
-	if (!tx_so)
-		error();
-	tx_we = mlx_load_png(WE);
-	if (!tx_we)
-		error();
-	tx_ea = mlx_load_png(EA);
-	if (!tx_ea)
-		error();
-	////----------------------
-
-	for (int y = 25; y < OFFSET_CUB; y++)
-	{
-		for (int x = 0; x < OFFSET_CUB; x++)
-		{
-			color = get_rgba(tx_ea, x, y);
-			printRect(screen, x, y, 1, 1, color);
-		}
-	}
-
-	/*
-	   int tx_ymax = 255 / tx_ea->height;
-	   int tx_xmax = tx_ea->width / scale;
-	   int ty = 0, tx = 0;
-	   int texel_y = 0, texel_x = 0;
-	   ft_printf("\ntx_ymax = %i |\ttx_xmax = %i\n", tx_ymax, tx_xmax);
-	   for (int y = 0; y <= 255; y++)
-	   {
-	   if (ty < tx_ymax)
-	   ty++;
-	   else
-	   {
-	   ty = 0;
-	   texel_y++;
-	   }
-	   for (int x = 0; x <= scale; x++)
-	   {
-	   if (tx < tx_xmax)
-	   {
-	   color = get_rgba(tx_ea, texel_x, texel_y);
-	   tx++;
-	   }
-	   else
-	   {
-	   tx = 0;
-	   texel_x++;
-	   }
-	   printRect(screen, x, y, 1, 1, color);
-	   }
-	   }
-	   */
-
-	int tx_ymax = 255 / tx_ea->height;
-	int ty = 0;
-	int texel_y = 0;
-	ft_printf("%stx_ymax = %i\n", G, tx_ymax);
-	for (int y = 0; y < 255; y++)
-	{
-		if (ty < tx_ymax)
-			ty++;
-		else
-		{
-			ty = 0;
-			texel_y++;
-		}
-		color = get_rgba(tx_ea, 0, texel_y);
-		printRect(screen, 0, y, 1, 1, color);
-	}
-
-	int tx_xmax = tx_ea->width / scale;
-	int tx = 0;
-	int texel_x = 0;
-	ft_printf("%stx_xmax = %i\n", Y, tx_xmax);
-	for (int x = 0; x < scale; x++)
-	{
-		if (tx < tx_xmax)
-			tx++;
-		else
-		{
-			tx = 0;
-			texel_x++;
-		}
-		color = get_rgba(tx_ea, texel_x, 0);
-		printRect(screen, x, 0, 1, 1, color);
-	}
-
-	texel_x = 0, texel_y = 0;
-	for (int y = 0; y < 255; y++)
-	{
-		if (ty < tx_ymax)
-			ty++;
-		else
-		{
-			ty = 0;
-			texel_y++;
-		}
-		for (int x = 0; x < scale; x++)
-		{
-			if (tx < tx_xmax)
-				tx++;
-			else
-			{
-				tx = 0;
-				texel_x++;
-			}
-			color = get_rgba(tx_ea, texel_x, texel_y);
-			printRect(screen, x, y, 1, 1, color);
-		}
-	}
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-}
-/**/
 
 /* ############# */
 
