@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/03 14:45:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:00:45 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int32_t color, wallc;
 float scale = SCR_WIDTH / RAYS;
 float px, py, pdx, pdy, pa;
 /*
-	-> px	-> Player X Position
-	-> py	-> Player Y Position
-	-> pdx	-> Player Delta X *
-	-> pdy	-> Player Delta Y **
-	-> pa	-> Player Angle (Where is fancing (what are you looking at?))
+   -> px	-> Player X Position
+   -> py	-> Player Y Position
+   -> pdx	-> Player Delta X *
+   -> pdy	-> Player Delta Y **
+   -> pa	-> Player Angle (Where is fancing (what are you looking at?))
 
-	*	pdx
-	**	pdy
-*/
+ *	pdx
+ **	pdy
+ */
 
 static mlx_image_t	*screen;
 static mlx_image_t	*img_rays_n[CUBS_CNT], *img_rays_s[CUBS_CNT], *img_rays_w[CUBS_CNT], *img_rays_e[CUBS_CNT];
@@ -40,10 +40,10 @@ static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
 static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea, *current = NULL;
 
 /*
-*	mapX -> max lenght of map
-*	mapY -> max height of map
-*	mapS -> Size of map
-*/
+ *	mapX -> max lenght of map
+ *	mapY -> max height of map
+ *	mapS -> Size of map
+ */
 static int mapX = 8, mapY = 8, mapS = 64;
 int map[8][8] =
 {
@@ -59,11 +59,11 @@ int map[8][8] =
 
 
 /* Returns a uint32_t representing the color inserted in this function
-* R [0-255] - G [0-255] - B [0-255] - && ALPHA [0-255]
-*/
+ * R [0-255] - G [0-255] - B [0-255] - && ALPHA [0-255]
+ */
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 static void error(void)
@@ -84,10 +84,10 @@ void	printmap(mlx_t *mlx)
 		{
 			if (map[y][x] == 0)
 				if (mlx_image_to_window(mlx, tx_floor, x * tx_floor->width, y * tx_floor->height) < 0)
-        			error();
+					error();
 			if (map[y][x] == 1)
 				if (mlx_image_to_window(mlx, tx_wall, x * tx_wall->width, y * tx_wall->height) < 0)
-        			error();
+					error();
 			x++;
 		}
 		y++;
@@ -95,17 +95,17 @@ void	printmap(mlx_t *mlx)
 }
 
 /* Calculate distance
-*	between player and rays endpoint
-*		** Use Pythagorean theorem --
-*/
+ *	between player and rays endpoint
+ *		** Use Pythagorean theorem --
+ */
 float	dist(float ax, float ay, float bx, float by)
 {
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
 /* Prints a Rectangle
-* - mlx-img, -- X --, -- Y --, width, height, color
-*/
+ * - mlx-img, -- X --, -- Y --, width, height, color
+ */
 void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, int32_t r_color)
 {
 	for (int sy = 0; sy < r_height; sy++)
@@ -275,21 +275,11 @@ void	drawrays()
 			if (theta > -PI / 2 && theta < P2)	// East <=
 			{
 				wallc = ft_pixel((int32_t)20, (int32_t)199, (int32_t)20, (int32_t)255);
-
-				img_rays_w[r]->instances[0].enabled = 0;
-				img_rays_e[r]->instances[0].enabled = 1;
-				img_rays_n[r]->instances[0].enabled = 0;
-				img_rays_s[r]->instances[0].enabled = 0;
 				current = tx_ea;
 			}
 			else								// West =>
 			{
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)199, (int32_t)255);
-
-				img_rays_w[r]->instances[0].enabled = 1;
-				img_rays_e[r]->instances[0].enabled = 0;
-				img_rays_n[r]->instances[0].enabled = 0;
-				img_rays_s[r]->instances[0].enabled = 0;
 				current = tx_we;
 			}
 		}
@@ -310,21 +300,11 @@ void	drawrays()
 			if (theta > 0 && theta < PI)	// South
 			{
 				wallc = ft_pixel((int32_t)66, (int32_t)66, (int32_t)66, (int32_t)255);
-
-				img_rays_n[r]->instances[0].enabled = 0;
-				img_rays_s[r]->instances[0].enabled = 1;
-				img_rays_e[r]->instances[0].enabled = 0;
-				img_rays_w[r]->instances[0].enabled = 0;
 				current = tx_so;
 			}
 			else							// North
 			{
 				wallc = ft_pixel((int32_t)199, (int32_t)20, (int32_t)20, (int32_t)255);
-
-				img_rays_n[r]->instances[0].enabled = 1;
-				img_rays_s[r]->instances[0].enabled = 0;
-				img_rays_e[r]->instances[0].enabled = 0;
-				img_rays_w[r]->instances[0].enabled = 0;
 				current = tx_no;
 			}
 		}
@@ -350,7 +330,7 @@ void	drawrays()
 
 		// Print every line casted, no texture
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
-		//printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
+		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
 		//for (int y = 0; y < lineH; y++)
 		//	printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
@@ -366,7 +346,8 @@ void	drawrays()
 		int ty = 0, tx = 0;
 		int texel_y = 0, texel_x = 0;
 		//ft_printf("tx_ymax = %i |\ttx_xmax = %i\n", tx_ymax, tx_xmax);
-		for (int y = 0; y <= lineH; y++)
+
+		for (int y = 0; y <= (lineH + lineO); y++)
 		{
 			if (ty < tx_ymax)
 				ty++;
@@ -378,32 +359,30 @@ void	drawrays()
 			for (int x = 0; x <= scale; x++)
 			{
 				if (tx < tx_xmax)
-				{
-					color = get_rgba(current, texel_x, texel_y);
 					tx++;
-				}
 				else
 				{
 					tx = 0;
 					texel_x++;
 				}
-				printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, x, y + lineO, color);
+				color = get_rgba(current, texel_x, texel_y);
+				printRect(screen, (SCR_HEIGHT + r * scale) + x, ((SCR_HEIGHT / 2) - (lineH + lineO) / 2) + y, 1, 1, color);
 			}
 		}
 		//****************************************************
 
 		/*
-		ft_printf(CLEAN);
-		ft_printf("\n ~ \e[38;5;215m Some values: \n");
-		printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
-		printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra * 180 / PI);
-		printf("\n   Line printed info ---->\n");
-		printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
-		printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
-		ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
-		ft_printf("\t\t\t\t  V%s\n", D);
-		printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa * 180 / PI);
-		*/
+		   ft_printf(CLEAN);
+		   ft_printf("\n ~ \e[38;5;215m Some values: \n");
+		   printf("{Ray[%i]}-> DisT = %f |/\\-/\\| rx[%f] ry[%f]\n", r, disT, rx, ry);
+		   printf("lineH = %f\t // lineO = %f \t ra = %f\n", lineH, lineO, ra * 180 / PI);
+		   printf("\n   Line printed info ---->\n");
+		   printf(" X  = %f\t|", SCR_HEIGHT + r * scale);
+		   printf(" Y  = %f\n", (SCR_HEIGHT / 2) - (lineH + lineO) / 2);
+		   ft_printf(" Width = % i | Height = %i || Color = %p\n", scale, lineH + lineO, wallc);
+		   ft_printf("\t\t\t\t  V%s\n", D);
+		   printf("\nPlayer location: X[%f] Y[%f] View: %f\n", px, py, pa * 180 / PI);
+		   */
 
 		ra += DR;
 		if (ra < 0)
@@ -415,9 +394,9 @@ void	drawrays()
 /**/
 
 /*this function will be called for every frame
-* this is for detecting key_inputs
-* Player movement and pointer is calculed here
-*/
+ * this is for detecting key_inputs
+ * Player movement and pointer is calculed here
+ */
 void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
@@ -635,7 +614,7 @@ void	start(void)
 	mlx_terminate(mlx);
 }
 
-
+/* Only a test for printing the texture in a cub */
 void testmess(void)
 {
 	if (!(mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true)))
@@ -667,18 +646,48 @@ void testmess(void)
 	{
 		for (int x = 0; x < OFFSET_CUB; x++)
 		{
-			color = get_rgba(tx_so, x, y);
+			color = get_rgba(tx_ea, x, y);
 			printRect(screen, x, y, 1, 1, color);
-			ft_printf("Hello it's me X=%i|y%i\n", x, y);
 		}
 	}
 
+	/*
+	   int tx_ymax = 255 / tx_ea->height;
+	   int tx_xmax = tx_ea->width / scale;
+	   int ty = 0, tx = 0;
+	   int texel_y = 0, texel_x = 0;
+	   ft_printf("\ntx_ymax = %i |\ttx_xmax = %i\n", tx_ymax, tx_xmax);
+	   for (int y = 0; y <= 255; y++)
+	   {
+	   if (ty < tx_ymax)
+	   ty++;
+	   else
+	   {
+	   ty = 0;
+	   texel_y++;
+	   }
+	   for (int x = 0; x <= scale; x++)
+	   {
+	   if (tx < tx_xmax)
+	   {
+	   color = get_rgba(tx_ea, texel_x, texel_y);
+	   tx++;
+	   }
+	   else
+	   {
+	   tx = 0;
+	   texel_x++;
+	   }
+	   printRect(screen, x, y, 1, 1, color);
+	   }
+	   }
+	   */
+
 	int tx_ymax = 255 / tx_ea->height;
-	int tx_xmax = tx_ea->width / scale;
-	int ty = 0, tx = 0;
-	int texel_y = 0, texel_x = 0;
-	ft_printf("\ntx_ymax = %i |\ttx_xmax = %i\n", tx_ymax, tx_xmax);
-	for (int y = 0; y <= 255; y++)
+	int ty = 0;
+	int texel_y = 0;
+	ft_printf("%stx_ymax = %i\n", G, tx_ymax);
+	for (int y = 0; y < 255; y++)
 	{
 		if (ty < tx_ymax)
 			ty++;
@@ -687,18 +696,47 @@ void testmess(void)
 			ty = 0;
 			texel_y++;
 		}
-		for (int x = 0; x <= scale; x++)
+		color = get_rgba(tx_ea, 0, texel_y);
+		printRect(screen, 0, y, 1, 1, color);
+	}
+
+	int tx_xmax = tx_ea->width / scale;
+	int tx = 0;
+	int texel_x = 0;
+	ft_printf("%stx_xmax = %i\n", Y, tx_xmax);
+	for (int x = 0; x < scale; x++)
+	{
+		if (tx < tx_xmax)
+			tx++;
+		else
+		{
+			tx = 0;
+			texel_x++;
+		}
+		color = get_rgba(tx_ea, texel_x, 0);
+		printRect(screen, x, 0, 1, 1, color);
+	}
+
+	texel_x = 0, texel_y = 0;
+	for (int y = 0; y < 255; y++)
+	{
+		if (ty < tx_ymax)
+			ty++;
+		else
+		{
+			ty = 0;
+			texel_y++;
+		}
+		for (int x = 0; x < scale; x++)
 		{
 			if (tx < tx_xmax)
-			{
-				color = get_rgba(tx_ea, texel_x, texel_y);
 				tx++;
-			}
 			else
 			{
 				tx = 0;
 				texel_x++;
 			}
+			color = get_rgba(tx_ea, texel_x, texel_y);
 			printRect(screen, x, y, 1, 1, color);
 		}
 	}
@@ -722,12 +760,12 @@ int main(int argc, char **args)
 
 	/* ADD File && Map control condition */
 	/* +++++ */
-		/* Put this to run if map is correct -> */
-			start(/*t_map*/); // The idea will be passing the map into a struct
-		/* I will change (exit) to respective function,
-		*  so exit failure ocours if something went wrong,
-		*  instead of function returning "EXIT_FAILURE"
-		*/
+	/* Put this to run if map is correct -> */
+	start(/*t_map*/); // The idea will be passing the map into a struct
+	/* I will change (exit) to respective function,
+	 *  so exit failure ocours if something went wrong,
+	 *  instead of function returning "EXIT_FAILURE"
+	 */
 	/* +++++ */
 	/* -- When done, perform memory liberation */
 	return (0);
