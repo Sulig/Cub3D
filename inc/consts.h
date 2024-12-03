@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/04 17:55:32 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:00:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,31 @@
 # define CONSTS_H
 
 /*		 ## SCREEN ##		*/
-# define WIDTH		666
-# define HEIGHT		666
+# define WIN_WIDTH	1580
+# define WIN_HEIGHT	1080
+
+# define SCR_WIDTH	900
+# define SCR_HEIGHT	900
+
+# define START_PX	515
+# define START_PY	256
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/
 # define PI			3.14159265358
-# define P2			1.570796327
-# define P3			4.71238898
-# define DR			0.0174533
+# define P2			1.570796327		// PI / 2
+# define P3			4.71238898		// 3 * PI / 2
+# define DR			0.0174533		// Value of a Dregree
+# define RAYS		60
 # define DIST		66
-# define VEL		7
-/*		## MATH CONSTS END ##	*/
+# define VEL		5
+
+# define COLL_SIZE	20
+
+# define CUBS_CNT	60
+# define CUB_SCALE	64
+# define OFFSET_CUB	0
+/*	## MATH CONSTS END ##	*/
 
 /*		 ## IMAGES ##		*/
 # define BAT		"./assets/sprites/Bat/Bat.png"
@@ -47,15 +60,17 @@
 /* --- */
 
 /* TEST TEXTURES */
+# define TX_FLOOOR	"./assets/textures/so-long/Floor_v4.png"
 # define TX_FLOOR	"./assets/textures/so-long/floor-diamond.png"
 # define TX_COLOR	"./assets/textures/so-long/justacolor.png"
+# define TX_TILE	"./assets/textures/so-long/Tile.png"
 /* --- */
 
 /* THE TEXTURES TO USE */
-# define NO TX_ERR
+# define NO TX_FLOOOR
 # define EA TX_ERG
 # define WE TX_ERROR
-# define SO TX_ERA
+# define SO TX_TILE
 /* ----------------- */
 /*		## TEXTURES END ##	*/
 

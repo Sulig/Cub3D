@@ -1,25 +1,13 @@
-* Issue v0:
- When repo cloned, the MLX42 MUST BE Compiled in the new address
- Using the same instruction as Codam provided:
-
-	git clone https://github.com/codam-coding-college/MLX42.git
-	cd MLX42
-	cmake -B build # build here refers to the outputfolder.
-	cmake --build build -j4 # or do make -C build -j4
-
-	** RESOLVED!! Marked as DONE!
-
-***
+# Cub3D TODO LIST
 
 * Convert Raycast into 3D:
+	** Needs improvement but is also done!
+***
 
- + The Idea:
-	- 1* Create an image with the withd & heith of screen
-		*(Use the "mlx_new_image"
-			&& mlx_image_to_window(mlx, screen, 0, 0))
-	- 2* Use the "mlx_put_pixel(screen, x, y, color)"
-		** This function will be inside of a while
-		** I supose this will work with "lineH" && "lineO"
+* Apply Textures:
+	** Testing diferent textures
+	- For now is working
+
 ***
 
 > [!WARNING]\

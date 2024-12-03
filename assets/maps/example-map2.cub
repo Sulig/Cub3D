@@ -1,15 +1,15 @@
-NO ./assets/textures/xpm/error-tile.xpm
-SO ./assets/textures/xpm/error-tile.xpm
-WE ./assets/textures/xpm/error-tile.xpm
-EA ./assets/textures/xpm/error-tile.xpm
+NO ./assets/textures/error-tile-colors/error-tile.png
+SO ./assets/textures/error-tile-colors/error-tile.png
+WE ./assets/textures/error-tile-colors/error-tile.png
+EA ./assets/textures/error-tile-colors/error-tile.png
 
 F 220,100,0
 C 225,30,0
 
-1111111111111111111111111
-1000000000110000000000001
-1011000001110000000000001
-1001000000000000000000001
+		1111111111111111111111111
+		1000000000110000000000001
+		1011000001110000000000001
+		1001000000000000000000001
 111111111011000001110000000000001
 100000000011000001110111111111111
 11110111111111011100000010001
