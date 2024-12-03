@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/03 18:00:45 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:20:52 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,40 +332,33 @@ void	drawrays()
 		// ----- mlx-img, --------- X ----------, ---------------- Y -------------------, width, -- height --, color
 		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, lineH + lineO, color);
 
-		//for (int y = 0; y < lineH; y++)
-		//	printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, scale, y + lineO, wallc);
-
 		// Draw Wall pixel per pixel with a solid color
-		//for (int y = 0; y < lineH; y++)
-		//	for (int x = 0; x < scale; x++)
-		//		printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, x, y + lineO, wallc);
+		// The 2 versions are working correctly
+		/* // V1
+		for (int y = 0; y < lineH; y++)
+			for (int x = 0; x < scale; x++)
+				printRect(screen, SCR_HEIGHT + r * scale, (SCR_HEIGHT / 2) - (lineH + lineO) / 2, x, y + lineO, wallc);
+		*/
+		/* // V2
+		for (int y = 0; y <= (lineH + lineO); y++)
+			for (int x = 0; x <= scale; x++)
+				printRect(screen, (SCR_HEIGHT + r * scale) + x, ((SCR_HEIGHT / 2) - (lineH + lineO) / 2) + y, 1, 1, wallc);
+		*/
 
 		//------------------> Texture it -------------------->
-		int tx_ymax = (lineH + lineO) / current->height;
-		int tx_xmax = current->width / scale;
-		int ty = 0, tx = 0;
-		int texel_y = 0, texel_x = 0;
-		//ft_printf("tx_ymax = %i |\ttx_xmax = %i\n", tx_ymax, tx_xmax);
+		float wallX;
+		if (distV < distH)
+			wallX = fmod(vy, CUB_SCALE) / CUB_SCALE;  // Vertical
+		else
+			wallX = fmod(hx, CUB_SCALE) / CUB_SCALE;  // Horizontal
 
-		for (int y = 0; y <= (lineH + lineO); y++)
+		for (int y = 0; y < (lineH + lineO); y++)
 		{
-			if (ty < tx_ymax)
-				ty++;
-			else
+			int texY = (y * current->height) / (lineH + lineO);
+			for (int x = 0; x < scale; x++)
 			{
-				ty = 0;
-				texel_y++;
-			}
-			for (int x = 0; x <= scale; x++)
-			{
-				if (tx < tx_xmax)
-					tx++;
-				else
-				{
-					tx = 0;
-					texel_x++;
-				}
-				color = get_rgba(current, texel_x, texel_y);
+				int texX = wallX * current->width;
+				color = get_rgba(current, texX, texY);
 				printRect(screen, (SCR_HEIGHT + r * scale) + x, ((SCR_HEIGHT / 2) - (lineH + lineO) / 2) + y, 1, 1, color);
 			}
 		}
