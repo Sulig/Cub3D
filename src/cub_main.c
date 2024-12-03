@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/03 18:20:52 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:56:06 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,11 +346,14 @@ void	drawrays()
 		*/
 
 		//------------------> Texture it -------------------->
+
 		float wallX;
 		if (distV < distH)
 			wallX = fmod(vy, CUB_SCALE) / CUB_SCALE;  // Vertical
 		else
 			wallX = fmod(hx, CUB_SCALE) / CUB_SCALE;  // Horizontal
+
+		int drawStart = ((SCR_HEIGHT / 2) - (lineH + lineO) / 2); // Centrar y aplicar offset
 
 		for (int y = 0; y < (lineH + lineO); y++)
 		{
@@ -359,9 +362,10 @@ void	drawrays()
 			{
 				int texX = wallX * current->width;
 				color = get_rgba(current, texX, texY);
-				printRect(screen, (SCR_HEIGHT + r * scale) + x, ((SCR_HEIGHT / 2) - (lineH + lineO) / 2) + y, 1, 1, color);
+				printRect(screen, (SCR_HEIGHT + r * scale) + x, drawStart + y, 1, 1, color);
 			}
 		}
+
 		//****************************************************
 
 		/*

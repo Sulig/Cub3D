@@ -4,10 +4,9 @@
 	** Needs improvement but is also done!
 ***
 
-* Apply textures ~ IN PROGRESS ~
- - I got the wall direction!
- - I GOT THE GET_RGBA!!!
-	* Issue p1 -> The textures are not been represented correctly
+* Apply Textures:
+	** Testing diferent textures
+	- For now is working
 
 ***
 
