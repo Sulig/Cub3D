@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/11/20 13:12:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:24:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,12 @@
 # include <math.h>
 
 # include "consts.h"
+# include "cub_structs.h"
 
+/**/
+void	print_err_arfor(int error);
 
-
-    /* STRUCTS */
-/* NECESSARY FOR MLX */
-
-/* PLAYER */
-typedef struct s_lcn
-{
-	size_t		x;
-	size_t		y;
-}				t_lcn;
-typedef struct s_player
-{
-    mlx_texture_t   *ply_tx;
-    mlx_image_t     *player;
-	//t_map		*map;
-	t_lcn		act;
-}				t_player;
-
-typedef struct s_data
-{
-    mlx_t   *mlx; // MLX Struct
-    mlx_image_t *wimg; //Window Image
-    t_player    *ply; //Player
-}               t_data;
-    /* ------- */
+/* start.c */
+void	start(t_map *map);
 
 #endif

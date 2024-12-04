@@ -1,16 +1,56 @@
 # Cub3D TODO LIST
+This things needs revision for merge work
 
-* Convert Raycast into 3D:
-	** Needs improvement but is also done!
+## GENERAL THINGS
+- [] Add the new files & directories to Makefile
+- [] Clean and redistribuite the code into files
+- [] Free all memory reserved
+- [] Norminette (Last thing)
+
+## FILE && MAP ERROR HANDLING
+
+- [] Error file.type atached to program display a custom error
+- [] Error in permisions display a error
+
+- [] In reading on file, if something is missing (like one character, one texture, etc..) display a custom error
+	* []! The textures might be in these format: .png (".png" is the only image format suported in MLX42)
+
+- [] The same as previous, but in case of duplicate data (** Only with player spawning and double character)
+	* If is the same path texture, but into differrent wall asisignment, don't count that as error (i will set the same texture into thoose wall orientation)
+	-- like:
+
+	WE ./assets/textures/xpm/error-tile.xpm
+	EA ./assets/textures/xpm/error-tile.xpm
+
+- [] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
+
+	 1
+	1N1		// This would be an OK map
+	 1
+
+	[] ** Spaces/Tabs inside map it should be considerated as '0'
+
+		-----------------------
 ***
 
-* Apply Textures:
-	** Testing diferent textures
-	- For now is working
+## MAP PARSER DATA -
+** Details: SEE THE "cub_structs.h" file
 
-***
+- [] Save the max_width && height of map
+	** Get the max line strlenght for the width!
 
-> [!WARNING]\
-> Add exit(EXIT_FAILURE) on a error (*Probably ya doned... but still revision)
+- [] Map parsed into a 2D array
+- [] The path to textures shall be saved into a *char
 
+- [?] The 3 values of color of Ceiling && Floor, should be saved into an int array
+	* Save a tmp with the line obtained with gnl
+	* Use ft_split(tmp, ',') to save into a tmp array
+	* Use atoi and save the values into a int array
+	(for example: *c_flr, c_sky[0] = 225, c_sky[1] = 224, c_sky[2] = 255)
+
+- [] The start position of player && orientation
+	* Orientation can be literally N, S, W or E
+	* [] Cast orientation into the ply.pa (Player Angle)
+
+		-------------------------
 ***
