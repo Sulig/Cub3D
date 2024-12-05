@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:51:53 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/04 20:23:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:39:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,13 @@ void	print_err_arfor(int error)
 		ft_printf_fd(2, "Error\nInvalid Extension\n");
 	ft_printf_fd(2, "%s Please introduce ONE file .cub", Y);
 	ft_printf_fd(2, " like this example:\n./cub3D map.cub %s\n", D);
+	exit(EXIT_FAILURE);
+}
+
+void	print_errmalloc(void)
+{
+	ft_printf_fd(STDERR_FILENO, RR);
+	ft_printf_fd(2, "Insuficient Memory or Malloc Error");
+	ft_printf_fd(2, D);
 	exit(EXIT_FAILURE);
 }

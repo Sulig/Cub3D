@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:02:07 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/04 20:26:18 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:26:03 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ void	ft_readfile(int fd, t_map *m, int j)
 		line = get_next_line(fd);
 	}
 	free(line);
-}
-
-void	ft_check_file(t_data *data, char *map, t_map *m)
-{
-	int	fd;
-	int	i;
-
-	if (ft_strcmp(ft_strrchr(map, '.'), ".cub") != 0)
-		ft_error(data, "File is not .cub");
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
-		ft_error(data, "Error opening file");
-	i = ft_count_lines(fd);
-	close(fd);
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
-		ft_error(data, "Error opening file");
-	ft_readfile(data, fd, m, i);
-	close(fd);
 }
 
 char	*ft_get_fc(t_data *data, char *dir, char *str, char c)

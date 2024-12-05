@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/04 20:26:13 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:43:46 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ int main(int argc, char **args)
 		print_err_arfor(0);
 	if (check_format(args[1]))
 	{
-		//
-		start(map);
+		map = new_map(map, args[1]);
+		if (map)
+		{
+			ft_print_stat(map);
+			//checker && parser
+			//start(map);
+			free_map(map);
+		}
 	}
 	exit(0);
 }
