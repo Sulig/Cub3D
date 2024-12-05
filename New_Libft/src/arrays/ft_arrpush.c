@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:55:30 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 14:42:17 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:59:00 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 /*
  * Push `add` into a new array (on last position)
  * And free the original array.
- * *Return org if !add || !size of org
+ * - Return org if !add
+ * - If !size, push add into a new array (size 1)
  */
 void	**arrpush(void **org, void *add)
 {
