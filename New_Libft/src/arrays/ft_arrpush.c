@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:55:30 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/14 13:47:07 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:42:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	**arrpush(void **org, void *add)
 	i = -1;
 	new_arr = NULL;
 	size = arrsize(org);
-	if (!size || !add)
+	if (!add)
 		return (org);
 	new_arr = ft_calloc(sizeof(char *), size + 2);
 	if (!new_arr)
