@@ -5,104 +5,102 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 13:02:07 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/05 14:26:03 by sadoming         ###   ########.fr       */
+/*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
+/*   Updated: 2024/12/05 20:15:38 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/game.h"
+#include "../inc/game.h"
 
-void	ft_readfile(int fd, t_map *m, int j)
+static t_map	*fill_pathtotextures(t_map *map)
 {
-	char	*line;
-	int		i;
+	size_t	pos_pop;
 
-	i = 0;
-	m->file = ft_calloc(sizeof(char *), (j + 1));
-	line = get_next_line(fd);
-	while (line > 0)
-	{
-		line = ft_expand_tabs(line);
-		line = ft_strjoinfree(line, NULL);
-		m->file[i] = ft_strdup(line);
-		free(line);
-		if (!m->file[i])
-			ft_error(data, "Malloc error");
-		i++;
-		line = get_next_line(fd);
-	}
-	free(line);
+	map->tx_no = map->file[ft_search_str(map->file, "NO")];
+	map->tx_so = map->file[ft_search_str(map->file, "SO")];
+	map->tx_we = map->file[ft_search_str(map->file, "WE")];
+	map->tx_ea = map->file[ft_search_str(map->file, "EA")];
+	map->tx_no = ft_strdup(map->tx_no);
+	map->tx_so = ft_strdup(map->tx_so);
+	map->tx_we = ft_strdup(map->tx_we);
+	map->tx_ea = ft_strdup(map->tx_ea);
+	pos_pop = ft_search_str(map->file, "NO");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	pos_pop = ft_search_str(map->file, "SO");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	pos_pop = ft_search_str(map->file, "WE");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	pos_pop = ft_search_str(map->file, "EA");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	return (map);
 }
 
-char	*ft_get_fc(t_data *data, char *dir, char *str, char c)
+static t_map	*fill_flcl_color(t_map *map)
 {
-	int		i;
-	int		j;
-	char	*ret;
+	char	*cl_tmp;
+	char	*fl_tmp;
+	char	**tmp;
 
-	if (dir != NULL)
-		ft_error(data, "Duplicate info");
-	i = 0;
-	j = 0;
-	if (str[i] && str[i] == c)
-		i++;
-	else
-		return (NULL);
-	while (str[i] && str[i] == ' ')
-		i++;
-	ret = malloc(ft_strlen(str) - i + 1);
-	while (str[i])
-	{
-		ret[j] = str[i];
-		i++;
-		j++;
-	}
-	ret[j] = '\0';
-	return (ret);
+	cl_tmp = map->file[ft_search_str(map->file, "C")];
+	fl_tmp = map->file[ft_search_str(map->file, "F")];
+	cl_tmp = ft_strtrim(cl_tmp, "C \t");
+	fl_tmp = ft_strtrim(fl_tmp, "F \t");
+	tmp = ft_split(cl_tmp, ',');
+	if (!tmp || arrsize_str(tmp) != 3)
+		print_err_dupmiss(2);
+	map->c_rgb[0] = ft_atoi(tmp[0]);
+	map->c_rgb[1] = ft_atoi(tmp[1]);
+	map->c_rgb[2] = ft_atoi(tmp[2]);
+	tmp = ft_free_arrstr(tmp);
+	tmp = ft_split(fl_tmp, ',');
+	if (!tmp || arrsize_str(tmp) != 3)
+		print_err_dupmiss(2);
+	map->f_rgb[0] = ft_atoi(tmp[0]);
+	map->f_rgb[1] = ft_atoi(tmp[1]);
+	map->f_rgb[2] = ft_atoi(tmp[2]);
+	tmp = ft_free_arrstr(tmp);
+	cl_tmp = ft_free_str(cl_tmp);
+	fl_tmp = ft_free_str(fl_tmp);
+	return (map);
 }
 
-int	ft_find_info(t_data *data, t_map *m, int j, int line_len)
+t_map	*clean_file(t_map *map)
 {
-	while (m->file[j])
+	size_t	pos_pop;
+	size_t	size;
+	size_t	len;
+	char	*tmp;
+
+	size = -1;
+	pos_pop = ft_search_str(map->file, "F");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	pos_pop = ft_search_str(map->file, "C");
+	map->file = (char **)arrpop((void **)map->file, pos_pop);
+	map->map = (char **)arrmap((void **)map->file);
+	if (!map->map)
+		print_errmalloc();
+	while (map->map[++size])
 	{
-		m->file[j] = ft_clean_line(m->file[j]);
-		line_len = ft_strlen(m->file[j]);
-		if (!ft_strncmp(m->file[j], "NO", 2))
-			m->no = ft_save_info(data, m->no, m->file[j], line_len);
-		else if (!ft_strncmp(m->file[j], "SO", 2))
-			m->so = ft_save_info(data, m->so, m->file[j], line_len);
-		else if (!ft_strncmp(m->file[j], "WE", 2))
-			m->we = ft_save_info(data, m->we, m->file[j], line_len);
-		else if (!ft_strncmp(m->file[j], "EA", 2))
-			m->ea = ft_save_info(data, m->ea, m->file[j], line_len);
-		else if (!ft_strncmp(m->file[j], "F", 1))
-			m->f = ft_get_fc(data, m->f, m->file[j], 'F');
-		else if (!ft_strncmp(m->file[j], "C", 1))
-			m->c = ft_get_fc(data, m->c, m->file[j], 'C');
-		else if (!ft_is_valid_line(m->file[j]))
-			return (0);
-		j++;
-		if (m->no && m->so && m->we && m->ea && m->f && m->c)
-			break ;
+		len = 0;
+		while (map->map[size][len])
+		{
+			if (map->map[size][len] == '\t')
+			{
+				map->map[size][len] = ' ';
+				tmp = ft_strinter(map->map[size], "   ", len);
+				map->map[size] = ft_strremplace(map->map[size], tmp);
+				tmp = ft_free_str(tmp);
+			}
+			len++;
+		}
 	}
-	if (!m->no || !m->so || !m->we || !m->ea || !m->f || !m->c)
-		return (0);
-	return (j);
+	return (map);
 }
 
-void	ft_parse_info(t_data *data, t_map *m)
+t_map	*parse_fileinfo_intovars(t_map *map)
 {
-	int i;
-
-	i = ft_find_info(data, m, 0, 0);
-	if (i == 0)
-		ft_error(data, "Couldn't find info/Wrong info");
-	if (!ft_check_rgb(data, m))
-		ft_error(data, "RGB format error");
-	if (!ft_check_texts(data, m))
-		ft_error(data, "Permission denied for textures");
-	while (m->file[i] && m->file[i][0] && m->file[i][0] == '\n')
-		i++;
-	ft_find_map_limits(data, m, i);
-	ft_get_map(data, m, &i, 0);
+	map = fill_pathtotextures(map);
+	map	= fill_flcl_color(map);
+	map = clean_file(map);
+	return (map);
 }

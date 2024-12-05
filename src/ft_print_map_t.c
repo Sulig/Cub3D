@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:59:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 14:47:49 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:06:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_print_map_t(char **map)
 			ft_print_case(map[size][len]);
 			len++;
 		}
-		//ft_printf("\n");
+		ft_printf("\n");
 		size++;
 	}
 	ft_printf("\n");
@@ -48,10 +48,13 @@ void	ft_print_map_t(char **map)
 
 void	ft_print_stat(t_map *map)
 {
-	//ft_printf("Width of map: %u\n", map->width);
-	//ft_printf("Height of map: %u\n\n", map->height);
 	ft_printf("\nPreview of file:\n\n");
 	ft_print_map_t(map->file);
-	//ft_printf("\nPreview of sol:\n\n");
-	//ft_print_map_t(map->sol);
+	ft_printf("\033[0;37mPath to textures asigned:\n");
+	ft_printf("NO - %s\nSO - %s\n", map->tx_no, map->tx_so);
+	ft_printf("WE - %s\nEA - %s\n", map->tx_we, map->tx_ea);
+	//ft_printf("Width of map: %u\n", map->width);
+	//ft_printf("Height of map: %u\n\n", map->height);
+	ft_printf("\nPreview of map:\n\n");
+	ft_print_map_t(map->map);
 }

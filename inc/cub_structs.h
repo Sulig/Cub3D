@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/04 19:48:42 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:02:50 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_map
 	char	*tx_so;
 	char	*tx_we;
 	char	*tx_ea;
+	char	pla;
 	size_t	height;
 	size_t	width;
 	size_t	size;

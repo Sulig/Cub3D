@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:40:39 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 14:30:29 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 19:52:19 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,27 @@ void	*free_map(t_map *map)
 
 t_map	*new_map(t_map *map, char *file)
 {
+	char	*rfile;
 	char	*tmp;
 	int		fd;
 
+	rfile = NULL;
 	map = ft_calloc(sizeof(t_map), 1);
 	if (!map)
-	{
 		print_errmalloc();
-		return (NULL);
-	}
 	fd = open(file, O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
-		ft_printf("\033[1;31mError\nSomething went wrong!\n");
+		ft_printf_fd(2, "%sError\nSomething went wrong!\n", R);
 	while (tmp)
 	{
-		map->file = (char **)arrpush((void **)map->file, (void *)tmp);
+		rfile = ft_strjoin_free_fst(rfile, tmp);
 		tmp = ft_free_str(tmp);
 		tmp = get_next_line(fd);
 	}
+	map->file = ft_split(rfile, '\n');
+	rfile = ft_free_str(rfile);
+	if (!map->file)
+		print_errmalloc();
 	return (map);
 }

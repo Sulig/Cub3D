@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:51:53 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 13:39:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:00:48 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,28 @@ void	print_errmalloc(void)
 	ft_printf_fd(STDERR_FILENO, RR);
 	ft_printf_fd(2, "Insuficient Memory or Malloc Error");
 	ft_printf_fd(2, D);
+	exit(EXIT_FAILURE);
+}
+
+void	print_mlxerror(void)
+{
+	ft_printf_fd(2, mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
+}
+
+/* Print custom error on invalid info
+*	- For missing info		-> 0
+*	- For duplicate info	-> 1
+*	- For invalid info		-> 2
+*/
+void	print_err_dupmiss(int error)
+{
+	ft_printf_fd(2, R);
+	if (!error)
+		ft_printf_fd(2, "Error\nSome info is missing!\n");
+	else if (error == 1)
+		ft_printf_fd(2, "Error\nSome info is duplicated!\n");
+	else if (error == 2)
+		ft_printf_fd(2, "Error\nInvalid info encountered!\n");
 	exit(EXIT_FAILURE);
 }

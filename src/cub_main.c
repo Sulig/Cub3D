@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 14:43:46 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 19:26:14 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int main(int argc, char **args)
 		map = new_map(map, args[1]);
 		if (map)
 		{
+			check_dupmiss(map);
+			parse_fileinfo_intovars(map);
 			ft_print_stat(map);
 			//checker && parser
 			//start(map);

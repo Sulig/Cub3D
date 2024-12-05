@@ -6,14 +6,14 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/05 14:36:45 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/05 18:16:12 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)claustrophobic-map.cub
+MAP_NAME	:=	$(MAP_DIR)example-map2.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
@@ -63,7 +63,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 # Sorces:
 
 SRC_SRC	:=	cub_main.c man_mapstruct.c check_file.c print_errors.c\
-			ft_print_map_t.c #parse_info.c
+			ft_print_map_t.c parse_info.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 

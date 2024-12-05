@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/04 20:26:15 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:26:34 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ t_mlxd	init_mlxdata(t_map *map)
 
 	mlxd.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, TITLE, true);
 	if (!mlxd.mlx)
-		error();
+		print_mlxerror();
 	mlxd.wimg = mlx_new_image(mlxd.mlx, SCR_WIDTH, SCR_HEIGHT);
 	if (!mlxd.wimg)
-		error();
+		print_mlxerror();
 	mlxd.tx_no = mlx_load_png(map->tx_no);
 	if (!mlxd.tx_no)
-		error();
+		print_mlxerror();
 	mlxd.tx_so = mlx_load_png(map->tx_so);
 	if (!mlxd.tx_so)
-		error();
+		print_mlxerror();
 	mlxd.tx_we = mlx_load_png(map->tx_we);
 	if (!mlxd.tx_we)
-		error();
+		print_mlxerror();
 	mlxd.tx_ea = mlx_load_png(map->tx_ea);
 	if (!mlxd.tx_ea)
-		error();
+		print_mlxerror();
 	mlxd.icon = mlx_load_png(ICON);
 	if (!mlxd.icon)
-		error();
+		print_mlxerror();
 	return (mlxd);
 }
 

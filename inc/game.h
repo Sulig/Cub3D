@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 14:28:22 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:11:58 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@
 # include "consts.h"
 # include "cub_structs.h"
 
-/**/
+/* PRINTING ERRORS */
 void	print_err_arfor(int error);
 void	print_errmalloc(void);
+void	print_mlxerror(void);
+void	print_err_dupmiss(int error);
 
 /* CHECKERS */
 int	check_format(char *file);
+int check_dupmiss(t_map *map);
+
+/* PARSER */
+t_map	*parse_fileinfo_intovars(t_map *map);
 
 /* Utils for see what i'm saving */
 void	ft_print_map_t(char **map);
