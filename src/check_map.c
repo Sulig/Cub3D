@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_main.c                                         :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 20:51:23 by andmart2         ###   ########.fr       */
+/*   Created: 2024/12/10 20:51:50 by andmart2          #+#    #+#             */
+/*   Updated: 2024/12/10 20:53:21 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
-int main(int argc, char **args)
+void	ft_check_valid_map(t_map *m)
 {
-	t_map	*map;
-
-	map = NULL;
-	if (argc != 2 || !args)
-		print_err_arfor(0);
-	if (check_format(args[1]))
-	{
-		map = new_map(map, args[1]);
-		if (map)
-		{
-			check_dupmiss(map);
-			parse_fileinfo_intovars(map);
-			ft_check_valid_map(map);
-			ft_print_stat(map); //Print info in term //only for debug
-			start(map);
-			free_map(map);
-		}
-	}
-	exit(0);
+	/*todo*/
 }
