@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:49:15 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:38:14 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,21 +479,6 @@ void	start(void)
 
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
-
-	// Minimap
-	//printmap(mlx);
-
-	// Put player into minimap
-	//if (mlx_image_to_window(mlx, player, px, py) < 0)
-	//	error();
-	// this is the "actual pointer" minimap
-	//if (mlx_image_to_window(mlx, ptr, px + DIST, py + DIST) < 0)
-	//	error();
-
-	// this is the "actual ray-pointer" minimap
-	//for (int i = 0; i < RAYS; i++)
-	//	if (mlx_image_to_window(mlx, tx_ray, px + DIST, py + DIST) < 0)
-	//		error();
 
 	/********************************/
 	mlx_loop_hook(mlx, ft_hook, mlx);

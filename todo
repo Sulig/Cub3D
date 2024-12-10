@@ -61,3 +61,12 @@ This things needs revision for merge work
 ## RAYCASTING
 
 - [] MAKE IT WORK!
+
+- [X] Set Player orientation
+	~ pa = 0	=> Look right
+	~ pa = PI	=> look left
+	~ pa = P2	=> look down
+	~ pa = P3	=> look up
+
+- [X] Set player position
+- [] Save the fnc utilities in a file

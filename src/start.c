@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:53:05 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:47:24 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,30 @@ static t_mlxd	init_mlxdata(t_map *map)
 	mlxd.icon = mlx_load_png(ICON);
 	if (!mlxd.icon)
 		print_mlxerror();
+	mlx_set_icon(mlxd.mlx, mlxd.icon);
 	return (mlxd);
 }
 
 /*
 * Track on keydown => Do action
 */
+
+t_game	start_player(t_game game)
+{
+	if (game.map->pla == 'N')
+		game.ply.pa = P3;
+	else if (game.map->pla == 'S')
+		game.ply.pa = P2;
+	else if (game.map->pla == 'W')
+		game.ply.pa = PI;
+	else if (game.map->pla == 'E')
+		game.ply.pa = 0;
+	game.ply.px = game.ply.plx_inmap * CUB_SCALE;
+	game.ply.py = game.ply.ply_inmap * CUB_SCALE;
+	game.ply.pdx = cos(game.ply.pa) * 5;
+	game.ply.pdy = sin(game.ply.pa) * 5;
+	return (game);
+}
 
 void	start(t_map *map)
 {
@@ -60,8 +78,8 @@ void	start(t_map *map)
 	game.ply = map->ply;
 	ft_bzero(&game.raycast, sizeof(t_raycast));
 	ft_bzero(&game.cubtex, sizeof(t_cubtex));
-	//Asignar orientacion del jugador
-	//mlx_loop_hook(game.mlxd, ft_hook, &game);
-	mlx_loop(game.mlxd);
-	mlx_terminate(game.mlxd);
+	game = start_player(game);
+	//mlx_loop_hook(mlxd.mlx, ft_hook, &game);
+	mlx_loop(mlxd.mlx);
+	mlx_terminate(mlxd.mlx);
 }
