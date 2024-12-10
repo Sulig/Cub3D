@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 19:26:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:48:34 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int main(int argc, char **args)
 		{
 			check_dupmiss(map);
 			parse_fileinfo_intovars(map);
-			ft_print_stat(map);
-			//checker && parser
-			//start(map);
+			//call map checker here
+			ft_print_stat(map); //Print info in term //only for debug
+			start(map);
 			free_map(map);
 		}
 	}

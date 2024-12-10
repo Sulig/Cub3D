@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 20:15:38 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:27:39 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,11 @@ static t_map	*fill_flcl_color(t_map *map)
 	return (map);
 }
 
-t_map	*clean_file(t_map *map)
+static t_map	*clean_file(t_map *map)
 {
 	size_t	pos_pop;
-	size_t	size;
-	size_t	len;
 	char	*tmp;
 
-	size = -1;
 	pos_pop = ft_search_str(map->file, "F");
 	map->file = (char **)arrpop((void **)map->file, pos_pop);
 	pos_pop = ft_search_str(map->file, "C");
@@ -79,6 +76,63 @@ t_map	*clean_file(t_map *map)
 	map->map = (char **)arrmap((void **)map->file);
 	if (!map->map)
 		print_errmalloc();
+	tmp = ft_strtrim(map->tx_no, "NO \t");
+	map->tx_no = ft_strremplace(map->tx_no, tmp);
+	tmp = ft_free_str(tmp);
+	tmp = ft_strtrim(map->tx_so, "SO \t");
+	map->tx_so = ft_strremplace(map->tx_so, tmp);
+	tmp = ft_free_str(tmp);
+	tmp = ft_strtrim(map->tx_we, "WE \t");
+	map->tx_we = ft_strremplace(map->tx_we, tmp);
+	tmp = ft_free_str(tmp);
+	tmp = ft_strtrim(map->tx_ea, "EA \t");
+	map->tx_ea = ft_strremplace(map->tx_ea, tmp);
+	tmp = ft_free_str(tmp);
+	return (map);
+}
+
+static t_map	*set_mapsize(t_map *map)
+{
+	size_t	len;
+
+	map->height = -1;
+	map->width = 0;
+	map->has_player = 0;
+	while (map->map[++map->height])
+	{
+		len = -1;
+		while (map->map[map->height][++len])
+		{
+			if (ft_strchr("NSWE", map->map[map->height][len]))
+			{
+				map->has_player++;
+				map->ply.plx_inmap = len;
+				map->ply.ply_inmap = map->height;
+			}
+		}
+		if (len > map->width)
+			map->width = len;
+	}
+	map->size = map->height * map->width;
+	if (!map->has_player || map->has_player > 1)
+		print_other_err("The file don't have/or have multiple player/s!");
+	return (map);
+}
+
+/*
+* Parse the recollected info `map->file`
+* into the corresponent vars
+*/
+t_map	*parse_fileinfo_intovars(t_map *map)
+{
+	size_t	size;
+	size_t	len;
+	char	*tmp;
+
+	size = -1;
+	map = fill_pathtotextures(map);
+	map = fill_flcl_color(map);
+	map = clean_file(map);
 	while (map->map[++size])
 	{
 		len = 0;
@@ -94,13 +148,5 @@ t_map	*clean_file(t_map *map)
 			len++;
 		}
 	}
-	return (map);
-}
-
-t_map	*parse_fileinfo_intovars(t_map *map)
-{
-	map = fill_pathtotextures(map);
-	map	= fill_flcl_color(map);
-	map = clean_file(map);
-	return (map);
+	return (set_mapsize(map));
 }

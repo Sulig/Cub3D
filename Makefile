@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/05 18:16:12 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/10 17:49:04 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 # Sorces:
 
 SRC_SRC	:=	cub_main.c man_mapstruct.c check_file.c print_errors.c\
-			ft_print_map_t.c parse_info.c
+			ft_print_map_t.c parse_info.c start.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 

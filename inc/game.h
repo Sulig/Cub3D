@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 18:11:58 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:23:46 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	print_err_arfor(int error);
 void	print_errmalloc(void);
 void	print_mlxerror(void);
 void	print_err_dupmiss(int error);
+void	print_other_err(char *err);
 
 /* CHECKERS */
 int	check_format(char *file);

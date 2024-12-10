@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 18:31:50 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:42:11 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,9 @@ int check_dupmiss(t_map *map)
 	}
 	return (1);
 }
+
+/*
+* I think here has space for
+	- Check the numbers introduced in floor and ceiling
+	- Checking if the map is surrounded by walls
+*/

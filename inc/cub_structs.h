@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 20:02:50 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:51:09 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@ typedef struct s_rect
 	int32_t	fill;
 }			t_rect;
 
-/* MAP & FILE DATA */
-typedef struct s_map
-{
-	char	**file;
-	char	**map;
-	char	*tx_no;
-	char	*tx_so;
-	char	*tx_we;
-	char	*tx_ea;
-	char	pla;
-	size_t	height;
-	size_t	width;
-	size_t	size;
-	int		f_rgb[3];
-	int		c_rgb[3];
-}			t_map;
-
 /* PLAYER DATA */
 /*
 	- px	-> Player X Position
@@ -81,6 +64,25 @@ typedef struct s_ply
 	int		ipy_add_yo;
 	int		ipy_sub_yo;
 }			t_ply;
+
+/* MAP & FILE DATA */
+typedef struct s_map
+{
+	char	**file;
+	char	**map;
+	char	*tx_no;
+	char	*tx_so;
+	char	*tx_we;
+	char	*tx_ea;
+	char	pla;
+	size_t	height;
+	size_t	width;
+	size_t	size;
+	int		f_rgb[3];
+	int		c_rgb[3];
+	int		has_player;
+	t_ply	ply;
+}			t_map;
 
 /* RAYCAST DATA */
 typedef struct s_raycast
@@ -118,7 +120,7 @@ typedef struct s_cubtex
 /* THE PRINCIPAL STRUCTURE */
 typedef struct s_game
 {
-	t_mlxd		mlxd;
+	t_mlxd		*mlxd;
 	t_map		*map;
 	t_ply		ply;
 	t_raycast	raycast;

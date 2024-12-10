@@ -6,13 +6,16 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 17:26:34 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:53:05 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
-t_mlxd	init_mlxdata(t_map *map)
+/*
+* Start MLX and all the textures
+*/
+static t_mlxd	init_mlxdata(t_map *map)
 {
 	t_mlxd	mlxd;
 
@@ -40,13 +43,9 @@ t_mlxd	init_mlxdata(t_map *map)
 	return (mlxd);
 }
 
-t_ply	start_player(t_map *map)
-{
-	t_ply	ply;
-
-	ft_bzero(&ply, sizeof(t_ply));
-	return (ply);
-}
+/*
+* Track on keydown => Do action
+*/
 
 void	start(t_map *map)
 {
@@ -55,8 +54,14 @@ void	start(t_map *map)
 
 	mlxd = init_mlxdata(map);
 	if (mlx_image_to_window(mlxd.mlx, mlxd.wimg, 0, 0) < 0)
-		error();
-	game.mlxd = mlxd;
+		print_mlxerror();
+	game.mlxd = &mlxd;
 	game.map = map;
-	game.ply = start_player(map);
+	game.ply = map->ply;
+	ft_bzero(&game.raycast, sizeof(t_raycast));
+	ft_bzero(&game.cubtex, sizeof(t_cubtex));
+	//Asignar orientacion del jugador
+	//mlx_loop_hook(game.mlxd, ft_hook, &game);
+	mlx_loop(game.mlxd);
+	mlx_terminate(game.mlxd);
 }

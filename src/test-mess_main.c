@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/04 19:33:41 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:49:15 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,65 +468,7 @@ void ft_hook(void* param)
 
 void	start(void)
 {
-	if (!(mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true)))
-		error();
 
-	/**/ /**/ /**/ /**/ /**/ /**/ /**/
-	mlx_texture_t* texture = mlx_load_png(DIAMOND);
-	if (!texture)
-		error();
-	// Convert texture to a displayable image
-	player = mlx_texture_to_image(mlx, texture);
-	if (!player)
-		error();
-	/**/
-	mlx_texture_t* textur = mlx_load_png(TX_ERGR);
-	if (!textur)
-		error();
-	// Convert texture to a displayable image
-	tx_floor = mlx_texture_to_image(mlx, textur);
-	if (!tx_floor)
-		error();
-	/**/
-	mlx_texture_t* textu = mlx_load_png(TX_ERROR);
-	if (!textu)
-		error();
-	// Convert texture to a displayable image
-	tx_wall = mlx_texture_to_image(mlx, textu);
-	if (!tx_wall)
-		error();
-	/**/
-	mlx_texture_t* tex = mlx_load_png(DIAMOND);
-	if (!tex)
-		error();
-	// Convert texture to a displayable image
-	ptr = mlx_texture_to_image(mlx, tex);
-	if (!ptr)
-		error();
-	/**/
-	mlx_texture_t* tx = mlx_load_png(TX_ERR);
-	if (!tx)
-		error();
-	// Convert texture to a displayable image
-	tx_ray = mlx_texture_to_image(mlx, tx);
-	if (!tx_ray)
-		error();
-
-	//// ---- Set the NO-SO-WE-EA textures
-	tx_no = mlx_load_png(NO);
-	if (!tx_no)
-		error();
-	tx_so = mlx_load_png(SO);
-	if (!tx_so)
-		error();
-	tx_we = mlx_load_png(WE);
-	if (!tx_we)
-		error();
-	tx_ea = mlx_load_png(EA);
-	if (!tx_ea)
-		error();
-	////----------------------
-	/**/ /**/ /**/ /**/ /**/ /**/ /**/
 
 	/*init*/
 	px = 5 * CUB_SCALE; // Player X initial position
@@ -534,13 +476,6 @@ void	start(void)
 	pdx = cos(pa) * 5;
 	pdy = sin(pa) * 5;
 	/*----*/
-
-	// The screen
-	screen = mlx_new_image(mlx, SCR_WIDTH, SCR_HEIGHT);
-	if (!screen)
-		error();
-	if (mlx_image_to_window(mlx, screen, START_PX, 0) < 0)
-		error();
 
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));

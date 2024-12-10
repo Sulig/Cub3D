@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:51:53 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 18:00:48 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:22:59 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,14 @@ void	print_err_dupmiss(int error)
 		ft_printf_fd(2, "Error\nSome info is duplicated!\n");
 	else if (error == 2)
 		ft_printf_fd(2, "Error\nInvalid info encountered!\n");
+	ft_printf_fd(2, D);
+	exit(EXIT_FAILURE);
+}
+
+void	print_other_err(char *err)
+{
+	ft_printf_fd(2, R);
+	ft_printf_fd(2, err);
+	ft_printf_fd(2, D);
 	exit(EXIT_FAILURE);
 }
