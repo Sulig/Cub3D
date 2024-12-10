@@ -6,70 +6,11 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 18:38:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:24:16 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
-
-/* TESTING ZONE! */
-#include <stdio.h>
-
-static	mlx_t*	mlx;
-
-int32_t color, wallc;
-/* Scale = SCR_WIDTH / RAYS */
-double scale = SCR_WIDTH / RAYS;
-double px, py, pdx, pdy, pa;
-/*
-   -> px	-> Player X Position
-   -> py	-> Player Y Position
-   -> pdx	-> Player Delta X *
-   -> pdy	-> Player Delta Y **
-   -> pa	-> Player Angle (Where is fancing (what are you looking at?))
-
- *	pdx
- **	pdy
- */
-
-static mlx_image_t	*screen;
-static mlx_image_t	*player, *tx_floor, *tx_wall, *ptr, *tx_ray;
-
-/* The actual texture to apply to the wall */
-static mlx_texture_t	*tx_no, *tx_so, *tx_we, *tx_ea, *current = NULL;
-
-/*
- *	mapX -> max lenght of map
- *	mapY -> max height of map
- *	mapS -> Size of map
- */
-static int mapX = 8, mapY = 8, mapS = 64;
-int map[8][8] =
-{
-	{1,1,1,1,1,1,1,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,0,0,0,0,0,1},
-	{1,0,0,0,1,0,0,1},
-	{1,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1}
-};
-
-
-/* Returns a uint32_t representing the color inserted in this function
- * R [0-255] - G [0-255] - B [0-255] - && ALPHA [0-255]
- */
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-static void error(void)
-{
-	ft_printf_fd(2, mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
 
 // Print Map
 void	printmap(mlx_t *mlx)
@@ -91,40 +32,6 @@ void	printmap(mlx_t *mlx)
 		}
 		y++;
 	}
-}
-
-/* Calculate distance
- *	between player and rays endpoint
- *		** Use Pythagorean theorem --
- */
-double	dist(double ax, double ay, double bx, double by)
-{
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
-}
-
-/* Prints a Rectangle
- * - mlx-img, -- X --, -- Y --, width, height, color
- */
-void	printRect(mlx_image_t *paint, int r_x, int r_y, int r_width, int r_height, int32_t r_color)
-{
-	for (int sy = 0; sy < r_height; sy++)
-		for (int sx = 0; sx < r_width; sx++)
-			mlx_put_pixel(paint, r_x + sx, r_y + sy, r_color);
-}
-
-/* Get the pixel color in texture */
-uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y)
-{
-	int	r;
-	int	g;
-	int	b;
-	int	a;
-
-	r = texture->pixels[y * texture->width * 4 + (x * 4)];
-	g = texture->pixels[y * texture->width * 4 + (x * 4) + 1];
-	b = texture->pixels[y * texture->width * 4 + (x * 4) + 2];
-	a = texture->pixels[y * texture->width * 4 + (x * 4) + 3];
-	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 /* Raycasting */
@@ -479,11 +386,6 @@ void	start(void)
 
 	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
 	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
-
-	/********************************/
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
 }
 
 /* ############# */

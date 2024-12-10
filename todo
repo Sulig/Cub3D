@@ -33,6 +33,8 @@ This things needs revision for merge work
 
 	[] ** Spaces/Tabs inside map it should be considerated as '0'
 
+- [] Check if the data is valid (if display an error use `print_other_err(char *err)`)
+
 		-----------------------
 ***
 
@@ -53,7 +55,7 @@ This things needs revision for merge work
 
 - [X] The start position of player && orientation
 	* Orientation can be literally N, S, W or E
-	* [] Cast orientation into the ply.pa (Player Angle)
+	* [X] Cast orientation into the ply.pa (Player Angle)
 
 		-------------------------
 ***
@@ -62,6 +64,10 @@ This things needs revision for merge work
 
 - [] MAKE IT WORK!
 
+- [X] Save the colors in t_game:
+	int32_t		c_flr;
+	int32_t		c_sky;
+
 - [X] Set Player orientation
 	~ pa = 0	=> Look right
 	~ pa = PI	=> look left
@@ -69,4 +75,6 @@ This things needs revision for merge work
 	~ pa = P3	=> look up
 
 - [X] Set player position
-- [] Save the fnc utilities in a file
+- [X] Save the fnc utilities in a file
+- [] Paint the BG with no segfault
+- [] Start Raycasting with try-me file
