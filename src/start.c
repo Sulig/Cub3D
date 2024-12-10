@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 18:47:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:42:23 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static t_mlxd	init_mlxdata(t_map *map)
 
 t_game	start_player(t_game game)
 {
+	int32_t	color[3];
+
 	if (game.map->pla == 'N')
 		game.ply.pa = P3;
 	else if (game.map->pla == 'S')
@@ -62,6 +64,14 @@ t_game	start_player(t_game game)
 	game.ply.py = game.ply.ply_inmap * CUB_SCALE;
 	game.ply.pdx = cos(game.ply.pa) * 5;
 	game.ply.pdy = sin(game.ply.pa) * 5;
+	color[0] = (int32_t)game.map->c_rgb[0];
+	color[1] = (int32_t)game.map->c_rgb[1];
+	color[2] = (int32_t)game.map->c_rgb[2];
+	game.c_sky = ft_pixel(color[0], color[1], color[2], 255);
+	color[0] = (int32_t)game.map->c_rgb[0];
+	color[1] = (int32_t)game.map->c_rgb[1];
+	color[2] = (int32_t)game.map->c_rgb[2];
+	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
 	return (game);
 }
 
@@ -79,6 +89,7 @@ void	start(t_map *map)
 	ft_bzero(&game.raycast, sizeof(t_raycast));
 	ft_bzero(&game.cubtex, sizeof(t_cubtex));
 	game = start_player(game);
+	paint_bg(game);
 	//mlx_loop_hook(mlxd.mlx, ft_hook, &game);
 	mlx_loop(mlxd.mlx);
 	mlx_terminate(mlxd.mlx);

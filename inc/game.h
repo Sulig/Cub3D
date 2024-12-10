@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:23:46 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:23:06 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,35 @@
 # include "cub_structs.h"
 
 /* PRINTING ERRORS */
-void	print_err_arfor(int error);
-void	print_errmalloc(void);
-void	print_mlxerror(void);
-void	print_err_dupmiss(int error);
-void	print_other_err(char *err);
+void		print_err_arfor(int error);
+void		print_errmalloc(void);
+void		print_mlxerror(void);
+void		print_err_dupmiss(int error);
+void		print_other_err(char *err);
 
 /* CHECKERS */
-int	check_format(char *file);
-int check_dupmiss(t_map *map);
+int			check_format(char *file);
+int			check_dupmiss(t_map *map);
 
 /* PARSER */
-t_map	*parse_fileinfo_intovars(t_map *map);
+t_map		*parse_fileinfo_intovars(t_map *map);
 
 /* Utils for see what i'm saving */
-void	ft_print_map_t(char **map);
-void	ft_print_stat(t_map *map);
+void		ft_print_map_t(char **map);
+void		ft_print_stat(t_map *map);
 
 /* Manage Memory of map */
-void	*free_map(t_map *map);
-t_map	*new_map(t_map *map, char *file);
+void		*free_map(t_map *map);
+t_map		*new_map(t_map *map, char *file);
 
 /* start.c */
-void	start(t_map *map);
+void		start(t_map *map);
+
+/* UTILITIES */
+double		dist(double ax, double ay, double bx, double by);
+int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y);
+void		printrect(mlx_image_t *paint, size_t x, size_t y, t_rect rect);
+void		paint_bg(t_game game);
 
 #endif

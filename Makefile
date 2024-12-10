@@ -6,14 +6,14 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/10 18:37:47 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/10 19:55:35 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)tryme-map.cub
+MAP_NAME	:=	$(MAP_DIR)other-map.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
@@ -63,7 +63,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 # Sorces:
 
 SRC_SRC	:=	cub_main.c man_mapstruct.c check_file.c print_errors.c\
-			ft_print_map_t.c parse_info.c start.c
+			ft_print_map_t.c parse_info.c start.c utilities.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
