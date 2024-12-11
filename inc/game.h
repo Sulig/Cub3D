@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 19:23:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:41:50 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void		print_other_err(char *err);
 /* CHECKERS */
 int			check_format(char *file);
 int			check_dupmiss(t_map *map);
+
+/*CHECK_MAP.C*/
+
+int         ft_is_valid_neighbor(char c);
+int         ft_check_map_spaces(t_map *m, int i, int j);
+int         ft_check_map_chars(t_map *m, int i, int j, int *player);
+void        ft_check_valid_map(t_map *m, int player);
 
 /* PARSER */
 t_map		*parse_fileinfo_intovars(t_map *map);
