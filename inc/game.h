@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 19:23:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:52:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void		ft_print_stat(t_map *map);
 void		*free_map(t_map *map);
 t_map		*new_map(t_map *map, char *file);
 
-/* start.c */
+/* GAME */
 void		start(t_map *map);
+t_game		*check_hrzlines(t_game *gm);
+t_game		*check_vrtlines(t_game *gm);
+void		raycasting(t_game *game);
 
 /* UTILITIES */
 double		dist(double ax, double ay, double bx, double by);

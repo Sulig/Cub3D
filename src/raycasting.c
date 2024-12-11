@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_main.c                                         :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:59 by sadoming         ###   ########.fr       */
+/*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
+/*   Updated: 2024/12/11 19:40:24 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
-int	main(int argc, char **args)
+void	raycasting(t_game *game)
 {
-	t_map	*map;
+	int	r;
 
-	map = NULL;
-	if (argc != 2 || !args)
-		print_err_arfor(0);
-	if (check_format(args[1]))
+	r = 0;
+	game->ray.ra = game->ply.pa - DR * 30;
+	if (game->ray.ra < 0)
+		game->ray.ra += 2 * PI;
+	if (game->ray.ra > 2 * PI)
+		game->ray.ra -= 2 * PI;
+	while (r < RAYS)
 	{
-		map = new_map(map, args[1]);
-		if (map)
-		{
-			check_dupmiss(map);
-			parse_fileinfo_intovars(map);
-			//call map checker here
-			ft_print_stat(map); //Print info in term //only for debug
-			start(map);
-			free_map(map);
-		}
+		game = check_hrzlines(game);
+		game = check_vrtlines(game);
+		//*
+		game->ray.ra += DR;
+		if (game->ray.ra < 0)
+			game->ray.ra += 2 * PI;
+		if (game->ray.ra > 2 * PI)
+			game->ray.ra -= 2 * PI;
+		r++;
 	}
-	exit(0);
 }

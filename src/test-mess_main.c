@@ -6,33 +6,11 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:56:10 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 19:24:16 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:01:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
-
-// Print Map
-void	printmap(mlx_t *mlx)
-{
-	int y = 0, x = 0;
-
-	while (y < mapY)
-	{
-		x = 0;
-		while (x < mapX)
-		{
-			if (map[y][x] == 0)
-				if (mlx_image_to_window(mlx, tx_floor, x * tx_floor->width, y * tx_floor->height) < 0)
-					error();
-			if (map[y][x] == 1)
-				if (mlx_image_to_window(mlx, tx_wall, x * tx_wall->width, y * tx_wall->height) < 0)
-					error();
-			x++;
-		}
-		y++;
-	}
-}
 
 /* Raycasting */
 void	drawrays()
@@ -46,10 +24,6 @@ void	drawrays()
 		ra += 2 * PI;
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
-
-	// Clear the screen (Do the "sky" and "floor")
-	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
-	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)50, (int32_t)50, (int32_t)66, (int32_t)255));
 
 	// --------------------- RAYCAST ---------------------------->
 	for (r = 0; r < RAYS; r++)
@@ -304,8 +278,7 @@ void ft_hook(void* param)
 	int ipx = px / mapS, ipx_add_xo = (px+xo) / mapS, ipx_sub_xo = (px - xo) / mapS;
 	int ipy = py / mapS, ipy_add_yo = (py+yo) / mapS, ipy_sub_yo = (py - yo) / mapS;
 	//***********************//
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
 		if (map[ipy_sub_yo][ipx_sub_xo] == 0)
@@ -336,79 +309,6 @@ void ft_hook(void* param)
 		if (map[ipy_sub_yo][ipx] == 0)
 			py -= pdy;
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-	{
-		/* Move angle vision "<-" */
-		pa -= 0.1f;
-		if (pa < 0)
-			pa += 2 * PI;
-		pdx = cos(pa) * VEL;
-		pdy = sin(pa) * VEL;
-	}
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-	{
-		/* Move angle vision "->" */
-		pa += 0.1f;
-		if (pa > 2 * PI)
-			pa -= 2 * PI;
-		pdx = cos(pa) * VEL;
-		pdy = sin(pa) * VEL;
-	}
-	//*//
-	//player->instances[0].x = px;
-	//player->instances[0].y = py;
-	/* Radial Movement for pointer */
-	//ptr->instances[0].x = player->instances[0].x + cos(pa) * DIST;
-	//ptr->instances[0].y = player->instances[0].y + sin(pa) * DIST;
-
-	/* Cast ray */
-	drawrays(NULL);
-
-	/**/
-	//ft_printf(CLEAN);
-	//printf("\nPlayer location:\t X[%f] Y[%f]\n", px, py);
-	//printf("Player REAL location:\t X[%i] Y[%i]\n", ipx, ipy);
-	//ft_printf("\nPointer location: X[%u] Y[%u]\n", ptr->instances[0].x, ptr->instances[0].y);
-	//printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", pdx, pdy, pa);
-	/**/
-}
-
-void	start(void)
-{
-
-
-	/*init*/
-	px = 5 * CUB_SCALE; // Player X initial position
-	py = 3 * CUB_SCALE; // Player Y initial position
-	pdx = cos(pa) * 5;
-	pdy = sin(pa) * 5;
-	/*----*/
-
-	printRect(screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, ft_pixel((int32_t)22, (int32_t)120, (int32_t)255, (int32_t)255));
-	printRect(screen, 0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, ft_pixel((int32_t)0, (int32_t)0, (int32_t)200, (int32_t)255));
 }
 
 /* ############# */
-
-int main(int argc, char **args)
-{
-	if (argc != 2 || !args)
-	{
-		ft_printf_fd(2, "%s Error\nIncorrect number of arguments\n", R);
-		ft_printf_fd(2, "%s Please introduce ONE file .cub", Y);
-		ft_printf_fd(2, " like this example:\n./cub3D map.cub %s \n", D);
-		exit(1);
-	}
-
-	/* ADD File && Map control condition */
-	/* +++++ */
-	/* Put this to run if map is correct -> */
-	start(/*t_map*/); // The idea will be passing the map into a struct
-	/* I will change (exit) to respective function,
-	 *  so exit failure ocours if something went wrong,
-	 *  instead of function returning "EXIT_FAILURE"
-	 */
-	/* +++++ */
-	/* -- When done, perform memory liberation */
-	return (0);
-}

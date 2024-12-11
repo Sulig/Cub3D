@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:42:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:43:48 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_format(char *file)
 }
 
 /* Checks if map->file have dupplicated info or missing info */
-int check_dupmiss(t_map *map)
+int	check_dupmiss(t_map *map)
 {
 	size_t	checker[6];
 	size_t	cnt;
