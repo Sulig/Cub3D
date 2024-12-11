@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:42:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:59:33 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_format(char *file)
 }
 
 /* Checks if map->file have dupplicated info or missing info */
-int check_dupmiss(t_map *map)
+int	check_dupmiss(t_map *map)
 {
 	size_t	checker[6];
 	size_t	cnt;
@@ -52,5 +52,26 @@ int check_dupmiss(t_map *map)
 /*
 * I think here has space for
 	- Check the numbers introduced in floor and ceiling
-	- Checking if the map is surrounded by walls
+	- Checking if the map is surrounded by walls (in check_map.c)
 */
+
+int	check_colors(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (map->c_rgb[i] < 0 || map->c_rgb[i] > 255)
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (i < 3)
+	{
+		if (map->f_rgb[i] < 0 || map->f_rgb[i] > 255)
+			return (0);
+		i++;
+	}
+	return (1);
+}

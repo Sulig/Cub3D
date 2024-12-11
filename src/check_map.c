@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:51:50 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/11 16:39:29 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:55:46 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_check_map_spaces(t_map *m, int i, int j)
 }
 
 /*checks that all the chars are valid and there is justo player position */
-int	ft_check_map_chars(t_map *m, int i, int j, int *player)
+int	ft_check_map_chars(t_map *m, int i, int j)
 {
 	char	c;
 
@@ -40,19 +40,12 @@ int	ft_check_map_chars(t_map *m, int i, int j, int *player)
 	if (c != ' ' && c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'W'
 		&& c != 'E')
 		return (0);
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-	{
-		if (*player == 1)
-			return (0);
-		*player = 1;
-		/* ft_init_player_pos(m->p, j, i, c); // init player position */
-	}
 	return (1);
 }
 
 /*verifies if the map is valid by checking the spaces,
 	the chars and if there is one player */
-void	ft_check_valid_map(t_map *m, int player)
+void	ft_check_valid_map(t_map *m)
 {
 	int	i;
 	int	j;
@@ -66,14 +59,14 @@ void	ft_check_valid_map(t_map *m, int player)
 			if (m->map[i][j] == ' ')
 			{
 				if (!ft_check_map_spaces(m, i, j))
-					print_other_err("Invalid map");
+					print_other_err("Invalid map, not closed properly");
 			}
-			if (!ft_check_map_chars(m, i, j, &player))
-				print_other_err("Invalid map");
+			if (!ft_check_map_chars(m, i, j))
+				print_other_err("Invalid map, wrong characters");
 			j++;
 		}
 		i++;
 	}
-	if (player == 0)
-		print_other_err("No player detected");
+	if (!check_colors(map))
+		print_other_err("Invalid ceiling or floor colors");
 }

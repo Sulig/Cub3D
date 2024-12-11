@@ -6,13 +6,13 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 16:40:03 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:59:55 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
-int main(int argc, char **args)
+int	main(int argc, char **args)
 {
 	t_map	*map;
 
@@ -26,8 +26,8 @@ int main(int argc, char **args)
 		{
 			check_dupmiss(map);
 			parse_fileinfo_intovars(map);
-			ft_check_valid_map(map, 0);
-			ft_print_stat(map); //Print info in term //only for debug
+			ft_check_valid_map(map);
+			ft_print_stat(map); // Print info in term //only for debug
 			start(map);
 			free_map(map);
 		}
