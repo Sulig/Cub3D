@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 19:29:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:58:13 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ static t_mlxd	*init_mlxdata(t_map *map, t_mlxd *mlxd)
 
 /*
 * Track on keydown => Do action
+* Need cleaning
 */
-void	hook_rotation(void *param)
+void	hook_keyboard(void *param)
 {
 	t_game	*game;
 
@@ -68,14 +69,6 @@ void	hook_rotation(void *param)
 		game->ply.pdx = cos(game->ply.pa) * VEL;
 		game->ply.pdy = sin(game->ply.pa) * VEL;
 	}
-	raycasting(game);
-}
-
-void	hook_movement(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
 	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_A))
 	{
 		game->ply.px += -1 * VEL * cos(game->ply.pa + P2);
@@ -126,6 +119,7 @@ static t_game	start_player(t_game game)
 	color[1] = (int32_t)game.map->f_rgb[1];
 	color[2] = (int32_t)game.map->f_rgb[2];
 	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
+	game.ray.scale = SCR_WIDTH / RAYS;
 	return (game);
 }
 
@@ -144,11 +138,11 @@ void	start(t_map *map)
 	game.map = map;
 	game.ply = map->ply;
 	ft_bzero(&game.ray, sizeof(t_ray));
-	ft_bzero(&game.cubtex, sizeof(t_cubtex));
+	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);
 	paint_bg(game);
-	mlx_loop_hook(mlxd->mlx, hook_rotation, &game);
-	mlx_loop_hook(mlxd->mlx, hook_movement, &game);
+	raycasting(&game);
+	//mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
 	mlx_loop(mlxd->mlx);
 	mlx_terminate(mlxd->mlx);
 	//free memory inside mlxd?

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 20:02:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:04:06 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 {
 	while (gm->ray.dof < gm->map->width)
 	{
+				ft_print_stat(gm->map);
 		gm->ray.mx = (int)(gm->ray.rx) >> 6;
 		gm->ray.my = (int)(gm->ray.ry) >> 6;
 		gm->ray.mp = gm->ray.my * gm->map->width + gm->ray.mx;
@@ -36,6 +37,7 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 			gm->ray.dof += 1;
 		}
 	}
+	return (gm);
 }
 
 /* Check Horizontal Lines */
@@ -92,6 +94,7 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 			gm->ray.dof += 1;
 		}
 	}
+	return (gm);
 }
 
 /* Check Vertical Lines */
@@ -121,5 +124,5 @@ t_game	*check_vrtlines(t_game *gm)
 		gm->ray.ry = gm->ply.py;
 		gm->ray.dof = gm->map->height;
 	}
-	return (hrz_lines_bucle(gm, gm->ray.vx, gm->ray.vy));
+	return (vrt_lines_bucle(gm, gm->ray.vx, gm->ray.vy));
 }
