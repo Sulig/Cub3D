@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/12 20:03:40 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:59:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ void	raycasting(t_game *game)
 		game->ray.ra -= 2 * PI;
 	while (r < RAYS)
 	{
+		ft_printf("\033[1;35mr = %i\n", r);
 		game = check_hrzlines(game);
-					//ft_print_stat(game->map);
 		game = check_vrtlines(game);
+		ft_printf_fd(1, "\033[0;31mALERT!\n");
 		game = check_wall_orientation(game);
 		game = calculate_line_h(game);
 		game = texture_and_print(game, r);

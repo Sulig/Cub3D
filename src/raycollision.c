@@ -6,29 +6,36 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/12 20:04:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:10:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
+static int	check_wall(t_game *gm)
+{
+	if (gm->ray.my >= gm->map->height || gm->ray.mx >= gm->map->width)
+		return (1);
+	if (gm->ray.mp > 0 && gm->ray.mp < gm->map->size)
+		if (gm->map->map[gm->ray.my][gm->ray.mx] == 1)
+			return (1);
+	return (0);
+}
+
 static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 {
 	while (gm->ray.dof < gm->map->width)
 	{
-				ft_print_stat(gm->map);
+		ft_printf("\033[0;34mhrz|| dof = %u |\twidth = %u\n", gm->ray.dof, gm->map->width);
 		gm->ray.mx = (int)(gm->ray.rx) >> 6;
 		gm->ray.my = (int)(gm->ray.ry) >> 6;
 		gm->ray.mp = gm->ray.my * gm->map->width + gm->ray.mx;
-		if (gm->ray.mp > 0 && gm->ray.mp < gm->map->size)
+		if (check_wall(gm))
 		{
-			if (gm->map->map[gm->ray.my][gm->ray.mx] == 1)
-			{
-				hx = gm->ray.rx;
-				hy = gm->ray.ry;
-				gm->ray.dis_h = dist(gm->ply.px, gm->ply.py, hx, hy);
-				gm->ray.dof = gm->map->width;
-			}
+			hx = gm->ray.rx;
+			hy = gm->ray.ry;
+			gm->ray.dis_h = dist(gm->ply.px, gm->ply.py, hx, hy);
+			gm->ray.dof = gm->map->width;
 		}
 		else
 		{
@@ -74,18 +81,16 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 {
 	while (gm->ray.dof < gm->map->height)
 	{
+		ft_printf("\033[1;34mvrt|| dof = %u |\twidth = %u\n", gm->ray.dof, gm->map->width);
 		gm->ray.mx = (int)(gm->ray.rx) >> 6;
 		gm->ray.my = (int)(gm->ray.ry) >> 6;
 		gm->ray.mp = gm->ray.my * gm->map->height + gm->ray.mx;
-		if (gm->ray.mp > 0 && gm->ray.mp < gm->map->size)
+		if (check_wall(gm))
 		{
-			if (gm->map->map[gm->ray.my][gm->ray.mx] == 1)
-			{
-				vx = gm->ray.rx;
-				vy = gm->ray.ry;
-				gm->ray.dis_v = dist(gm->ply.px, gm->ply.py, vx, vy);
-				gm->ray.dof = gm->map->height;
-			}
+			vx = gm->ray.rx;
+			vy = gm->ray.ry;
+			gm->ray.dis_v = dist(gm->ply.px, gm->ply.py, vx, vy);
+			gm->ray.dof = gm->map->height;
 		}
 		else
 		{
@@ -94,6 +99,7 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 			gm->ray.dof += 1;
 		}
 	}
+	ft_printf_fd(1, "\033[1;33mALERT!\n");
 	return (gm);
 }
 
