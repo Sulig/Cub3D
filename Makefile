@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
+#    By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/16 17:51:37 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/16 19:12:10 by andmart2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,9 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 
 SRC_SRC	:=	cub_main.c man_memory.c check_file.c print_errors.c\
 			ft_print_map_t.c parse_info.c start.c utilities.c\
-			raycasting.c raycollision.c paint_minimap_test.c
+			raycasting.c raycollision.c paint_minimap_test.c\
+			check_map.c key_hook.c
+			
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 

@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 18:50:53 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:04:30 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,62 +46,7 @@ static t_mlxd	*init_mlxdata(t_map *map, t_mlxd *mlxd)
  * Track on keydown => Do action
  * Need cleaning
  */
-void	handle_key_rotation(t_game *game, int key, float angle_delta)
-{
-	if (mlx_is_key_down(game->mlxd->mlx, key))
-	{
-		game->ply.pa += angle_delta;
-		if (game->ply.pa < 0)
-			game->ply.pa += 2 * PI;
-		else if (game->ply.pa > 2 * PI)
-			game->ply.pa -= 2 * PI;
-		game->ply.pdx = cos(game->ply.pa) * VEL;
-		game->ply.pdy = sin(game->ply.pa) * VEL;
-	}
-}
 
-void	handle_key_movement(t_game *game, int key, float angle_offset,
-		float direction)
-{
-	if (mlx_is_key_down(game->mlxd->mlx, key))
-	{
-		game->ply.px += direction * VEL * cos(game->ply.pa + angle_offset);
-		game->ply.py += direction * VEL * sin(game->ply.pa + angle_offset);
-	}
-}
-
-void	handle_key_translation(t_game *game, int key_forward, int key_backward)
-{
-	if (mlx_is_key_down(game->mlxd->mlx, key_forward))
-	{
-		game->ply.px += game->ply.pdx;
-		game->ply.py += game->ply.pdy;
-		game->ply.plx_inmap = game->ply.px / game->map->size;
-		game->ply.ply_inmap = game->ply.py / game->map->size;
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, key_backward))
-	{
-		game->ply.px -= game->ply.pdx;
-		game->ply.py -= game->ply.pdy;
-	}
-}
-
-void	hook_keyboard(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlxd->mlx);
-	handle_key_rotation(game, MLX_KEY_LEFT, -0.1f);
-	handle_key_rotation(game, MLX_KEY_RIGHT, 0.1f);
-	handle_key_movement(game, MLX_KEY_A, P2, -1);
-	handle_key_movement(game, MLX_KEY_D, P2, 1);
-	handle_key_translation(game, MLX_KEY_UP, MLX_KEY_DOWN);
-	handle_key_translation(game, MLX_KEY_W, MLX_KEY_S);
-	raycasting(game);
-	printmap(game);
-}
 
 /*
  * Start player vars and set bgcolor
@@ -153,7 +98,7 @@ void	start(t_map *map)
 	game = start_player(game);
 	paint_bg(game);
 	raycasting(&game);
-	// mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
+	mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
 	mlx_loop(mlxd->mlx);
 	mlx_terminate(mlxd->mlx);
 	// free memory inside mlxd?

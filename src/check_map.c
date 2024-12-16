@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:51:50 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/11 17:55:46 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:17:50 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	ft_is_valid_neighbor(char c)
 	return (c == ' ' || c == '1');
 }
 
-/*checks that around the ' ' the other chars are valid*/
-int	ft_check_map_spaces(t_map *m, int i, int j)
+int	ft_check_map_spaces(t_map *m, size_t i, size_t j)
 {
 	if (i > 0 && !ft_is_valid_neighbor(m->map[i - 1][j]))
 		return (0);
@@ -31,8 +30,7 @@ int	ft_check_map_spaces(t_map *m, int i, int j)
 	return (1);
 }
 
-/*checks that all the chars are valid and there is justo player position */
-int	ft_check_map_chars(t_map *m, int i, int j)
+int	ft_check_map_chars(t_map *m, size_t i, size_t j, int *player)
 {
 	char	c;
 
@@ -40,15 +38,20 @@ int	ft_check_map_chars(t_map *m, int i, int j)
 	if (c != ' ' && c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'W'
 		&& c != 'E')
 		return (0);
+
+	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+	{
+		if (*player)
+			return (0); // Multiple players found
+		*player = 1; // Mark the player as found
+	}
 	return (1);
 }
 
-/*verifies if the map is valid by checking the spaces,
-	the chars and if there is one player */
-void	ft_check_valid_map(t_map *m)
+void	ft_check_valid_map(t_map *m, int player)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (i < m->height)
@@ -61,12 +64,15 @@ void	ft_check_valid_map(t_map *m)
 				if (!ft_check_map_spaces(m, i, j))
 					print_other_err("Invalid map, not closed properly");
 			}
-			if (!ft_check_map_chars(m, i, j))
-				print_other_err("Invalid map, wrong characters");
+			if (!ft_check_map_chars(m, i, j, &player))
+				print_other_err("Invalid map, wrong characters or multiple players");
 			j++;
 		}
 		i++;
 	}
-	if (!check_colors(map))
+	if (!player)
+		print_other_err("No player position found on the map");
+	if (!check_colors(m))
 		print_other_err("Invalid ceiling or floor colors");
 }
+
