@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 17:41:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:56:13 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 {
 	while (gm->ray.dof_x < gm->map->width)
 	{
-		ft_printf("\033[0;34mhrz|| dof = %u |\twidth = %u\n", gm->ray.dof_x, gm->map->width);
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
 		gm->ray.my = (size_t)(gm->ray.ry) >> 6;
 		gm->ray.mp = gm->ray.my * gm->map->width + gm->ray.mx;
@@ -81,7 +80,6 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 {
 	while (gm->ray.dof_y < gm->map->height)
 	{
-		ft_printf("\033[1;34mvrt|| dof = %u |\twidth = %u\n", gm->ray.dof_y, gm->map->height);
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
 		gm->ray.my = (size_t)(gm->ray.ry) >> 6;
 		gm->ray.mp = gm->ray.my * gm->map->height + gm->ray.mx;

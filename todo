@@ -78,8 +78,8 @@ This things needs revision for merge work
 - [X] Set player position
 - [X] Save the fnc utilities in a file
 - [X] Paint the BG with no segfault
-- [] Implement the hooks
-	- [] Implement the rotation
+- [X] Implement the hooks
+	- [X] Implement the rotation
 	- [] Implemant the movement
 
 	* ~ [] Clean and separate the keyhook and action to ejecute
@@ -89,10 +89,9 @@ This things needs revision for merge work
 
 	- [] ~(BONUS)~ Implement the collisions
 
-- [] Start Raycasting with try-me file
+- [X] Start Raycasting with try-me file
 	- [X] Calculate where the ray has collided
 		/* Work to do: See where is the problem, is it not breaking the while?
 			*- See raycollision
 	- [X] Calculate what is the minnor distance
-	- [] Try to print it with color
 - [] Texture the rays
