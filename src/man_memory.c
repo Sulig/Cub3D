@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   man_mapstruct.c                                    :+:      :+:    :+:   */
+/*   man_memory.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:40:39 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 16:01:55 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:30:49 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
+
+/* Reserved space for free mlx things */
 
 void	*free_map(t_map *map)
 {
@@ -24,7 +26,7 @@ void	*free_map(t_map *map)
 	free(map);
 	return (NULL);
 }
-/*saves file in map->file*/
+
 t_map	*new_map(t_map *map, char *file)
 {
 	char	*rfile;

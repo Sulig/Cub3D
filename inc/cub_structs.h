@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 19:16:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:38:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,16 @@ typedef struct s_map
 }			t_map;
 
 /* RAYCAST DATA */
-typedef struct s_raycast
+typedef struct s_ray
 {
-	double	mx;
-	double	my;
-	double	mp;
-	double	dof;
+	size_t	dof;
+	size_t	mx;
+	size_t	my;
+	size_t	mp;
+	double	hx;
+	double	hy;
+	double	vx;
+	double	vy;
 	double	rx;
 	double	ry;
 	double	ra;
@@ -102,20 +106,24 @@ typedef struct s_raycast
 	double	line_h;
 	double	line_o;
 	double	line_t;
+	double	scale;
 	double	delta_x;
 	double	delta_y;
+	double	atan;
+	double	ntan;
 	double	theta;
-}			t_raycast;
+}			t_ray;
 
 /* DATA OF A CUB-RECT TEXTURED */
-typedef struct s_cubtex
+typedef struct s_tex
 {
 	double	wall_x;
-	int		draw_start;
-	int		tex_x;
-	int		tex_y;
-	int32_t	texcol;
-}		t_cubtex;
+	double	x;
+	double	y;
+	int		tx;
+	int		ty;
+	t_rect	rc;
+}		t_tex;
 
 /* THE PRINCIPAL STRUCTURE */
 typedef struct s_game
@@ -123,8 +131,8 @@ typedef struct s_game
 	t_mlxd		*mlxd;
 	t_map		*map;
 	t_ply		ply;
-	t_raycast	raycast;
-	t_cubtex	cubtex;
+	t_ray		ray;
+	t_tex		tex;
 	int32_t		c_flr;
 	int32_t		c_sky;
 }			t_game;

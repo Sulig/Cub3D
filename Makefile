@@ -6,20 +6,20 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/10 19:55:35 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/12 19:53:23 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)other-map.cub
+MAP_NAME	:=	$(MAP_DIR)tryme-map.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
 
 MAKF 		+=	--silent
-MLX_FLAGS	:=	-B
+MLX_FLAGS	:=	-B -DDEBUG=1
 
 CC			=	gcc
 CFLAGS		:=	-Wall -Werror -Wextra -g -c
@@ -62,8 +62,9 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 
 # Sorces:
 
-SRC_SRC	:=	cub_main.c man_mapstruct.c check_file.c print_errors.c\
-			ft_print_map_t.c parse_info.c start.c utilities.c
+SRC_SRC	:=	cub_main.c man_memory.c check_file.c print_errors.c\
+			ft_print_map_t.c parse_info.c start.c utilities.c\
+			raycasting.c raycollision.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
@@ -116,7 +117,7 @@ author:
 #-------------------------------------------------------------#
 norm:
 	@echo "\n$(Y)~ Norminette:\n"
-	@make -s norm -C $(LIBFT)
+	@make -s norm -C $(LIB_DIR)
 	@norminette -R CheckForbiddenSourceHeader $(INC_DIR) $(SRC_DIR)
 	@echo "\n~~~~~~~~~~~~~~~~~~~~~~\n"
 	@norminette $(INC_DIR) $(SRC_DIR)
@@ -126,7 +127,7 @@ norm:
 run: re
 	@echo "$(C)\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
-	@echo "\n~ **************************************** $(DEF)~\n"
+	@echo "\n~ **************************************** ~ $(DEF)\n"
 	@./$(NAME) $(RUN_MAP_NAME)
 #-------------------------------------------------------------#
 # ******************************************************************************* #
@@ -160,6 +161,13 @@ val: $(NAME)
 
 val_s: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(RUN_MAP_NAME)
+
+#-----------#
+debug: re
+	@echo "$(C)\n~ **************************************** ~\n"
+	@echo " ~ lldb will launch ´./$(NAME) $(RUN_MAP_NAME)´"
+	@echo "\n~ **************************************** ~ $(DEF)\n"
+	@lldb $(NAME) $(RUN_MAP_NAME)
 
 # ********************************************************************************* #
 # Clean region

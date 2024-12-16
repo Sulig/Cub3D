@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:32:54 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:59:55 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:31:32 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	main(int argc, char **args)
 		{
 			check_dupmiss(map);
 			parse_fileinfo_intovars(map);
-			ft_check_valid_map(map);
-			ft_print_stat(map); // Print info in term //only for debug
+			//call map checker here
 			start(map);
 			free_map(map);
 		}

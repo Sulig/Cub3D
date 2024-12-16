@@ -5,6 +5,7 @@ This things needs revision for merge work
 - [] Add the new files & directories to Makefile
 - [] Clean and redistribuite the code into files
 - [] Free all memory reserved
+	- [] See how to free the leaked info (mlx loading png, and other things)
 - [] Norminette (Last thing)
 
 ## FILE && MAP ERROR HANDLING
@@ -22,18 +23,18 @@ This things needs revision for merge work
 	WE ./assets/textures/xpm/error-tile.xpm
 	EA ./assets/textures/xpm/error-tile.xpm
 
-- [] Check the numbers introduced in floor and ceiling
+- [A] Check the numbers introduced in floor and ceiling
 	- This should be in 0-255 range
 
-- [] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
+- [A] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
 
 	 1
 	1N1		// This would be an OK map
 	 1
 
-	[] ** Spaces/Tabs inside map it should be considerated as '0'
+	[A] ** Spaces/Tabs inside map it should be considerated as '0'
 
-- [] Check if the data is valid (if display an error use `print_other_err(char *err)`)
+- [A] Check if the data is valid (if display an error use `print_other_err(char *err)`)
 
 		-----------------------
 ***
@@ -76,5 +77,22 @@ This things needs revision for merge work
 
 - [X] Set player position
 - [X] Save the fnc utilities in a file
-- [] Paint the BG with no segfault
+- [X] Paint the BG with no segfault
+- [] Implement the hooks
+	- [] Implement the rotation
+	- [] Implemant the movement
+
+	* ~ [] Clean and separate the keyhook and action to ejecute
+			to diferent files:
+			- [] `start` => hooks
+			- [] `action` => Ejecute Move and Rotate
+
+	- [] ~(BONUS)~ Implement the collisions
+
 - [] Start Raycasting with try-me file
+	- [X] Calculate where the ray has collided
+		/* Work to do: See where is the problem, is it not breaking the while?
+			*- See raycollision
+	- [X] Calculate what is the minnor distance
+	- [] Try to print it with color
+- [] Texture the rays
