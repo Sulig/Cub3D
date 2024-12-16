@@ -23,18 +23,18 @@ This things needs revision for merge work
 	WE ./assets/textures/xpm/error-tile.xpm
 	EA ./assets/textures/xpm/error-tile.xpm
 
-- [A] Check the numbers introduced in floor and ceiling
+- [X] Check the numbers introduced in floor and ceiling
 	- This should be in 0-255 range
 
-- [A] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
+- [X] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
 
 	 1
 	1N1		// This would be an OK map
 	 1
 
-	[A] ** Spaces/Tabs inside map it should be considerated as '0'
+	[X] ** Spaces/Tabs inside map it should be considerated as '0'
 
-- [A] Check if the data is valid (if display an error use `print_other_err(char *err)`)
+- [X] Check if the data is valid (if display an error use `print_other_err(char *err)`)
 
 		-----------------------
 ***
@@ -95,3 +95,5 @@ This things needs revision for merge work
 			*- See raycollision
 	- [X] Calculate what is the minnor distance
 - [] Texture the rays
+
+- [] Merge branches & work of partner
