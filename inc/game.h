@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:20:04 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:37:22 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		handle_key_rotation(t_game *game, int key, float angle_delta);
 
 /* GAME */
 void		start(t_map *map);
+void		free_mlxd(t_mlxd *mlxd);
 t_game		*check_hrzlines(t_game *gm);
 t_game		*check_vrtlines(t_game *gm);
 void		raycasting(t_game *game);

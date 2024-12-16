@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:04:30 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:43:29 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@ static t_mlxd	*init_mlxdata(t_map *map, t_mlxd *mlxd)
 }
 
 /*
- * Track on keydown => Do action
- * Need cleaning
- */
-
-
-/*
  * Start player vars and set bgcolor
  */
 static t_game	start_player(t_game game)
@@ -79,6 +73,36 @@ static t_game	start_player(t_game game)
 	return (game);
 }
 
+void	free_mlxd(t_mlxd *mlxd)
+{
+	if (!mlxd)
+		return;
+
+	// free textures
+	if (mlxd->tx_no)
+		mlx_delete_texture(mlxd->tx_no);
+	if (mlxd->tx_so)
+		mlx_delete_texture(mlxd->tx_so);
+	if (mlxd->tx_we)
+		mlx_delete_texture(mlxd->tx_we);
+	if (mlxd->tx_ea)
+		mlx_delete_texture(mlxd->tx_ea);
+	if (mlxd->icon)
+		mlx_delete_texture(mlxd->icon);
+
+	// free image
+	if (mlxd->wimg)
+		mlx_delete_image(mlxd->mlx, mlxd->wimg);
+
+	// free main mlx
+	if (mlxd->mlx)
+		mlx_terminate(mlxd->mlx);
+
+	// free structure
+	ft_free_ptr((void *)mlxd);
+}
+
+
 void	start(t_map *map)
 {
 	t_mlxd	*mlxd;
@@ -100,7 +124,5 @@ void	start(t_map *map)
 	raycasting(&game);
 	mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
 	mlx_loop(mlxd->mlx);
-	mlx_terminate(mlxd->mlx);
-	// free memory inside mlxd?
-	mlxd = ft_free_ptr((void *)mlxd);
+	free_mlxd(mlxd);
 }
