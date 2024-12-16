@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/12 19:38:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:26:26 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ typedef struct s_map
 /* RAYCAST DATA */
 typedef struct s_ray
 {
-	size_t	dof;
+	size_t	dof_x;
+	size_t	dof_y;
 	size_t	mx;
 	size_t	my;
 	size_t	mp;

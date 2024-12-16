@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 18:34:45 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:50:53 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	handle_key_translation(t_game *game, int key_forward, int key_backward)
 	{
 		game->ply.px += game->ply.pdx;
 		game->ply.py += game->ply.pdy;
+		game->ply.plx_inmap = game->ply.px / game->map->size;
+		game->ply.ply_inmap = game->ply.py / game->map->size;
 	}
 	if (mlx_is_key_down(game->mlxd->mlx, key_backward))
 	{
@@ -98,6 +100,7 @@ void	hook_keyboard(void *param)
 	handle_key_translation(game, MLX_KEY_UP, MLX_KEY_DOWN);
 	handle_key_translation(game, MLX_KEY_W, MLX_KEY_S);
 	raycasting(game);
+	printmap(game);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:38:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:50:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void	paint_bg(t_game game)
 	floor.fill = game.c_flr;
 	printrect(game.mlxd->wimg, 0, 0, sky);
 	printrect(game.mlxd->wimg, 0, SCR_HEIGHT / 2, floor);
+	printmap(&game);
 }
