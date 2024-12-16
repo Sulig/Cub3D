@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 17:49:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:24:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ double		dist(double ax, double ay, double bx, double by);
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y);
 void		printrect(mlx_image_t *paint, size_t x, size_t y, t_rect rect);
-void		paint_bg(t_game game);
+void		paint_bg(t_game *game);
 
 #endif

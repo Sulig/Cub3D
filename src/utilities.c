@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 17:50:40 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:24:57 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,18 @@ void	printrect(mlx_image_t *paint, size_t x, size_t y, t_rect rect)
 	}
 }
 
-void	paint_bg(t_game game)
+void	paint_bg(t_game *game)
 {
 	t_rect	sky;
 	t_rect	floor;
 
 	sky.height = SCR_HEIGHT;
 	sky.width = SCR_WIDTH;
-	sky.fill = game.c_sky;
+	sky.fill = game->c_sky;
 	floor.height = SCR_HEIGHT / 2;
 	floor.width = SCR_WIDTH;
-	floor.fill = game.c_flr;
-	printrect(game.mlxd->wimg, 0, 0, sky);
-	printrect(game.mlxd->wimg, 0, SCR_HEIGHT / 2, floor);
-	printmap(&game);
+	floor.fill = game->c_flr;
+	printrect(game->mlxd->wimg, 0, 0, sky);
+	printrect(game->mlxd->wimg, 0, SCR_HEIGHT / 2, floor);
+	//printmap(&game);
 }

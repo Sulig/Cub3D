@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 18:30:05 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:20:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static t_map	*set_mapsize(t_map *map)
 	size_t	len;
 
 	map->height = -1;
-	map->width = 0;
-	map->has_player = 0;
 	while (map->map[++map->height])
 	{
 		len = -1;
@@ -106,6 +104,7 @@ static t_map	*set_mapsize(t_map *map)
 			if (ft_strchr("NSWE", map->map[map->height][len]))
 			{
 				map->pla = map->map[map->height][len];
+				map->map[map->height][len] = '0';
 				map->has_player++;
 				map->ply.plx_inmap = len;
 				map->ply.ply_inmap = map->height;
