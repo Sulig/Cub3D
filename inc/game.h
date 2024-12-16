@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 19:52:21 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:49:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ int			check_dupmiss(t_map *map);
 /* PARSER */
 t_map		*parse_fileinfo_intovars(t_map *map);
 
-/* Utils for see what i'm saving */
+/* DEBUG */
 void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
+void		printmap(t_game *gm);
 
-/* Manage Memory of map */
+/* MEMORY */
 void		*free_map(t_map *map);
 t_map		*new_map(t_map *map, char *file);
 

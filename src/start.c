@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/12 19:58:13 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:59:46 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,32 @@ void	hook_keyboard(void *param)
 	{
 		game->ply.px += -1 * VEL * cos(game->ply.pa + P2);
 		game->ply.py += -1 * VEL * sin(game->ply.pa + P2);
+		game->ply.plx_inmap = game->ply.px / game->map->size;
+		game->ply.ply_inmap = game->ply.py / game->map->size;
 	}
 	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_D))
 	{
 		game->ply.px += 1 * VEL * cos(game->ply.pa + P2);
 		game->ply.py += 1 * VEL * sin(game->ply.pa + P2);
+		game->ply.plx_inmap = game->ply.px / game->map->size;
+		game->ply.ply_inmap = game->ply.py / game->map->size;
 	}
 	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_UP) || mlx_is_key_down(game->mlxd->mlx, MLX_KEY_W))
 	{
 		game->ply.px += game->ply.pdx;
 		game->ply.py += game->ply.pdy;
+		game->ply.plx_inmap = game->ply.px / game->map->size;
+		game->ply.ply_inmap = game->ply.py / game->map->size;
 	}
 	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_DOWN) || mlx_is_key_down(game->mlxd->mlx, MLX_KEY_S))
 	{
 		game->ply.px -= game->ply.pdx;
 		game->ply.py -= game->ply.pdy;
+		game->ply.plx_inmap = game->ply.px / game->map->size;
+		game->ply.ply_inmap = game->ply.py / game->map->size;
 	}
 	raycasting(game);
+	printmap(game);
 }
 
 /*
@@ -141,8 +150,7 @@ void	start(t_map *map)
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);
 	paint_bg(game);
-	raycasting(&game);
-	//mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
+	mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
 	mlx_loop(mlxd->mlx);
 	mlx_terminate(mlxd->mlx);
 	//free memory inside mlxd?
