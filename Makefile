@@ -6,22 +6,23 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/11/12 17:08:56 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/17 18:06:43 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
-MAP_NAME	:=	example-map1.cub
+MAP_DIR		:=	./assets/maps/
+MAP_NAME	:=	$(MAP_DIR)tryme-map.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
 
 MAKF 		+=	--silent
-MLX_FLAGS	:=	-B
+MLX_FLAGS	:=	-B -DDEBUG=1
 
 CC			=	gcc
-CFLAGS		:=	-Wall -Werror -Wextra -g -c
+CFLAGS		:=	-Wall -Werror -Wextra -g -c #-fsanitize=address
 LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
 
 DEP_FLAGS	:= -MMD -MP
@@ -48,18 +49,23 @@ OBJ_DIR		:=	./obj
 ASSETS_DIR	:=	./assets/
 MAPS		:=	$(ASSETS_DIR)maps/
 
+# libft Dirs
 LIB_DIR		:=	./New_Libft
 LIB_INC		:=	./New_Libft/inc
 LIB_LIB		:=	./New_Libft/libft.a
 
+# MLX42 Dirs:
 MLX_DIR		:=	./MLX42/
 MLX_INC		:=	./MLX42/include/MLX42
 MLX_LIB		:=	./MLX42/build/libmlx42.a
 MLX_BUILD_DIR	:=	./MLX42/build/
-# ------------------ #
+
 # Sorces:
 
-SRC_SRC	:=	cub_main.c
+SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
+			print_errors.c ft_print_map_t.c parse_info.c\
+			start.c key_hook.c raycasting.c raycollision.c\
+			paint_minimap_test.c utilities.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
@@ -107,12 +113,13 @@ help:
 #-------------------------------------------------------------#
 author:
 	@echo "$(P)~ **************************************** ~\n"
-	@echo "  ~\t     Made by Sadoming \t        ~"
-	@echo "\n~ **************************************** ~\n$(DEF)\n"
+	@echo " ~\t      Made by Sadoming \t         ~"
+	@echo " ~   With the collaboration of Andmart2  ~"
+	@echo "~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 norm:
 	@echo "\n$(Y)~ Norminette:\n"
-	@make -s norm -C $(LIBFT)
+	@make -s norm -C $(LIB_DIR)
 	@norminette -R CheckForbiddenSourceHeader $(INC_DIR) $(SRC_DIR)
 	@echo "\n~~~~~~~~~~~~~~~~~~~~~~\n"
 	@norminette $(INC_DIR) $(SRC_DIR)
@@ -122,7 +129,7 @@ norm:
 run: re
 	@echo "$(C)\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
-	@echo "\n~ **************************************** $(DEF)~\n"
+	@echo "\n~ **************************************** ~ $(DEF)\n"
 	@./$(NAME) $(RUN_MAP_NAME)
 #-------------------------------------------------------------#
 # ******************************************************************************* #
@@ -156,6 +163,13 @@ val: $(NAME)
 
 val_s: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(RUN_MAP_NAME)
+
+#-----------#
+debug: re
+	@echo "$(C)\n~ **************************************** ~\n"
+	@echo " ~ lldb will launch ´./$(NAME) $(RUN_MAP_NAME)´"
+	@echo "\n~ **************************************** ~ $(DEF)\n"
+	@lldb $(NAME) $(RUN_MAP_NAME)
 
 # ********************************************************************************* #
 # Clean region

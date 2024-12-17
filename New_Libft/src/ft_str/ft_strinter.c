@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:29:20 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/14 13:49:32 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:12:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*ft_strnext(const char *str, char *to_fill, size_t pos)
  * if str is NULL, return a strdup of inter
  * if inter is NULL, return a strdup of str
 */
-char	*ft_strinter(const char *str, const char *inter, size_t pos)
+char	*ft_strinter(char *str, char *inter, size_t pos)
 {
 	size_t	len_s;
 	size_t	len_i;
