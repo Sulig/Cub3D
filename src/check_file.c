@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:48 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:52:08 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,19 @@ int	check_dupmiss(t_map *map)
 	return (1);
 }
 
-/*
-* I think here has space for
-	- Check the numbers introduced in floor and ceiling
-	- Checking if the map is surrounded by walls
-*/
+/* Check if the color is in correct range of [0 - 255] */
+int	check_colors(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (map->c_rgb[i] < 0 || map->c_rgb[i] > 255)
+			return (0);
+		if (map->f_rgb[i] < 0 || map->f_rgb[i] > 255)
+			return (0);
+		i++;
+	}
+	return (1);
+}

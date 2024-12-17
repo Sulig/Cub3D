@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:53:06 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:41:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,58 +40,6 @@ static t_mlxd	*init_mlxdata(t_map *map, t_mlxd *mlxd)
 		print_mlxerror();
 	mlx_set_icon(mlxd->mlx, mlxd->icon);
 	return (mlxd);
-}
-
-/*
-* Track on keydown => Do action
-* Need cleaning
-*/
-void	hook_keyboard(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlxd->mlx);
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_LEFT))
-	{
-		game->ply.pa -= 0.1;
-		if (game->ply.pa < 0)
-			game->ply.pa += 2 * PI;
-		game->ply.pdx = cos(game->ply.pa) * VEL;
-		game->ply.pdy = sin(game->ply.pa) * VEL;
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_RIGHT))
-	{
-		game->ply.pa += 0.1;
-		if (game->ply.pa > 2 * PI)
-			game->ply.pa -= 2 * PI;
-		game->ply.pdx = cos(game->ply.pa) * VEL;
-		game->ply.pdy = sin(game->ply.pa) * VEL;
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_A))
-	{
-		game->ply.px += -1 * VEL * cos(game->ply.pa + P2);
-		game->ply.py += -1 * VEL * sin(game->ply.pa + P2);
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_D))
-	{
-		game->ply.px += 1 * VEL * cos(game->ply.pa + P2);
-		game->ply.py += 1 * VEL * sin(game->ply.pa + P2);
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_UP) || mlx_is_key_down(game->mlxd->mlx, MLX_KEY_W))
-	{
-		game->ply.px += game->ply.pdx;
-		game->ply.py += game->ply.pdy;
-	}
-	if (mlx_is_key_down(game->mlxd->mlx, MLX_KEY_DOWN) || mlx_is_key_down(game->mlxd->mlx, MLX_KEY_S))
-	{
-		game->ply.px -= game->ply.pdx;
-		game->ply.py -= game->ply.pdy;
-	}
-	game->ply.plx_inmap = game->ply.px / game->map->size;
-	game->ply.ply_inmap = game->ply.py / game->map->size;
-	raycasting(game);
 }
 
 /*
@@ -145,6 +93,5 @@ void	start(t_map *map)
 	mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
 	mlx_loop(mlxd->mlx);
 	mlx_terminate(mlxd->mlx);
-	//free memory inside mlxd?
-	mlxd = ft_free_ptr((void *)mlxd);
+	mlxd = free_mlxd(mlxd);
 }

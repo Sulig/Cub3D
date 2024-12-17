@@ -80,8 +80,7 @@ This things needs revision for merge work
 - [X] Paint the BG with no segfault
 - [X] Implement the hooks
 	- [X] Implement the rotation
-	- [] Implemant the movement
-
+	- [X] Implemant the movement
 	* ~ [] Clean and separate the keyhook and action to ejecute
 			to diferent files:
 			- [] `start` => hooks
@@ -95,5 +94,3 @@ This things needs revision for merge work
 			*- See raycollision
 	- [X] Calculate what is the minnor distance
 - [] Texture the rays
-
-- [] Merge branches & work of partner
