@@ -19,10 +19,12 @@ Your goal will be to make a dynamic view inside a maze, in which you’ll have t
 - [The New_Libft](https://github.com/Sulig/New_Libft)
 - [MinilibX Codam](https://github.com/codam-coding-college/MLX42)
   - // Clonned into repo when you "make"
+- Cub3D Mandatory files & headers 
 - [Subject English](https://github.com/Sulig/Cub3D/blob/master/Cub3D_subject-en.pdf)
 
 > [!WARNING]\
-> This repository is just started! Don't expect to encounter so much thing right now...
+> This repository is IN TEST right now
+> Can Segfault on some points, you're alerted!
 
 ***
 ~ Made by sadoming ~
