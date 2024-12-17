@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 17:41:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:20:23 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,33 @@ static t_game	start_player(t_game game)
 	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
 	game.ray.scale = SCR_WIDTH / RAYS;
 	return (game);
+}
+
+void	hook_keyboard(void *param)
+{
+	t_game	*gm;
+
+	gm = (t_game *)param;
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(gm->mlxd->mlx);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_W))
+		translate(gm, MOV_UP);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_UP))
+		translate(gm, MOV_UP);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_S))
+		translate(gm, MOV_DOWN);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_DOWN))
+		translate(gm, MOV_DOWN);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_A))
+		translate(gm, MOV_LEFT);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_D))
+		translate(gm, MOV_RIGHT);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_LEFT))
+		rotate(gm, ROT_LEFT);
+	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_RIGHT))
+		rotate(gm, ROT_RIGHT);
+	raycasting(gm);
+	printmap(gm);
 }
 
 void	start(t_map *map)

@@ -63,7 +63,7 @@ This things needs revision for merge work
 
 ## RAYCASTING
 
-- [] MAKE IT WORK!
+- [X] MAKE IT WORK!
 
 - [X] Save the colors in t_game:
 	int32_t		c_flr;
@@ -81,10 +81,10 @@ This things needs revision for merge work
 - [X] Implement the hooks
 	- [X] Implement the rotation
 	- [X] Implemant the movement
-	* ~ [] Clean and separate the keyhook and action to ejecute
+	* ~ [X] Clean and separate the keyhook and action to ejecute
 			to diferent files:
-			- [] `start` => hooks
-			- [] `action` => Ejecute Move and Rotate
+			- [X] `start` => hooks
+			- [X] `action` => Ejecute Move and Rotate
 
 	- [] ~(BONUS)~ Implement the collisions
 
