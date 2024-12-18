@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:59:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:33:31 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:56:31 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ void	ft_print_stat(t_map *map)
 	ft_printf("Height of map: %u\n", map->height);
 	ft_printf("\nPreview of map:\n\n");
 	ft_print_map_t(map->map);
+}
+
+/**/
+#include <stdio.h>
+void	print_player_position(t_game *gm)
+{
+	ft_printf(CLEAN);
+	printf("\nPlayer location:\t X[%f] Y[%f]\n", gm->ply.px, gm->ply.py);
+	printf("Player REAL location:\t X[%i] Y[%i]\n", gm->ply.ipx, gm->ply.ipy);
+	printf("\nVision: pdx: %f | pdy: %f ||| pa: %f\n", gm->ply.pdx, gm->ply.pdy, gm->ply.pa);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:42:13 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/14 13:47:11 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:01:32 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 /*
  * Pop `add` into a new array (on last position)
  * And free the original array.
- * *Free the original if !size || pop >= size of org
+ * *Free the original if !size || size >= arrsize(org)
+ * *Return Original if pop >= arrsize(org)
  */
 void	**arrpop(void **org, size_t pop)
 {
@@ -29,11 +30,13 @@ void	**arrpop(void **org, size_t pop)
 	i = -1;
 	new_arr = NULL;
 	size = arrsize(org) - 1;
-	if (!size || pop >= arrsize(org))
+	if (!size || size >= arrsize(org))
 	{
 		org = ft_free_arr(org);
 		return (NULL);
 	}
+	if (pop >= arrsize(org))
+		return (org);
 	new_arr = ft_calloc(sizeof(char *), size + 1);
 	if (!new_arr)
 		return (NULL);

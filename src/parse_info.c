@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:20:07 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:56:31 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ static t_map	*set_mapsize(t_map *map)
 				map->pla = map->map[map->height][len];
 				map->map[map->height][len] = '0';
 				map->has_player++;
-				map->ply.plx_inmap = len;
-				map->ply.ply_inmap = map->height;
+				map->ply.ipx = len;
+				map->ply.ipy = map->height;
 			}
 		}
 		if (len > map->width)

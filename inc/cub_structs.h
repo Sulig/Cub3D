@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 18:47:29 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:17:25 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct s_rect
 	- pdy	-> Player Delta Y
 	- pa	-> Player Angle
 	-----
-	- plx_inmap	-> Player X Position in Map
-	- ply_inmap	-> Player Y Position in Map
+	- ipx	-> Player X Position in Map
+	- ipy	-> Player Y Position in Map
 	-----
 	- ipx_add & sub _xo -> This is necessary for collisions in X
 	- ipy_add & sub _yo -> This is necessary for collisions in Y
@@ -57,12 +57,15 @@ typedef struct s_ply
 	double	pdx;
 	double	pdy;
 	double	pa;
-	int		plx_inmap;
-	int		ply_inmap;
+	int		ipx;
+	int		ipy;
 	int		ipx_add_xo;
 	int		ipx_sub_xo;
 	int		ipy_add_yo;
 	int		ipy_sub_yo;
+	int		can_move;
+	int		can_move_vert;
+	int		can_move_horz;
 }			t_ply;
 
 /* MAP & FILE DATA */

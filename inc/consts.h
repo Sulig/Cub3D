@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 20:08:24 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:38:19 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define VEL		5
 # define ANGLE_D	0.1
 
-# define COLL_SIZE	25
+# define COLL_SIZE	20
 # define CUB_SCALE	64
 /*	## MATH CONSTS END ##	*/
 
@@ -49,6 +49,8 @@
 # define MOV_DOWN	'1'
 # define MOV_LEFT	'2'
 # define MOV_RIGHT	'3'
+# define HORZ		'H'
+# define VERT		'V'
 /*	## ACTIONS CONSTS END ##	*/
 
 /**/

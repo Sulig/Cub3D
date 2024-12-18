@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:25:39 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:13:46 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void	raycasting(t_game *game)
 	paint_bg(game);
 	while (r < RAYS)
 	{
-		ft_printf("\033[1;35mr = %i\n", r);
 		game = check_hrzlines(game);
 		game = check_vrtlines(game);
 		game = check_wall_orientation(game);

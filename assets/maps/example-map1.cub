@@ -1,7 +1,7 @@
-NO ./assets/textures/error-tile-colors/error-tile.png
-SO ./assets/textures/error-tile-colors/error-tile.png
+NO ./assets/textures/so-long/gold-brick.png
+SO ./assets/textures/so-long/diamond-rug.png
 WE ./assets/textures/error-tile-colors/error-tile.png
-EA ./assets/textures/error-tile-colors/error-tile.png
+EA ./assets/textures/error-tile-colors/error-tile_GREEN.png
 
 F 220,100,0
 C 225,30,0

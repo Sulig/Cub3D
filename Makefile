@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/17 19:59:34 by sadoming         ###   ########.fr        #
+#    Updated: 2024/12/18 19:27:49 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
 			print_errors.c ft_print_map_t.c parse_info.c\
 			start.c action.c raycasting.c raycollision.c\
-			paint_minimap_test.c utilities.c
+			paint_minimap_test.c utilities.c collisions.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
