@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:58:17 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:39:34 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,7 @@ void		print_other_err(char *err);
 int			check_format(char *file);
 int			check_dupmiss(t_map *map);
 int			check_colors(t_map *map);
-
-/*CHECK_MAP.C*/
-
-int			ft_is_valid_neighbor(char c);
-int			ft_check_map_spaces(t_map *m, size_t i, size_t j);
-int			ft_check_map_chars(t_map *m, size_t i, size_t j, int *player);
-void		ft_check_valid_map(t_map *m, int player);
+void		ft_check_valid_map(t_map *m);
 
 /* PARSER */
 t_map		*parse_fileinfo_intovars(t_map *map);
@@ -47,17 +41,21 @@ void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
 void		printmap(t_game *gm);
 
+void		print_player_position(t_game *gm);
+
 /* MEMORY */
+void		free_mlxd(t_mlxd *mlxd);
 void		*free_map(t_map *map);
 t_map		*new_map(t_map *map, char *file);
 
-/*KEY_HOOK.C*/
+/* COLLISIONS */
+t_game		*calulate_move_to(t_game *gm);
+t_game		*can_move_to(t_game *gm, char dir);
+
+/* ACTIONS */
+void		rotate(t_game *gm, char direction);
+void		translate(t_game *gm, char dir);
 void		hook_keyboard(void *param);
-void		handle_key_translation(t_game *game, int key_forward,
-				int key_backward);
-void		handle_key_movement(t_game *game, int key, float angle_offset,
-				float direction);
-void		handle_key_rotation(t_game *game, int key, float angle_delta);
 
 /* GAME */
 void		start(t_map *map);
@@ -67,6 +65,7 @@ t_game		*check_vrtlines(t_game *gm);
 void		raycasting(t_game *game);
 
 /* UTILITIES */
+int			ft_is_valid_neighbor(char c);
 double		dist(double ax, double ay, double bx, double by);
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y);

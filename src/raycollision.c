@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:56:13 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:55:36 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static int	check_wall(t_game *gm)
 {
-	if (gm->ray.my >= gm->map->height || gm->ray.mx >= gm->map->width)
-		return (1);
+	if (gm->ray.my >= gm->map->height)
+		gm->ray.my = gm->map->height - 1;
+	if (gm->ray.mx >= gm->map->width)
+		gm->ray.mx = gm->map->width - 1;
 	if (gm->ray.mp > 0 && gm->ray.mp < gm->map->size)
 		if (gm->map->map[gm->ray.my][gm->ray.mx] == '1')
 			return (1);
@@ -24,6 +26,8 @@ static int	check_wall(t_game *gm)
 
 static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 {
+	gm->ray.hx = gm->ply.px;
+	gm->ray.hy = gm->ply.py;
 	while (gm->ray.dof_x < gm->map->width)
 	{
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
@@ -33,6 +37,8 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 		{
 			hx = gm->ray.rx;
 			hy = gm->ray.ry;
+			gm->ray.hx = gm->ray.rx;
+			gm->ray.hy = gm->ray.ry;
 			gm->ray.dis_h = dist(gm->ply.px, gm->ply.py, hx, hy);
 			gm->ray.dof_x = gm->map->width;
 		}
@@ -49,10 +55,9 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 /* Check Horizontal Lines */
 t_game	*check_hrzlines(t_game *gm)
 {
-	gm->ray.hx = gm->ply.px;
-	gm->ray.hy = gm->ply.py;
-	gm->ray.atan = -1 / tan(gm->ray.ra);
 	gm->ray.dof_x = 0;
+	gm->ray.dis_h = 1000000;
+	gm->ray.atan = -1 / tan(gm->ray.ra);
 	if (gm->ray.ra > PI)
 	{
 		gm->ray.ry = (((int)gm->ply.py >> 6) << 6) - 0.0001;
@@ -78,6 +83,8 @@ t_game	*check_hrzlines(t_game *gm)
 
 static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 {
+	gm->ray.vx = gm->ply.px;
+	gm->ray.vy = gm->ply.py;
 	while (gm->ray.dof_y < gm->map->height)
 	{
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
@@ -87,6 +94,8 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 		{
 			vx = gm->ray.rx;
 			vy = gm->ray.ry;
+			gm->ray.vx = gm->ray.rx;
+			gm->ray.vy = gm->ray.ry;
 			gm->ray.dis_v = dist(gm->ply.px, gm->ply.py, vx, vy);
 			gm->ray.dof_y = gm->map->height;
 		}
@@ -103,10 +112,9 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 /* Check Vertical Lines */
 t_game	*check_vrtlines(t_game *gm)
 {
-	gm->ray.vx = gm->ply.px;
-	gm->ray.vy = gm->ply.py;
-	gm->ray.ntan = -1 / tan(gm->ray.ra);
 	gm->ray.dof_y = 0;
+	gm->ray.dis_v = 1000000;
+	gm->ray.ntan = -tan(gm->ray.ra);
 	if (gm->ray.ra > P2 && gm->ray.ra < P3)
 	{
 		gm->ray.rx = (((int)gm->ply.px >> 6) << 6) - 0.0001;

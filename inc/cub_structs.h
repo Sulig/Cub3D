@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 17:26:26 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:31:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include "game.h"
 
 /* MLX DATA */
+/*
+	- mlx -> The MLX
+	- wing -> The image where will ocour the render of game
+	- icon -> The Icon game
+	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- tx_ac -> The Actual texture to apply to the wall
+*/
 typedef struct s_mlxd
 {
 	mlx_t			*mlx;
@@ -29,6 +36,11 @@ typedef struct s_mlxd
 }					t_mlxd;
 
 /* RECTANGLE STRUCT */
+/*
+	- width -> Rect width
+	- height -> Rect height
+	- fill -> Rect fill color (int32)
+*/
 typedef struct s_rect
 {
 	size_t	width;
@@ -44,11 +56,14 @@ typedef struct s_rect
 	- pdy	-> Player Delta Y
 	- pa	-> Player Angle
 	-----
-	- plx_inmap	-> Player X Position in Map
-	- ply_inmap	-> Player Y Position in Map
+	- ipx	-> Player X Position in Map
+	- ipy	-> Player Y Position in Map
 	-----
-	- ipx_add & sub _xo -> This is necessary for collisions in X
-	- ipy_add & sub _yo -> This is necessary for collisions in Y
+	- ipx_add & sub_xo -> This is necessary for collisions in X
+	- ipy_add & sub_yo -> This is necessary for collisions in Y
+	- rackmap -> Player Rack Map for collisions
+	- can_move & _vert & _horz -> Bool collisions
+	-----
 */
 typedef struct s_ply
 {
@@ -57,12 +72,16 @@ typedef struct s_ply
 	double	pdx;
 	double	pdy;
 	double	pa;
-	int		plx_inmap;
-	int		ply_inmap;
-	int		ipx_add_xo;
-	int		ipx_sub_xo;
-	int		ipy_add_yo;
-	int		ipy_sub_yo;
+	long	ipx;
+	long	ipy;
+	long	ipx_add_xo;
+	long	ipx_sub_xo;
+	long	ipy_add_yo;
+	long	ipy_sub_yo;
+	char	rackmap[3][3];
+	int		can_move;
+	int		can_move_vert;
+	int		can_move_horz;
 }			t_ply;
 
 /* MAP & FILE DATA */

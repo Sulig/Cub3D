@@ -6,13 +6,28 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:40:39 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 17:30:49 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:46:40 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
-/* Reserved space for free mlx things */
+void	free_mlxd(t_mlxd *mlxd)
+{
+	if (!mlxd)
+		return ;
+	if (mlxd->tx_no)
+		mlx_delete_texture(mlxd->tx_no);
+	if (mlxd->tx_so)
+		mlx_delete_texture(mlxd->tx_so);
+	if (mlxd->tx_we)
+		mlx_delete_texture(mlxd->tx_we);
+	if (mlxd->tx_ea)
+		mlx_delete_texture(mlxd->tx_ea);
+	if (mlxd->icon)
+		mlx_delete_texture(mlxd->icon);
+	ft_bzero(mlxd, sizeof(t_mlxd));
+}
 
 void	*free_map(t_map *map)
 {

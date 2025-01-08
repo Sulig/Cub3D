@@ -6,7 +6,7 @@
 #    By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/16 19:52:26 by andmart2         ###   ########.fr        #
+#    Updated: 2025/01/08 18:40:20 by andmart2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MAKF 		+=	--silent
 MLX_FLAGS	:=	-B -DDEBUG=1
 
 CC			=	gcc
-CFLAGS		:=	-Wall -Werror -Wextra -g -c
+CFLAGS		:=	-Wall -Werror -Wextra -g -c #-fsanitize=address
 LIB_FLAGS	:=	-lm -ldl -lglfw -pthread
 
 DEP_FLAGS	:= -MMD -MP
@@ -61,12 +61,10 @@ MLX_LIB		:=	./MLX42/build/libmlx42.a
 MLX_BUILD_DIR	:=	./MLX42/build/
 
 # Sorces:
-
-SRC_SRC	:=	cub_main.c man_memory.c check_file.c print_errors.c\
-			ft_print_map_t.c parse_info.c start.c utilities.c\
-			raycasting.c raycollision.c paint_minimap_test.c\
-			check_map.c key_hook.c
-			
+SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
+			print_errors.c ft_print_map_t.c parse_info.c\
+			start.c action.c raycasting.c raycollision.c\
+			paint_minimap_test.c utilities.c collisions.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
@@ -114,8 +112,9 @@ help:
 #-------------------------------------------------------------#
 author:
 	@echo "$(P)~ **************************************** ~\n"
-	@echo "  ~\t     Made by Sadoming \t        ~"
-	@echo "\n~ **************************************** ~\n$(DEF)\n"
+	@echo " ~\t      Made by Sadoming \t         ~"
+	@echo " ~   With the collaboration of Andmart2  ~"
+	@echo "~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 norm:
 	@echo "\n$(Y)~ Norminette:\n"

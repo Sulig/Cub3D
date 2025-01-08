@@ -2,10 +2,10 @@
 This things needs revision for merge work
 
 ## GENERAL THINGS
-- [] Add the new files & directories to Makefile
+- [X] Add the new files & directories to Makefile
 - [] Clean and redistribuite the code into files
-- [] Free all memory reserved
-	- [] See how to free the leaked info (mlx loading png, and other things)
+- [X] Free all memory reserved
+	- [?] See how to free the leaked info (mlx loading png, and other things)?
 - [] Norminette (Last thing)
 
 ## FILE && MAP ERROR HANDLING
@@ -23,18 +23,18 @@ This things needs revision for merge work
 	WE ./assets/textures/xpm/error-tile.xpm
 	EA ./assets/textures/xpm/error-tile.xpm
 
-- [A] Check the numbers introduced in floor and ceiling
+- [X] Check the numbers introduced in floor and ceiling
 	- This should be in 0-255 range
 
-- [A] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
+- [X] Check if map is surrounded by walls (Can I ask that the tabs count as 4 spaces within the map?)
 
 	 1
 	1N1		// This would be an OK map
 	 1
 
-	[A] ** Spaces/Tabs inside map it should be considerated as '0'
+	[X] ** Spaces/Tabs inside map it should be considerated as '0'
 
-- [A] Check if the data is valid (if display an error use `print_other_err(char *err)`)
+- [X] Check if the data is valid (if display an error use `print_other_err(char *err)`)
 
 		-----------------------
 ***
@@ -63,7 +63,7 @@ This things needs revision for merge work
 
 ## RAYCASTING
 
-- [] MAKE IT WORK!
+- [X] MAKE IT WORK!
 
 - [X] Save the colors in t_game:
 	int32_t		c_flr;
@@ -80,18 +80,17 @@ This things needs revision for merge work
 - [X] Paint the BG with no segfault
 - [X] Implement the hooks
 	- [X] Implement the rotation
-	- [] Implemant the movement
-
-	* ~ [] Clean and separate the keyhook and action to ejecute
+	- [X] Implemant the movement
+	* ~ [X] Clean and separate the keyhook and action to ejecute
 			to diferent files:
-			- [] `start` => hooks
-			- [] `action` => Ejecute Move and Rotate
+			- [X] `start` => hooks
+			- [X] `action` => Ejecute Move and Rotate
 
-	- [] ~(BONUS)~ Implement the collisions
+	- [X] ~(BONUS)~ Implement the collisions
 
 - [X] Start Raycasting with try-me file
 	- [X] Calculate where the ray has collided
 		/* Work to do: See where is the problem, is it not breaking the while?
 			*- See raycollision
 	- [X] Calculate what is the minnor distance
-- [] Texture the rays
+- [X] Texture the rays
