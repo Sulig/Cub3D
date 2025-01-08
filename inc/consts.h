@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 19:38:19 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:23:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@
 # define HORZ		'H'
 # define VERT		'V'
 /*	## ACTIONS CONSTS END ##	*/
+
+/*		 ## ERRORS CONSTS ##		*/
+# define BAD_PLY_NUM	"The file don't have/or have multiple player/s!\n"
+# define PLY_TRSNMAP	"Player have traspased to an unexistent ubication\n"
+/*	## ERRORS CONSTS END ##	*/
 
 /**/
 # define EXIT_SUCCESS	0

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 17:13:46 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:53:43 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static t_game	*calculate_line_h(t_game *gm)
 	if (ca > 2 * PI)
 		ca -= 2 * PI;
 	gm->ray.dist = gm->ray.dist * cos(ca);
-	gm->ray.line_h = (gm->map->size * SCR_WIDTH) / gm->ray.dist;
+	gm->ray.line_h = (CUB_SCALE * SCR_WIDTH) / gm->ray.dist;
 	if (gm->ray.line_h > SCR_HEIGHT)
 		gm->ray.line_h = SCR_HEIGHT;
 	gm->ray.line_o = SCR_HEIGHT / 2 - gm->ray.line_h / 2;

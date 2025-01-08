@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:05:22 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/18 19:37:09 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:58:08 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	hook_keyboard(void *param)
 		rotate(gm, ROT_RIGHT);
 	raycasting(gm);
 	printmap(gm);
-	print_player_position(gm);
+	//print_player_position(gm);
 }

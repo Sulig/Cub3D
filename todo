@@ -86,7 +86,7 @@ This things needs revision for merge work
 			- [X] `start` => hooks
 			- [X] `action` => Ejecute Move and Rotate
 
-	- [] ~(BONUS)~ Implement the collisions
+	- [X] ~(BONUS)~ Implement the collisions
 
 - [X] Start Raycasting with try-me file
 	- [X] Calculate where the ray has collided

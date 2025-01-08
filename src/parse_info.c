@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 18:56:31 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:30:13 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static t_map	*set_mapsize(t_map *map)
 	}
 	map->size = map->height * map->width;
 	if (!map->has_player || map->has_player > 1)
-		print_other_err("The file don't have/or have multiple player/s!");
+		print_other_err(BAD_PLY_NUM);
 	return (map);
 }
 
