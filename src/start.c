@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 19:00:56 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:50:52 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,6 @@ static t_game	start_player(t_game game)
 	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
 	game.ray.scale = SCR_WIDTH / RAYS;
 	return (game);
-}
-
-void	free_mlxd(t_mlxd *mlxd)
-{
-	if (!mlxd)
-		return ;
-	if (mlxd->tx_no)
-		mlx_delete_texture(mlxd->tx_no);
-	if (mlxd->tx_so)
-		mlx_delete_texture(mlxd->tx_so);
-	if (mlxd->tx_we)
-		mlx_delete_texture(mlxd->tx_we);
-	if (mlxd->tx_ea)
-		mlx_delete_texture(mlxd->tx_ea);
-	if (mlxd->icon)
-		mlx_delete_texture(mlxd->icon);
-	if (mlxd->wimg)
-		mlx_delete_image(mlxd->mlx, mlxd->wimg);
-	if (mlxd->mlx)
-		mlx_terminate(mlxd->mlx);
-	ft_free_ptr((void *)mlxd);
 }
 
 void	start(t_map *map)
