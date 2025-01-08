@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 18:39:34 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:31:42 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_game		*can_move_to(t_game *gm, char dir);
 void		rotate(t_game *gm, char direction);
 void		translate(t_game *gm, char dir);
 void		hook_keyboard(void *param);
+void        translate_horizontal(t_game *gm, char dir);
+void        translate_vertical(t_game *gm, char dir);
 
 /* GAME */
 void		start(t_map *map);

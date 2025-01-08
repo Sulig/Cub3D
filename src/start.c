@@ -6,15 +6,15 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 18:41:49 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:00:56 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/game.h"
 
 /*
-* Start MLX and all the textures
-*/
+ * Start MLX and all the textures
+ */
 static t_mlxd	init_mlxdata(t_map *map, t_mlxd mlxd)
 {
 	mlxd.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, TITLE, true);
@@ -43,8 +43,8 @@ static t_mlxd	init_mlxdata(t_map *map, t_mlxd mlxd)
 }
 
 /*
-* Start player vars and set bgcolor
-*/
+ * Start player vars and set bgcolor
+ */
 static t_game	start_player(t_game game)
 {
 	int32_t	color[3];
@@ -76,9 +76,7 @@ static t_game	start_player(t_game game)
 void	free_mlxd(t_mlxd *mlxd)
 {
 	if (!mlxd)
-		return;
-
-	// free textures
+		return ;
 	if (mlxd->tx_no)
 		mlx_delete_texture(mlxd->tx_no);
 	if (mlxd->tx_so)
@@ -89,19 +87,12 @@ void	free_mlxd(t_mlxd *mlxd)
 		mlx_delete_texture(mlxd->tx_ea);
 	if (mlxd->icon)
 		mlx_delete_texture(mlxd->icon);
-
-	// free image
 	if (mlxd->wimg)
 		mlx_delete_image(mlxd->mlx, mlxd->wimg);
-
-	// free main mlx
 	if (mlxd->mlx)
 		mlx_terminate(mlxd->mlx);
-
-	// free structure
 	ft_free_ptr((void *)mlxd);
 }
-
 
 void	start(t_map *map)
 {

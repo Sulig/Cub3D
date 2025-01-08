@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:05:22 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/08 12:58:08 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:29:02 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,40 @@ void	rotate(t_game *gm, char direction)
 	}
 }
 
-/* Translate / Move the player */
 void	translate(t_game *gm, char dir)
 {
 	if (dir == MOV_LEFT || dir == MOV_RIGHT)
+		translate_horizontal(gm, dir);
+	else if (dir == MOV_UP || dir == MOV_DOWN)
+		translate_vertical(gm, dir);
+}
+
+void	translate_horizontal(t_game *gm, char dir)
+{
+	gm = can_move_to(gm, dir);
+	if (gm->ply.can_move && dir == MOV_LEFT)
 	{
-		gm = can_move_to(gm, dir);
-		if (gm->ply.can_move && dir == MOV_LEFT)
-		{
-			gm->ply.px += -1 * VEL * cos(gm->ply.pa + P2);
-			gm->ply.py += -1 * VEL * sin(gm->ply.pa + P2);
-		}
-		if (gm->ply.can_move && dir == MOV_RIGHT)
-		{
-			gm->ply.px += 1 * VEL * cos(gm->ply.pa + P2);
-			gm->ply.py += 1 * VEL * sin(gm->ply.pa + P2);
-		}
+		gm->ply.px += -1 * VEL * cos(gm->ply.pa + P2);
+		gm->ply.py += -1 * VEL * sin(gm->ply.pa + P2);
 	}
-	if (dir == MOV_UP || dir == MOV_DOWN)
+	if (gm->ply.can_move && dir == MOV_RIGHT)
 	{
-		gm = can_move_to(gm, dir);
-		if (dir == MOV_UP && gm->ply.can_move_horz)
-			gm->ply.px += gm->ply.pdx;
-		if (dir == MOV_UP && gm->ply.can_move_vert)
-			gm->ply.py += gm->ply.pdy;
-		if (dir == MOV_DOWN && gm->ply.can_move_horz)
-			gm->ply.px -= gm->ply.pdx;
-		if (dir == MOV_DOWN && gm->ply.can_move_vert)
-			gm->ply.py -= gm->ply.pdy;
+		gm->ply.px += 1 * VEL * cos(gm->ply.pa + P2);
+		gm->ply.py += 1 * VEL * sin(gm->ply.pa + P2);
 	}
+}
+
+void	translate_vertical(t_game *gm, char dir)
+{
+	gm = can_move_to(gm, dir);
+	if (dir == MOV_UP && gm->ply.can_move_horz)
+		gm->ply.px += gm->ply.pdx;
+	if (dir == MOV_UP && gm->ply.can_move_vert)
+		gm->ply.py += gm->ply.pdy;
+	if (dir == MOV_DOWN && gm->ply.can_move_horz)
+		gm->ply.px -= gm->ply.pdx;
+	if (dir == MOV_DOWN && gm->ply.can_move_vert)
+		gm->ply.py -= gm->ply.pdy;
 }
 
 void	hook_keyboard(void *param)
@@ -89,5 +94,4 @@ void	hook_keyboard(void *param)
 		rotate(gm, ROT_RIGHT);
 	raycasting(gm);
 	printmap(gm);
-	//print_player_position(gm);
 }
