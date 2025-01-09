@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 14:27:03 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:20:44 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 	- mlx -> The MLX
 	- wing -> The image where will ocour the render of game
 	- icon -> The Icon game
-	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- tx_no, _so, _we & _ea -> Set and convert textures loaded from file
 	- tx_ac -> The Actual texture to apply to the wall
 */
 typedef struct s_mlxd
@@ -78,6 +78,21 @@ typedef struct s_ply
 }			t_ply;
 
 /* MAP & FILE DATA */
+/*
+	- file	-> Data file attached to program
+	- map	-> 2D Map
+	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- pla	-> Player Focuss ("NSWE")
+	-----
+	- height	-> Max height of map
+	- width		-> Max width of map
+	- size		-> height * width of map
+	-----
+	- f_rgb & c_rgb -> Color background (Sky & Floor)
+	-----
+	- has_player	-> Counts num of players
+	- ply			-> Attach to player_struct
+*/
 typedef struct s_map
 {
 	char	**file;
@@ -97,12 +112,16 @@ typedef struct s_map
 }			t_map;
 
 /* RAYCAST DATA */
+/*
+	-
+*/
 typedef struct s_ray
 {
 	size_t	dof_x;
 	size_t	dof_y;
 	size_t	mx;
 	size_t	my;
+	size_t	mp;
 	double	hx;
 	double	hy;
 	double	vx;
@@ -147,6 +166,8 @@ typedef struct s_game
 	t_tex		tex;
 	int32_t		c_flr;
 	int32_t		c_sky;
+	size_t		scr_w;
+	size_t		scr_h;
 }			t_game;
 
 #endif

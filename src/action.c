@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:05:22 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/09 13:44:00 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:27:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	hook_keyboard(void *param)
 		rotate(gm, ROT_LEFT);
 	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_RIGHT))
 		rotate(gm, ROT_RIGHT);
+	gm = resize_window(gm);
 	raycasting(gm);
 }

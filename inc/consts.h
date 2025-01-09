@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 13:29:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:01:45 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 /*		 ## SCREEN ##		*/
 # define TITLE		"CUB3D"
-# define WIN_WIDTH	1020
-# define WIN_HEIGHT	1020
+# define WIN_WIDTH	1080
+# define WIN_HEIGHT	1080
 
-# define SCR_WIDTH	1020
-# define SCR_HEIGHT	1020
+# define SCR_WIDTH	1080
+# define SCR_HEIGHT	1080
 
 # define MINMAP_W	333
 # define MINMAP_H	250

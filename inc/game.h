@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 20:00:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:27:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_map		*new_map(t_map *map, char *file);
 int			can_move_to(t_game *gm);
 
 /* ACTIONS */
+t_game		*resize_window(t_game *gm);
 void		rotate(t_game *gm, char direction);
 void		translate(t_game *gm, char dir);
 void		hook_keyboard(void *param);

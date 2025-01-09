@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 13:44:08 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:31:51 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static t_game	*texture_and_print(t_game *gm, int r)
 		{
 			gm->tex.tx = gm->tex.wall_x * gm->mlxd->tx_ac->width;
 			gm->tex.rc.fill = get_rgba(gm->mlxd->tx_ac, gm->tex.tx, gm->tex.ty);
-			gm->tex.x = (SCR_HEIGHT + r * gm->ray.scale) + x;
-			gm->tex.y = ((SCR_HEIGHT / 2) - gm->ray.line_t / 2) + y;
+			gm->tex.x = (gm->scr_h + r * gm->ray.scale) + x;
+			gm->tex.y = ((gm->scr_h / 2) - gm->ray.line_t / 2) + y;
 			printrect(gm->mlxd->wimg, gm->tex.x, gm->tex.y, gm->tex.rc);
 		}
 	}
@@ -92,10 +92,10 @@ static t_game	*calculate_line_h(t_game *gm)
 	if (ca > 2 * PI)
 		ca -= 2 * PI;
 	gm->ray.dist = gm->ray.dist * cos(ca);
-	gm->ray.line_h = (CUB_SCALE * SCR_WIDTH) / gm->ray.dist;
-	if (gm->ray.line_h > SCR_HEIGHT)
-		gm->ray.line_h = SCR_HEIGHT;
-	gm->ray.line_o = SCR_HEIGHT / 2 - gm->ray.line_h / 2;
+	gm->ray.line_h = (CUB_SCALE * gm->scr_w) / gm->ray.dist;
+	if (gm->ray.line_h > gm->scr_h)
+		gm->ray.line_h = gm->scr_h;
+	gm->ray.line_o = gm->scr_h / 2 - gm->ray.line_h / 2;
 	gm->ray.line_t = gm->ray.line_h + gm->ray.line_o;
 	return (gm);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 19:47:56 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:36:23 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,33 @@ static t_game	start_player(t_game game)
 	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
 	game.ray.scale = SCR_WIDTH / RAYS;
 	return (game);
+}
+
+t_game	*resize_window(t_game *gm)
+{
+	size_t	w;
+	size_t	h;
+
+	w = gm->mlxd->mlx->width;
+	h = gm->mlxd->mlx->height;
+	if (h < w)
+		w = h;
+	if (!gm->scr_h)
+		gm->scr_h = SCR_HEIGHT;
+	if (!gm->scr_w)
+		gm->scr_w = SCR_WIDTH;
+	while (w % RAYS)
+	{
+		if (w < 60)
+			w++;
+		else
+			w--;
+	}
+	mlx_resize_image(gm->mlxd->wimg, w, w);
+	gm->ray.scale = w / RAYS;
+	gm->scr_w = w;
+	gm->scr_h = w;
+	return (gm);
 }
 
 void	start(t_map *map)
