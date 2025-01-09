@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:51:53 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/10 17:22:59 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:11:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	print_err_arfor(int error)
 	exit(EXIT_FAILURE);
 }
 
+/* Print Malloc error */
 void	print_errmalloc(void)
 {
 	ft_printf_fd(STDERR_FILENO, RR);
@@ -42,6 +43,7 @@ void	print_errmalloc(void)
 	exit(EXIT_FAILURE);
 }
 
+/* Print MLX error */
 void	print_mlxerror(void)
 {
 	ft_printf_fd(2, mlx_strerror(mlx_errno));
@@ -66,6 +68,7 @@ void	print_err_dupmiss(int error)
 	exit(EXIT_FAILURE);
 }
 
+/* Print Custom Error */
 void	print_other_err(char *err)
 {
 	ft_printf_fd(2, R);

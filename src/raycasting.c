@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 19:25:39 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:44:08 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static t_game	*calculate_line_h(t_game *gm)
 	if (ca > 2 * PI)
 		ca -= 2 * PI;
 	gm->ray.dist = gm->ray.dist * cos(ca);
-	gm->ray.line_h = (gm->map->size * SCR_WIDTH) / gm->ray.dist;
+	gm->ray.line_h = (CUB_SCALE * SCR_WIDTH) / gm->ray.dist;
 	if (gm->ray.line_h > SCR_HEIGHT)
 		gm->ray.line_h = SCR_HEIGHT;
 	gm->ray.line_o = SCR_HEIGHT / 2 - gm->ray.line_h / 2;
@@ -113,7 +113,6 @@ void	raycasting(t_game *game)
 	paint_bg(game);
 	while (r < RAYS)
 	{
-		ft_printf("\033[1;35mr = %i\n", r);
 		game = check_hrzlines(game);
 		game = check_vrtlines(game);
 		game = check_wall_orientation(game);
@@ -126,5 +125,5 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
-	printmap(game);
+	//printmap(gm);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:51:50 by andmart2          #+#    #+#             */
-/*   Updated: 2024/12/17 17:54:25 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:31:50 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_check_map_chars(t_map *m, size_t i, size_t j)
 	char	c;
 
 	c = m->map[i][j];
-	if (c == ' ' || c == '0' || c == '1')
+	if (c == ' ' || c == '0' || c == '1' || c == '\0')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);

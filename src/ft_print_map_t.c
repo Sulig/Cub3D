@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:59:29 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/11 17:33:31 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:59:04 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_print_stat(t_map *map)
 	ft_printf("WE - %s\nEA - %s\n", map->tx_we, map->tx_ea);
 	ft_printf("\nWidth of map: %u\n", map->width);
 	ft_printf("Height of map: %u\n", map->height);
+	ft_printf("Size of map: %u\n", map->size);
 	ft_printf("\nPreview of map:\n\n");
 	ft_print_map_t(map->map);
+	ft_printf("PLY_X = %u | PLY = %u\n", map->ply.ipx, map->ply.ipy);
 }

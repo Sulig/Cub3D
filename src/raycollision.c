@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 18:55:36 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:09:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 t_game	*check_hrzlines(t_game *gm)
 {
 	gm->ray.dof_x = 0;
-	gm->ray.dis_h = 1000000;
+	gm->ray.dis_h = 1000000000;
 	gm->ray.atan = -1 / tan(gm->ray.ra);
 	if (gm->ray.ra > PI)
 	{
@@ -113,7 +113,7 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 t_game	*check_vrtlines(t_game *gm)
 {
 	gm->ray.dof_y = 0;
-	gm->ray.dis_v = 1000000;
+	gm->ray.dis_v = 1000000000;
 	gm->ray.ntan = -tan(gm->ray.ra);
 	if (gm->ray.ra > P2 && gm->ray.ra < P3)
 	{

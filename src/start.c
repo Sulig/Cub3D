@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 17:41:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:47:56 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 /*
 * Start MLX and all the textures
 */
-static t_mlxd	*init_mlxdata(t_map *map, t_mlxd *mlxd)
+static t_mlxd	init_mlxdata(t_map *map, t_mlxd mlxd)
 {
-	mlxd->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, TITLE, true);
-	if (!mlxd->mlx)
+	mlxd.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, TITLE, true);
+	if (!mlxd.mlx)
 		print_mlxerror();
-	mlxd->wimg = mlx_new_image(mlxd->mlx, SCR_WIDTH, SCR_HEIGHT);
-	if (!mlxd->wimg)
+	mlxd.wimg = mlx_new_image(mlxd.mlx, SCR_WIDTH, SCR_HEIGHT);
+	if (!mlxd.wimg)
 		print_mlxerror();
-	mlxd->tx_no = mlx_load_png(map->tx_no);
-	if (!mlxd->tx_no)
+	mlxd.tx_no = mlx_load_png(map->tx_no);
+	if (!mlxd.tx_no)
 		print_mlxerror();
-	mlxd->tx_so = mlx_load_png(map->tx_so);
-	if (!mlxd->tx_so)
+	mlxd.tx_so = mlx_load_png(map->tx_so);
+	if (!mlxd.tx_so)
 		print_mlxerror();
-	mlxd->tx_we = mlx_load_png(map->tx_we);
-	if (!mlxd->tx_we)
+	mlxd.tx_we = mlx_load_png(map->tx_we);
+	if (!mlxd.tx_we)
 		print_mlxerror();
-	mlxd->tx_ea = mlx_load_png(map->tx_ea);
-	if (!mlxd->tx_ea)
+	mlxd.tx_ea = mlx_load_png(map->tx_ea);
+	if (!mlxd.tx_ea)
 		print_mlxerror();
-	mlxd->icon = mlx_load_png(ICON);
-	if (!mlxd->icon)
+	mlxd.icon = mlx_load_png(ICON);
+	if (!mlxd.icon)
 		print_mlxerror();
-	mlx_set_icon(mlxd->mlx, mlxd->icon);
+	mlx_set_icon(mlxd.mlx, mlxd.icon);
 	return (mlxd);
 }
 
@@ -57,8 +57,8 @@ static t_game	start_player(t_game game)
 		game.ply.pa = PI;
 	else if (game.map->pla == 'E')
 		game.ply.pa = 0;
-	game.ply.px = game.ply.plx_inmap * CUB_SCALE;
-	game.ply.py = game.ply.ply_inmap * CUB_SCALE;
+	game.ply.px = game.ply.ipx * CUB_SCALE;
+	game.ply.py = game.ply.ipy * CUB_SCALE;
 	game.ply.pdx = cos(game.ply.pa) * 5;
 	game.ply.pdy = sin(game.ply.pa) * 5;
 	color[0] = (int32_t)game.map->c_rgb[0];
@@ -75,23 +75,20 @@ static t_game	start_player(t_game game)
 
 void	start(t_map *map)
 {
-	t_mlxd	*mlxd;
+	t_mlxd	mlxd;
 	t_game	game;
 
-	mlxd = ft_calloc(sizeof(t_mlxd), 1);
-	if (!mlxd)
-		print_errmalloc();
 	mlxd = init_mlxdata(map, mlxd);
-	if (mlx_image_to_window(mlxd->mlx, mlxd->wimg, 0, 0) < 0)
+	if (mlx_image_to_window(mlxd.mlx, mlxd.wimg, 0, 0) < 0)
 		print_mlxerror();
-	game.mlxd = mlxd;
+	game.mlxd = &mlxd;
 	game.map = map;
 	game.ply = map->ply;
 	ft_bzero(&game.ray, sizeof(t_ray));
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);
-	mlx_loop_hook(mlxd->mlx, hook_keyboard, &game);
-	mlx_loop(mlxd->mlx);
-	mlx_terminate(mlxd->mlx);
-	mlxd = free_mlxd(mlxd);
+	mlx_loop_hook(mlxd.mlx, hook_keyboard, &game);
+	mlx_loop(mlxd.mlx);
+	mlx_terminate(mlxd.mlx);
+	free_mlxd(&mlxd);
 }
