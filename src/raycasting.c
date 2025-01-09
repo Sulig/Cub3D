@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 13:53:43 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:44:08 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,5 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
-	printmap(game);
+	//printmap(gm);
 }

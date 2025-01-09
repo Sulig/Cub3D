@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 17:31:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:27:03 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,13 @@ typedef struct s_rect
 	- ipx	-> Player X Position in Map
 	- ipy	-> Player Y Position in Map
 	-----
-	- ipx_add & sub_xo -> This is necessary for collisions in X
-	- ipy_add & sub_yo -> This is necessary for collisions in Y
-	- rackmap -> Player Rack Map for collisions
-	- can_move & _vert & _horz -> Bool collisions
-	-----
 */
 typedef struct s_ply
 {
 	double	px;
 	double	py;
+	double	new_px;
+	double	new_py;
 	double	pdx;
 	double	pdy;
 	double	pa;
@@ -78,10 +75,6 @@ typedef struct s_ply
 	long	ipx_sub_xo;
 	long	ipy_add_yo;
 	long	ipy_sub_yo;
-	char	rackmap[3][3];
-	int		can_move;
-	int		can_move_vert;
-	int		can_move_horz;
 }			t_ply;
 
 /* MAP & FILE DATA */
@@ -110,7 +103,6 @@ typedef struct s_ray
 	size_t	dof_y;
 	size_t	mx;
 	size_t	my;
-	size_t	mp;
 	double	hx;
 	double	hy;
 	double	vx;

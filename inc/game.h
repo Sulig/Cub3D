@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 20:02:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/08 20:00:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,13 @@ void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
 void		printmap(t_game *gm);
 
-void		print_player_position(t_game *gm);
-
 /* MEMORY */
 void		free_mlxd(t_mlxd *mlxd);
 void		*free_map(t_map *map);
 t_map		*new_map(t_map *map, char *file);
 
 /* COLLISIONS */
-t_game		*calulate_move_to(t_game *gm);
-t_game		*can_move_to(t_game *gm, char dir);
+int			can_move_to(t_game *gm);
 
 /* ACTIONS */
 void		rotate(t_game *gm, char direction);
