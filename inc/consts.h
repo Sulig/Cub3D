@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 19:39:14 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:55:10 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # define MINMAP_H	250
 # define MINMAP_CW	15
 # define MINMAP_CH	15
+
+# define MINIMAP_VIEW_WIDTH 25  
+# define MINIMAP_VIEW_HEIGHT 25 
+
 
 # define ICON		"./assets/textures/error-tile_anim/error-tile_0.png"
 /*		## SCREEN END ##	*/
