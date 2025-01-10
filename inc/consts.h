@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 18:01:45 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 16:22:02 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@
 # define P3			4.71238898
 # define DR			0.0174533
 # define RAYS		60
+# define RAYS_SUB	30
 # define VEL		5
 # define ANGLE_D	0.1
 
-# define COLL_SIZE	20
 # define CUB_SCALE	64
 /*	## MATH CONSTS END ##	*/
 

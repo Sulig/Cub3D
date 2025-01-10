@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 18:20:44 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:23:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ typedef struct s_ray
 	double	scale;
 	double	delta_x;
 	double	delta_y;
-	double	atan;
-	double	ntan;
+	double	htan;
+	double	vtan;
 	double	theta;
 }			t_ray;
 

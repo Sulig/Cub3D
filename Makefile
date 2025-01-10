@@ -6,14 +6,14 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2025/01/08 18:37:29 by sadoming         ###   ########.fr        #
+#    Updated: 2025/01/10 16:34:21 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)open-map.cub
+MAP_NAME	:=	$(MAP_DIR)cubmap.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:

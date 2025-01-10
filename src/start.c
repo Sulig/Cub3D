@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 19:36:23 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 16:35:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	start(t_map *map)
 	ft_bzero(&game.ray, sizeof(t_ray));
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);
+	ft_print_stat(game.map);
 	mlx_loop_hook(mlxd.mlx, hook_keyboard, &game);
 	mlx_loop(mlxd.mlx);
 	mlx_terminate(mlxd.mlx);

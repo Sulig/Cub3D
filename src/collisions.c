@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:10:25 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 12:58:21 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:44:48 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static char	get_cell(t_map *map, long x, long y)
 /* Manage collisions with a 'rackmap' tool */
 int	can_move_to(t_game *gm)
 {
-	char next_horz;
-	char next_vert;
-	char next_diag;
+	char	next_horz;
+	char	next_vert;
+	char	next_diag;
 
 	next_horz = get_cell(gm->map, gm->ply.new_px, gm->ply.py);
 	next_vert = get_cell(gm->map, gm->ply.px, gm->ply.new_py);

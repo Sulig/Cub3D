@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 18:27:40 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:07:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # include <fcntl.h>
 # include <math.h>
+//*
+# include <stdio.h>
 
 # include "consts.h"
 # include "cub_structs.h"
