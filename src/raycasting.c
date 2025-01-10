@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 18:17:51 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:26:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ static t_game	*calculate_line_h(t_game *gm)
 	if (ca > 2 * PI)
 		ca -= 2 * PI;
 	gm->ray.dist = gm->ray.dist * cos(ca);
-	if (gm->ray.dist < CUB_SCALE)
-		gm->ray.dist = CUB_SCALE;
-	//
-	printf("Dist = %f\n", gm->ray.dist);
+	if (gm->ray.dist < CUB_SCALE + 1)
+		gm->ray.dist = CUB_SCALE + 1;
 	gm->ray.line_h = (CUB_SCALE * gm->scr_w) / gm->ray.dist;
 	if (gm->ray.line_h > gm->scr_h)
 		gm->ray.line_h = gm->scr_h;
 	gm->ray.line_o = gm->scr_h / 2 - gm->ray.line_h / 2;
 	gm->ray.line_t = gm->ray.line_h + gm->ray.line_o;
+	if (gm->ray.line_t > gm->scr_h)
+		gm->ray.line_t = gm->scr_h;
 	return (gm);
 }
 
@@ -132,5 +132,4 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
-	//printmap(gm);
 }
