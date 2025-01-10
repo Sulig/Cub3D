@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 16:35:27 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:31:49 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ t_game	*resize_window(t_game *gm)
 
 	w = gm->mlxd->mlx->width;
 	h = gm->mlxd->mlx->height;
+	if (gm->scr_h == h && gm->scr_w == w)
+		return (gm);
 	if (h < w)
 		w = h;
-	if (!gm->scr_h)
-		gm->scr_h = SCR_HEIGHT;
-	if (!gm->scr_w)
-		gm->scr_w = SCR_WIDTH;
 	while (w % RAYS)
 	{
 		if (w < 60)
@@ -111,6 +109,8 @@ void	start(t_map *map)
 	game.mlxd = &mlxd;
 	game.map = map;
 	game.ply = map->ply;
+	game.scr_h = SCR_HEIGHT;
+	game.scr_w = SCR_WIDTH;
 	ft_bzero(&game.ray, sizeof(t_ray));
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);

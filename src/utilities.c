@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 19:15:08 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:01:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 */
 double	dist(double ax, double ay, double bx, double by)
 {
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+	double	dx;
+	double	dy;
+
+	dx = bx - ax;
+	dy = by - ay;
+	return (sqrt(dx * dx + dy * dy));
 }
 
 /* Returns a uint32_t representing the color inserted in this function

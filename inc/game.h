@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 18:07:17 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:27:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 
 # include <fcntl.h>
 # include <math.h>
-//*
-# include <stdio.h>
 
 # include "consts.h"
 # include "cub_structs.h"
@@ -43,7 +41,6 @@ t_map		*parse_fileinfo_intovars(t_map *map);
 /* DEBUG */
 void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
-void		printmap(t_game *gm);
 
 /* MEMORY */
 void		free_mlxd(t_mlxd *mlxd);
