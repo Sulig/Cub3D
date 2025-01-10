@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 20:04:21 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:39:14 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 /*		 ## SCREEN ##		*/
 # define TITLE		"CUB3D"
-# define WIN_WIDTH	900
-# define WIN_HEIGHT	900
+# define WIN_WIDTH	1080
+# define WIN_HEIGHT	1080
 
-# define SCR_WIDTH	900
-# define SCR_HEIGHT	900
+# define SCR_WIDTH	1080
+# define SCR_HEIGHT	1080
 
 # define MINMAP_W	333
 # define MINMAP_H	250
@@ -35,10 +35,10 @@
 # define P3			4.71238898
 # define DR			0.0174533
 # define RAYS		60
+# define RAYS_SUB	30
 # define VEL		5
 # define ANGLE_D	0.1
 
-# define COLL_SIZE	20
 # define CUB_SCALE	64
 /*	## MATH CONSTS END ##	*/
 

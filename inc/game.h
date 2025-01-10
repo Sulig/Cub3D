@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 19:31:42 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:39:34 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 # define GAME_H
 
 # include "../MLX42/include/MLX42/MLX42.h"
-# include "../New_Libft/inc/libft.h"
+
+# include <fcntl.h>
+# include <math.h>
+//*
+# include <stdio.h>
+
 # include "consts.h"
 # include "cub_structs.h"
 # include <fcntl.h>
@@ -41,18 +46,16 @@ void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
 void		printmap(t_game *gm);
 
-void		print_player_position(t_game *gm);
-
 /* MEMORY */
 void		free_mlxd(t_mlxd *mlxd);
 void		*free_map(t_map *map);
 t_map		*new_map(t_map *map, char *file);
 
 /* COLLISIONS */
-t_game		*calulate_move_to(t_game *gm);
-t_game		*can_move_to(t_game *gm, char dir);
+int			can_move_to(t_game *gm);
 
 /* ACTIONS */
+t_game		*resize_window(t_game *gm);
 void		rotate(t_game *gm, char direction);
 void		translate(t_game *gm, char dir);
 void		hook_keyboard(void *param);

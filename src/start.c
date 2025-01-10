@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 19:50:52 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:40:50 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,33 @@ static t_game	start_player(t_game game)
 	return (game);
 }
 
+t_game	*resize_window(t_game *gm)
+{
+	size_t	w;
+	size_t	h;
+
+	w = gm->mlxd->mlx->width;
+	h = gm->mlxd->mlx->height;
+	if (h < w)
+		w = h;
+	if (!gm->scr_h)
+		gm->scr_h = SCR_HEIGHT;
+	if (!gm->scr_w)
+		gm->scr_w = SCR_WIDTH;
+	while (w % RAYS)
+	{
+		if (w < 60)
+			w++;
+		else
+			w--;
+	}
+	mlx_resize_image(gm->mlxd->wimg, w, w);
+	gm->ray.scale = w / RAYS;
+	gm->scr_w = w;
+	gm->scr_h = w;
+	return (gm);
+}
+
 void	start(t_map *map)
 {
 	t_mlxd	mlxd;
@@ -87,6 +114,7 @@ void	start(t_map *map)
 	ft_bzero(&game.ray, sizeof(t_ray));
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);
+	ft_print_stat(game.map);
 	mlx_loop_hook(mlxd.mlx, hook_keyboard, &game);
 	mlx_loop(mlxd.mlx);
 	mlx_terminate(mlxd.mlx);

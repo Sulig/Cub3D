@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/17 18:55:36 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:04:25 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 t_game	*check_hrzlines(t_game *gm)
 {
 	gm->ray.dof_x = 0;
-	gm->ray.dis_h = 1000000;
-	gm->ray.atan = -1 / tan(gm->ray.ra);
-	if (gm->ray.ra > PI)
+	gm->ray.dis_h = 1000000000;
+	gm->ray.htan = -tan(gm->ray.ra);
+	if (gm->ray.ra > P2 && gm->ray.ra < P3)
 	{
-		gm->ray.ry = (((int)gm->ply.py >> 6) << 6) - 0.0001;
-		gm->ray.rx = (gm->ply.py - gm->ray.ry) * gm->ray.atan + gm->ply.px;
-		gm->ray.yo = -CUB_SCALE;
-		gm->ray.xo = -gm->ray.yo * gm->ray.atan;
+		gm->ray.rx = (((int)gm->ply.px >> 6) << 6) - 0.0001;
+		gm->ray.ry = (gm->ply.px - gm->ray.rx) * gm->ray.htan + gm->ply.py;
+		gm->ray.xo = -CUB_SCALE;
+		gm->ray.yo = -gm->ray.xo * gm->ray.htan;
 	}
-	if (gm->ray.ra < PI)
+	if (gm->ray.ra < P2 || gm->ray.ra > P3)
 	{
-		gm->ray.ry = (((int)gm->ply.py >> 6) << 6) + CUB_SCALE;
-		gm->ray.rx = (gm->ply.py - gm->ray.ry) * gm->ray.atan + gm->ply.px;
-		gm->ray.yo = CUB_SCALE;
-		gm->ray.xo = -gm->ray.yo * gm->ray.atan;
+		gm->ray.rx = (((int)gm->ply.px >> 6) << 6) + CUB_SCALE;
+		gm->ray.ry = (gm->ply.px - gm->ray.rx) * gm->ray.htan + gm->ply.py;
+		gm->ray.xo = CUB_SCALE;
+		gm->ray.yo = -gm->ray.xo * gm->ray.htan;
 	}
 	if (gm->ray.ra == 0 || gm->ray.ra == PI)
 	{
@@ -113,21 +113,21 @@ static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 t_game	*check_vrtlines(t_game *gm)
 {
 	gm->ray.dof_y = 0;
-	gm->ray.dis_v = 1000000;
-	gm->ray.ntan = -tan(gm->ray.ra);
-	if (gm->ray.ra > P2 && gm->ray.ra < P3)
+	gm->ray.dis_v = 1000000000;
+	gm->ray.vtan = -1 / tan(gm->ray.ra);
+	if (gm->ray.ra > PI)
 	{
-		gm->ray.rx = (((int)gm->ply.px >> 6) << 6) - 0.0001;
-		gm->ray.ry = (gm->ply.px - gm->ray.rx) * gm->ray.ntan + gm->ply.py;
-		gm->ray.xo = -CUB_SCALE;
-		gm->ray.yo = -gm->ray.xo * gm->ray.ntan;
+		gm->ray.ry = (((int)gm->ply.py >> 6) << 6) - 0.0001;
+		gm->ray.rx = (gm->ply.py - gm->ray.ry) * gm->ray.vtan + gm->ply.px;
+		gm->ray.yo = -CUB_SCALE;
+		gm->ray.xo = -gm->ray.yo * gm->ray.vtan;
 	}
-	if (gm->ray.ra < P2 || gm->ray.ra > P3)
+	if (gm->ray.ra < PI)
 	{
-		gm->ray.rx = (((int)gm->ply.px >> 6) << 6) + CUB_SCALE;
-		gm->ray.ry = (gm->ply.px - gm->ray.rx) * gm->ray.ntan + gm->ply.py;
-		gm->ray.xo = CUB_SCALE;
-		gm->ray.yo = -gm->ray.xo * gm->ray.ntan;
+		gm->ray.ry = (((int)gm->ply.py >> 6) << 6) + CUB_SCALE;
+		gm->ray.rx = (gm->ply.py - gm->ray.ry) * gm->ray.vtan + gm->ply.px;
+		gm->ray.yo = CUB_SCALE;
+		gm->ray.xo = -gm->ray.yo * gm->ray.vtan;
 	}
 	if (gm->ray.ra == 0 || gm->ray.ra == PI)
 	{

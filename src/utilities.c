@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/16 20:03:26 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:15:08 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void	paint_bg(t_game *game)
 	t_rect	sky;
 	t_rect	floor;
 
-	sky.height = SCR_HEIGHT;
-	sky.width = SCR_WIDTH;
+	sky.height = game->scr_h;
+	sky.width = game->scr_w;
 	sky.fill = game->c_sky;
-	floor.height = SCR_HEIGHT / 2;
-	floor.width = SCR_WIDTH;
+	floor.height = sky.height / 2;
+	floor.width = sky.width;
 	floor.fill = game->c_flr;
 	printrect(game->mlxd->wimg, 0, 0, sky);
-	printrect(game->mlxd->wimg, 0, SCR_HEIGHT / 2, floor);
+	printrect(game->mlxd->wimg, 0, floor.height, floor);
 }

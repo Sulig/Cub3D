@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 17:31:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:23:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 	- mlx -> The MLX
 	- wing -> The image where will ocour the render of game
 	- icon -> The Icon game
-	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- tx_no, _so, _we & _ea -> Set and convert textures loaded from file
 	- tx_ac -> The Actual texture to apply to the wall
 */
 typedef struct s_mlxd
@@ -59,16 +59,13 @@ typedef struct s_rect
 	- ipx	-> Player X Position in Map
 	- ipy	-> Player Y Position in Map
 	-----
-	- ipx_add & sub_xo -> This is necessary for collisions in X
-	- ipy_add & sub_yo -> This is necessary for collisions in Y
-	- rackmap -> Player Rack Map for collisions
-	- can_move & _vert & _horz -> Bool collisions
-	-----
 */
 typedef struct s_ply
 {
 	double	px;
 	double	py;
+	double	new_px;
+	double	new_py;
 	double	pdx;
 	double	pdy;
 	double	pa;
@@ -78,13 +75,24 @@ typedef struct s_ply
 	long	ipx_sub_xo;
 	long	ipy_add_yo;
 	long	ipy_sub_yo;
-	char	rackmap[3][3];
-	int		can_move;
-	int		can_move_vert;
-	int		can_move_horz;
 }			t_ply;
 
 /* MAP & FILE DATA */
+/*
+	- file	-> Data file attached to program
+	- map	-> 2D Map
+	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- pla	-> Player Focuss ("NSWE")
+	-----
+	- height	-> Max height of map
+	- width		-> Max width of map
+	- size		-> height * width of map
+	-----
+	- f_rgb & c_rgb -> Color background (Sky & Floor)
+	-----
+	- has_player	-> Counts num of players
+	- ply			-> Attach to player_struct
+*/
 typedef struct s_map
 {
 	char	**file;
@@ -104,6 +112,9 @@ typedef struct s_map
 }			t_map;
 
 /* RAYCAST DATA */
+/*
+	-
+*/
 typedef struct s_ray
 {
 	size_t	dof_x;
@@ -129,8 +140,8 @@ typedef struct s_ray
 	double	scale;
 	double	delta_x;
 	double	delta_y;
-	double	atan;
-	double	ntan;
+	double	htan;
+	double	vtan;
 	double	theta;
 }			t_ray;
 
@@ -155,6 +166,8 @@ typedef struct s_game
 	t_tex		tex;
 	int32_t		c_flr;
 	int32_t		c_sky;
+	size_t		scr_w;
+	size_t		scr_h;
 }			t_game;
 
 #endif
