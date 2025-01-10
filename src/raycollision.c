@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 18:04:25 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:13:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static int	check_wall(t_game *gm)
 {
+	if (gm->ray.mp > gm->map->size)
+		return (1);
 	if (gm->ray.my >= gm->map->height)
 		gm->ray.my = gm->map->height - 1;
 	if (gm->ray.mx >= gm->map->width)
 		gm->ray.mx = gm->map->width - 1;
-	if (gm->ray.mp > 0 && gm->ray.mp < gm->map->size)
-		if (gm->map->map[gm->ray.my][gm->ray.mx] == '1')
-			return (1);
+	if (gm->map->map[gm->ray.my][gm->ray.mx] == '1')
+		return (1);
 	return (0);
 }
 
