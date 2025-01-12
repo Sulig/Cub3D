@@ -6,14 +6,14 @@
 #    By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2025/01/08 18:40:20 by andmart2         ###   ########.fr        #
+#    Updated: 2025/01/12 13:14:00 by andmart2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
 
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)tryme-map.cub
+MAP_NAME	:=	$(MAP_DIR)other-map.cub
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
