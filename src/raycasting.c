@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 19:26:37 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:36:14 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,5 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
+	printmap(game);
 }

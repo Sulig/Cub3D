@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 19:27:35 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:45:15 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GAME_H
 # define GAME_H
 
-# include "../New_Libft/inc/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
-
-# include <fcntl.h>
-# include <math.h>
-
+# include "../New_Libft/inc/libft.h"
 # include "consts.h"
 # include "cub_structs.h"
+# include <fcntl.h>
+# include <math.h>
 
 /* PRINTING ERRORS */
 void		print_err_arfor(int error);
@@ -70,4 +68,6 @@ uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y);
 void		printrect(mlx_image_t *paint, size_t x, size_t y, t_rect rect);
 void		paint_bg(t_game *game);
 
+/*MINIMAP*/
+void		printmap(t_game *gm);
 #endif
