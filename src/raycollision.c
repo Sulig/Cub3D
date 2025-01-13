@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:19:24 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/10 20:13:21 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:52:19 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 static int	check_wall(t_game *gm)
 {
-	if (gm->ray.mp > gm->map->size)
+	if (gm->ray.mp >= gm->map->size)
 		return (1);
 	if (gm->ray.my >= gm->map->height)
 		gm->ray.my = gm->map->height - 1;
 	if (gm->ray.mx >= gm->map->width)
 		gm->ray.mx = gm->map->width - 1;
-	if (gm->map->map[gm->ray.my][gm->ray.mx] == '1')
-		return (1);
+	if (gm->ray.mp < gm->map->size)
+		if (gm->map->map[gm->ray.my][gm->ray.mx] == '1')
+			return (1);
 	return (0);
 }
 
 static t_game	*hrz_lines_bucle(t_game *gm, double hx, double hy)
 {
-	gm->ray.hx = gm->ply.px;
-	gm->ray.hy = gm->ply.py;
 	while (gm->ray.dof_x < gm->map->width)
 	{
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
 		gm->ray.my = (size_t)(gm->ray.ry) >> 6;
-		gm->ray.mp = gm->ray.my * gm->map->width + gm->ray.mx;
+		gm->ray.mp = gm->ray.my * gm->ray.mx;
 		if (check_wall(gm))
 		{
 			hx = gm->ray.rx;
@@ -84,13 +83,11 @@ t_game	*check_hrzlines(t_game *gm)
 
 static t_game	*vrt_lines_bucle(t_game *gm, double vx, double vy)
 {
-	gm->ray.vx = gm->ply.px;
-	gm->ray.vy = gm->ply.py;
 	while (gm->ray.dof_y < gm->map->height)
 	{
 		gm->ray.mx = (size_t)(gm->ray.rx) >> 6;
 		gm->ray.my = (size_t)(gm->ray.ry) >> 6;
-		gm->ray.mp = gm->ray.my * gm->map->height + gm->ray.mx;
+		gm->ray.mp = gm->ray.my * gm->ray.mx;
 		if (check_wall(gm))
 		{
 			vx = gm->ray.rx;
