@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   consts.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:00:08 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/13 20:20:57 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,12 @@
 
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
+
+# define MINMAP_W	333
+# define MINMAP_H	250
+# define MINMAP_CW	25
+# define MINMAP_CH	25
+#define MINIMAP_VIEW_WIDTH 10  
+#define MINIMAP_VIEW_HEIGHT 10 
 
 #endif

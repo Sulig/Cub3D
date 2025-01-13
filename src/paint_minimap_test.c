@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:29:56 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/13 19:59:21 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/13 20:18:03 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 #define MAP_WINDOW_X 50       // Coordenada X de inicio de la ventana del mapa
 #define MAP_WINDOW_Y 50       // Coordenada Y de inicio de la ventana del mapa
 #define VIEW_RADIUS 5         // Radio en celdas alrededor del jugador
-typedef struct s_point {
+
+
+/*typedef struct s_point {
     int x;
     int y;
 } t_point;
@@ -115,9 +117,9 @@ void	printmap(t_game *gm)
 
     // Dibujar el jugador
     paint_player(gm, area.start);
-}
+}*/
 
-/*void	paint_player(t_game *gm, int start_x, int start_y)
+void	paint_player(t_game *gm, int start_x, int start_y)
 {
 	t_rect	m;
 	int		x;
@@ -206,4 +208,4 @@ void	printmap(t_game *gm)
 		&end_y);
 	draw_map_area(gm, start_x, end_x, start_y, end_y);
 	paint_player(gm, start_x, start_y);
-}*/
+}
