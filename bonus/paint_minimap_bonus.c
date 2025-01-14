@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:37:56 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 20:32:54 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:37:46 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,14 @@ void	draw_map_area(t_game *gm, t_view_area area)
 }*/
 void	printmap(t_game *gm)
 {
-	ply_ipx = (int)(gm->ply.ipx);
-	ply_ipy = (int)(gm->ply.ipy);
-	area = calculate_view_area(gm, ply_ipx, ply_ipy);
-	draw_map_area(gm, area);
-	paint_player(gm, area.start);
+    int         ply_ipx;  // Declarar ply_ipx
+    int         ply_ipy;  // Declarar ply_ipy
+    t_view_area area;     // Declarar area
+
+    ply_ipx = (int)(gm->ply.ipx);
+    ply_ipy = (int)(gm->ply.ipy);
+    area = calculate_view_area(gm, ply_ipx, ply_ipy);
+    draw_map_area(gm, area);
+    paint_player(gm, area.start);
 }
+
