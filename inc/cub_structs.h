@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_structs.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:00:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:33:23 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,25 @@ typedef struct s_game
 	size_t		scr_h;
 }			t_game;
 
+/*MINIMAP*/
+typedef struct s_point
+{
+	int		x;
+	int		y;
+}			t_point;
+
+typedef struct s_view_area
+{
+	t_point	start;
+	t_point	end;
+}			t_view_area;
+
+typedef struct s_draw_params
+{
+	t_rect	rect;
+	int		map_x;
+	int		map_y;
+}			t_draw_params;
+
 #endif
+

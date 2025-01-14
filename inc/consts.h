@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:20:57 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:34:38 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,18 @@
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
 
+/* ## ERRORS CONSTS END ## */
 # define MINMAP_W	333
 # define MINMAP_H	250
 # define MINMAP_CW	25
 # define MINMAP_CH	25
 #define MINIMAP_VIEW_WIDTH 10  
 #define MINIMAP_VIEW_HEIGHT 10 
+
+#define MAP_WINDOW_WIDTH 200  // Ancho de la ventana del mapa
+#define MAP_WINDOW_HEIGHT 200 // Altura de la ventana del mapa
+#define MAP_WINDOW_X 50       // Coordenada X de inicio de la ventana del mapa
+#define MAP_WINDOW_Y 50       // Coordenada Y de inicio de la ventana del mapa
+#define VIEW_RADIUS 5         // Radio en celdas alrededor del jugador
 
 #endif
