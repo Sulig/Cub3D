@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:10:51 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:41:47 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,8 @@ void		paint_bg(t_game *game);
 
 /*MINIMAP*/
 void		printmap(t_game *gm);
+void		draw_map_area(t_game *gm, t_view_area area);
+void		paint_player(t_game *gm, t_point start);
+t_view_area	calculate_view_area(t_game *gm, int ply_ipx, int ply_ipy);
+
 #endif

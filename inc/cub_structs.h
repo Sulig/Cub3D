@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 18:33:23 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:46:00 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_mlxd
 */
 typedef struct s_rect
 {
-	size_t	width;
-	size_t	height;
-	int32_t	fill;
-}			t_rect;
+	size_t			width;
+	size_t			height;
+	int32_t			fill;
+}					t_rect;
 
 /* PLAYER DATA */
 /*
@@ -62,20 +62,20 @@ typedef struct s_rect
 */
 typedef struct s_ply
 {
-	double	px;
-	double	py;
-	double	new_px;
-	double	new_py;
-	double	pdx;
-	double	pdy;
-	double	pa;
-	long	ipx;
-	long	ipy;
-	long	ipx_add_xo;
-	long	ipx_sub_xo;
-	long	ipy_add_yo;
-	long	ipy_sub_yo;
-}			t_ply;
+	double			px;
+	double			py;
+	double			new_px;
+	double			new_py;
+	double			pdx;
+	double			pdy;
+	double			pa;
+	long			ipx;
+	long			ipy;
+	long			ipx_add_xo;
+	long			ipx_sub_xo;
+	long			ipy_add_yo;
+	long			ipy_sub_yo;
+}					t_ply;
 
 /* MAP & FILE DATA */
 /*
@@ -95,97 +95,96 @@ typedef struct s_ply
 */
 typedef struct s_map
 {
-	char	**file;
-	char	**map;
-	char	*tx_no;
-	char	*tx_so;
-	char	*tx_we;
-	char	*tx_ea;
-	char	pla;
-	size_t	height;
-	size_t	width;
-	size_t	size;
-	int		f_rgb[3];
-	int		c_rgb[3];
-	int		has_player;
-	t_ply	ply;
-}			t_map;
+	char			**file;
+	char			**map;
+	char			*tx_no;
+	char			*tx_so;
+	char			*tx_we;
+	char			*tx_ea;
+	char			pla;
+	size_t			height;
+	size_t			width;
+	size_t			size;
+	int				f_rgb[3];
+	int				c_rgb[3];
+	int				has_player;
+	t_ply			ply;
+}					t_map;
 
 /* RAYCAST DATA */
 typedef struct s_ray
 {
-	size_t	dof_x;
-	size_t	dof_y;
-	size_t	mx;
-	size_t	my;
-	size_t	mp;
-	double	hx;
-	double	hy;
-	double	vx;
-	double	vy;
-	double	rx;
-	double	ry;
-	double	ra;
-	double	xo;
-	double	yo;
-	double	dis_h;
-	double	dis_v;
-	double	dist;
-	double	line_h;
-	double	line_o;
-	double	line_t;
-	double	scale;
-	double	delta_x;
-	double	delta_y;
-	double	htan;
-	double	vtan;
-	double	theta;
-}			t_ray;
+	size_t			dof_x;
+	size_t			dof_y;
+	size_t			mx;
+	size_t			my;
+	size_t			mp;
+	double			hx;
+	double			hy;
+	double			vx;
+	double			vy;
+	double			rx;
+	double			ry;
+	double			ra;
+	double			xo;
+	double			yo;
+	double			dis_h;
+	double			dis_v;
+	double			dist;
+	double			line_h;
+	double			line_o;
+	double			line_t;
+	double			scale;
+	double			delta_x;
+	double			delta_y;
+	double			htan;
+	double			vtan;
+	double			theta;
+}					t_ray;
 
 /* DATA OF A CUB-RECT TEXTURED */
 typedef struct s_tex
 {
-	double	wall_x;
-	double	x;
-	double	y;
-	int		tx;
-	int		ty;
-	t_rect	rc;
-}		t_tex;
+	double			wall_x;
+	double			x;
+	double			y;
+	int				tx;
+	int				ty;
+	t_rect			rc;
+}					t_tex;
 
 /* THE PRINCIPAL STRUCTURE */
 typedef struct s_game
 {
-	t_mlxd		*mlxd;
-	t_map		*map;
-	t_ply		ply;
-	t_ray		ray;
-	t_tex		tex;
-	int32_t		c_flr;
-	int32_t		c_sky;
-	size_t		scr_w;
-	size_t		scr_h;
-}			t_game;
+	t_mlxd			*mlxd;
+	t_map			*map;
+	t_ply			ply;
+	t_ray			ray;
+	t_tex			tex;
+	int32_t			c_flr;
+	int32_t			c_sky;
+	size_t			scr_w;
+	size_t			scr_h;
+}					t_game;
 
 /*MINIMAP*/
 typedef struct s_point
 {
-	int		x;
-	int		y;
-}			t_point;
+	int				x;
+	int				y;
+}					t_point;
 
 typedef struct s_view_area
 {
-	t_point	start;
-	t_point	end;
-}			t_view_area;
+	t_point			start;
+	t_point			end;
+}					t_view_area;
 
 typedef struct s_draw_params
 {
-	t_rect	rect;
-	int		map_x;
-	int		map_y;
-}			t_draw_params;
+	t_rect			rect;
+	int				map_x;
+	int				map_y;
+}					t_draw_params;
 
 #endif
-
