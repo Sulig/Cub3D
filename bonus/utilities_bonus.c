@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilities.c                                        :+:      :+:    :+:   */
+/*   utilities_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:10:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /* Calculate distance
  *	between player and rays endpoint

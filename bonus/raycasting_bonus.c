@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:21:58 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /*
 * Calculate how many times has to repeat a pixel
@@ -132,4 +132,5 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
+	printmap(game);
 }

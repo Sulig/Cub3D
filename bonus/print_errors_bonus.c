@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_errors.c                                     :+:      :+:    :+:   */
+/*   print_errors_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 19:51:53 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:10:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /* Print custom error on invalid args or file extension
 *	- For invalid number args	-> 0

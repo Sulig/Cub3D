@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_file.c                                       :+:      :+:    :+:   */
+/*   check_file_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:10:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /* Verifies the format of file */
 int	check_format(char *file)

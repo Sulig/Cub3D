@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action.c                                           :+:      :+:    :+:   */
+/*   action_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:05:22 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:21:22 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /* Rotate the perspective view */
 void	rotate(t_game *gm, char direction)
 {
 	if (direction == ROT_LEFT)
 		gm->ply.pa -= ANGLE_D;
-	if (direction == ROT_RIGHT)
+	else if (direction == ROT_RIGHT)
 		gm->ply.pa += ANGLE_D;
 	if (gm->ply.pa < 0)
 		gm->ply.pa += 2 * PI;
@@ -80,6 +80,7 @@ void	hook_keyboard(void *param)
 		rotate(gm, ROT_LEFT);
 	if (mlx_is_key_down(gm->mlxd->mlx, MLX_KEY_RIGHT))
 		rotate(gm, ROT_RIGHT);
+	gm = hook_rotation(gm, 1);
 	gm = resize_window(gm);
 	raycasting(gm);
 }

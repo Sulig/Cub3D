@@ -6,11 +6,11 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:59:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 19:59:04 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:10:44 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/game.h"
+#include "./inc/game.h"
 
 static void	ft_print_case(char c)
 {
