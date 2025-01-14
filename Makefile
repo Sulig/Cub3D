@@ -6,14 +6,17 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2025/01/08 18:37:29 by sadoming         ###   ########.fr        #
+#    Updated: 2025/01/14 18:51:19 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:=	cub3D
+BONUS		:=	cub3D_bonus
 
+# Default map to run
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)open-map.cub
+MAP_NAME	:=	$(MAP_DIR)other-map.cub
+
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
 # Flags:
@@ -42,30 +45,37 @@ RG	:=	\033[1;32m
 # ------------------ #
 # Directories:
 
-INC_DIR		:=	./inc
-SRC_DIR		:=	./src/
-OBJ_DIR		:=	./obj
-
 ASSETS_DIR	:=	./assets/
 MAPS		:=	$(ASSETS_DIR)maps/
 
-# libft Dirs
-LIB_DIR		:=	./New_Libft
-LIB_INC		:=	./New_Libft/inc
-LIB_LIB		:=	./New_Libft/libft.a
+# SRC DIR
+SRC_DIR		:=	./src/
+INC_DIR		:=	$(SRC_DIR)inc
+OBJ_DIR		:=	./obj
 
-# MLX42 Dirs:
+# BONUS DIR
+
+BNS_DIR		:=	./bonus/
+INCB_DIR	:=	$(BNS_DIR)inc
+OBJB_DIR	:=	./objb
+#-----
+
+# libft DIR
+LIB_DIR		:=	./libft
+LIB_INC		:=	./$(LIB_DIR)/inc
+LIB_LIB		:=	./$(LIB_DIR)/libft.a
+
+# MLX42 DIR:
 MLX_DIR		:=	./MLX42/
 MLX_INC		:=	./MLX42/include/MLX42
 MLX_LIB		:=	./MLX42/build/libmlx42.a
 MLX_BUILD_DIR	:=	./MLX42/build/
 
 # Sorces:
-
 SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
 			print_errors.c ft_print_map_t.c parse_info.c\
 			start.c action.c raycasting.c raycollision.c\
-			paint_minimap_test.c utilities.c collisions.c
+			utilities.c collisions.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
@@ -73,9 +83,23 @@ OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.d, $(SRC))
 -include $(DEPS)
 
-vpath %.h $(INC_DIR) $(MLX_INC) $(LIB_INC)
-vpath %.c $(SRC_DIR) $(TST_DIR) $(_DM_DIR) $(_MM_DIR) $(_BG_DIR) $(_UT_DIR) $(_PL_DIR) $(_RC_DIR) $(_WALL_DIR) $(_PIX_DIR)
-vpath %.o $(OBJ_DIR)
+## BONUS SRC
+BNS_SRC	:=	cub_main_bonus.c man_memory_bonus.c check_file_bonus.c\
+			check_map_bonus.c print_errors_bonus.c parse_info_bonus.c\
+			start_bonus.c action_bonus.c raycasting_bonus.c\
+			raycollision_bonus.c utilities_bonus.c collisions_bonus.c\
+			paint_minimap_bonus.c bonus_actions_bonus.c
+
+BNS := $(addprefix $(BNS_DIR), $(BNS_SRC))
+
+OBJSB = $(patsubst $(BNS_DIR)%.c, $(OBJB_DIR)/%.o, $(BNS))
+DEPSB = $(patsubst $(BNS_DIR)%.c, $(OBJB_DIR)/%.d, $(BNS))
+-include $(DEPSB)
+
+# More deps...
+vpath %.h $(INC_DIR) $(INCB_DIR) $(MLX_INC) $(LIB_INC)
+vpath %.c $(SRC_DIR) $(BNS_DIR)
+vpath %.o $(OBJ_DIR) $(OBJB_DIR)
 # ******************************************************************************* #
 #-------------------------------------------------------------#
 all: mlx42 $(LIB_LIB) $(NAME)
@@ -86,7 +110,7 @@ all: mlx42 $(LIB_LIB) $(NAME)
 	@echo "~ **************************************** ~$(DEF)\n"
 	@make -s author
 
-# ---- #
+# ----
 mlx42:
 	@echo "$(Y)Checking if MLX42 exist...$(DEF)"
 	@if [ -d "MLX42" ]; then \
@@ -99,38 +123,56 @@ mlx42:
 		cmake --build build -j4; \
 	fi
 #-------------------------------------------------------------#
-help:
-	@echo "\033[1;37m\n ~ Posible comands:\n"
-	@echo "\t~ \t\t\t #-> Make $(NAME)\n"
-	@echo "\t~ all  \t\t #-> Make $(NAME)\n"
-	@echo "\t~ clean \t #-> Clean *.o\n"
-	@echo "\t~ fclean \t #-> Clean all\n"
-	@echo "\t~ clear \t #-> Clean all & clear\n"
-	@echo "\t~ norm \t\t #-> Run norminette\n"
-	@echo "\t~ re   \t\t #-> Redo $(NAME)\n"
-	@make -s author
-
-#-------------------------------------------------------------#
 author:
 	@echo "$(P)~ **************************************** ~\n"
 	@echo " ~\t      Made by Sadoming \t         ~"
 	@echo " ~   With the collaboration of Andmart2  ~"
 	@echo "~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
+bonus: mlx42 $(LIB_LIB) $(BONUS)
+	@make -C $(LIB_DIR)
+	@make -C $(MLX_BUILD_DIR) -j4
+	@echo "$(RG)\n~ **************************************** ~\n"
+	@echo "  ~\t     $(BONUS) is ready!\t\t ~\n"
+	@echo "~ **************************************** ~$(DEF)\n"
+	@make -s author
+#-------------------------------------------------------------#
+help:
+	@echo "\033[1;37m\n ~ Posible comands:\n"
+	@echo "\t~ \t\t\t #-> Make $(NAME)\n"
+	@echo "\t~ all  \t\t #-> Make $(NAME)\n"
+	@echo "\t~ bonus \t #-> Make $(BONUS)\n"
+	@echo "\t~ clean \t #-> Clean *.o\n"
+	@echo "\t~ fclean \t #-> Clean all\n"
+	@echo "\t~ clear \t #-> Clean all & clear\n"
+	@echo "\t~ norm \t\t #-> Run norminette\n"
+	@echo "\t~ re   \t\t #-> Redo $(NAME)\n"
+	@echo "\t~ run  \t\t #-> Run $(NAME)\n"
+	@echo "\t~ run-bonus \t #-> Run $(BONUS)\n"
+	@echo "\n If you're fancing problems with recompiling, try\n"
+	@echo "\t remove-mlx\n And after `make all` or `make bonus`"
+	@make -s author
+#-------------------------------------------------------------#
 norm:
 	@echo "\n$(Y)~ Norminette:\n"
 	@make -s norm -C $(LIB_DIR)
-	@norminette -R CheckForbiddenSourceHeader $(INC_DIR) $(SRC_DIR)
+	@norminette -R CheckForbiddenSourceHeader $(SRC_DIR) $(BNS_DIR)
 	@echo "\n~~~~~~~~~~~~~~~~~~~~~~\n"
-	@norminette $(INC_DIR) $(SRC_DIR)
+	@norminette $(SRC_DIR) $(BNS_DIR)
 	@echo "$(G)\n ~ Norminette:\t~ OK\n"
 	@echo "~~~~~~~~~~~~~~~~~~~~~~$(DEF)\n"
 #-------------------------------------------------------------#
-run: re
+run: all $(NAME)
 	@echo "$(C)\n~ **************************************** ~\n"
 	@echo " ~ Running ./$(NAME) $(RUN_MAP_NAME)"
 	@echo "\n~ **************************************** ~ $(DEF)\n"
 	@./$(NAME) $(RUN_MAP_NAME)
+#-------------------------------------------------------------#
+run-bonus: bonus $(BONUS)
+	@echo "$(C)\n~ **************************************** ~\n"
+	@echo " ~ Running ./$(BONUS) $(RUN_MAP_NAME)"
+	@echo "\n~ **************************************** ~ $(DEF)\n"
+	@./$(BONUS) $(RUN_MAP_NAME)
 #-------------------------------------------------------------#
 # ******************************************************************************* #
 # Compiling Region:
@@ -146,7 +188,7 @@ $(MLX_LIB):
 
 #-------------------------------------------------------------#
 #Cub3D objs
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDRS) $(MAK) $(LIB_LIB) $(MLX_LIB)
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(MAK) $(LIB_LIB) $(MLX_LIB)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_INC) -I $(LIB_INC) $(LIB_FLAGS) $< -o $@
 
@@ -154,6 +196,17 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)%.c $(HDRS) $(MAK) $(LIB_LIB) $(MLX_LIB)
 $(NAME): $(OBJS) $(LIB_LIB) $(MLX_LIB)
 	@$(CC) $(OBJS) $(MLX_LIB) $(LIB_LIB) -o $(NAME) $(LIB_FLAGS)
 	@echo "$(G)\n~ $(NAME) Compiled Successfully ~"
+#-------------------------------------------------------------#
+
+#Cub3D objs BONUS
+$(OBJB_DIR)/%.o: $(BNS_DIR)%.c $(MAK) $(LIB_LIB) $(MLX_LIB)
+	@mkdir -p $(OBJB_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_INC) -I $(LIB_INC) $(LIB_FLAGS) $< -o $@
+
+#Cub3D BNS
+$(BONUS): $(OBJSB) $(LIB_LIB) $(MLX_LIB)
+	@$(CC) $(OBJSB) $(MLX_LIB) $(LIB_LIB) -o $(BONUS) $(LIB_FLAGS)
+	@echo "$(G)\n~ $(BONUS) Compiled Successfully ~"
 #-------------------------------------------------------------#
 # ********************************************************************************* #
 # Debug region
@@ -163,6 +216,13 @@ val: $(NAME)
 
 val_s: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(RUN_MAP_NAME)
+
+#-----------#
+val-b: $(BONUS)
+	@valgrind --leak-check=full --track-origins=yes ./$(BONUS) $(RUN_MAP_NAME)
+
+val_s-b: $(BONUS)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(BONUS) $(RUN_MAP_NAME)
 
 #-----------#
 debug: re
@@ -176,6 +236,7 @@ debug: re
 
 clean:
 	@/bin/rm -frd $(OBJ_DIR)
+	@/bin/rm -frd $(OBJB_DIR)
 	@make -s clean -C $(LIB_DIR)
 	@echo "$(B)\n All objs & deps removed$(DEF)\n"
 
@@ -183,16 +244,20 @@ fclean: clean
 	@make -s fclean -C $(LIB_DIR)
 	@/bin/rm -f $(NAME)
 	@/bin/rm -frd $(NAME).dSYM
+	@/bin/rm -f $(BONUS)
+	@/bin/rm -frd $(BONUS).dSYM
 	@echo "$(B)\n All cleaned succesfully$(DEF)\n"
 
 clear: fclean
 	@clear
 
-prepare-push: clear
+remove-mlx: clear
 	@rm -rf MLX42
 	@echo "$(C)\tReady!$(DEF)\n"
 
 re: fclean all
+re-bonus: fclean bonus
 # -------------------- #
-.PHONY: all author clean fclean mlx42 norm re run val val_s
+.PHONY: all author clean fclean mlx42 norm re remove-mlx run val val_s
+.PHONY: bonus re-bonus run-bonus val-b val_s-b
 # ********************************************************************************** #

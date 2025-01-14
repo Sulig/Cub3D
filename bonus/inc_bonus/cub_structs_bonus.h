@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_structs.h                                      :+:      :+:    :+:   */
+/*   cub_structs_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 13:25:13 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:02:02 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_STRUCTS_H
-# define CUB_STRUCTS_H
+#ifndef CUB_STRUCTS_BONUS_H
+# define CUB_STRUCTS_BONUS_H
 
-# include "game.h"
+# include "game_bonus.h"
 
 /* MLX DATA */
 /*
 	- mlx -> The MLX
 	- wing -> The image where will ocour the render of game
 	- icon -> The Icon game
-	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- tx_no, _so, _we & _ea -> Set and convert textures loaded from file
 	- tx_ac -> The Actual texture to apply to the wall
 */
 typedef struct s_mlxd
@@ -47,6 +47,26 @@ typedef struct s_rect
 	size_t	height;
 	int32_t	fill;
 }			t_rect;
+
+/* MINIMAP */
+typedef struct s_point
+{
+	size_t	x;
+	size_t	y;
+}			t_point;
+
+typedef struct s_view_area
+{
+	t_point	start;
+	t_point	end;
+}			t_view_area;
+
+typedef struct s_draw_params
+{
+	t_rect	rect;
+	int		map_x;
+	int		map_y;
+}			t_draw_params;
 
 /* PLAYER DATA */
 /*
@@ -78,6 +98,21 @@ typedef struct s_ply
 }			t_ply;
 
 /* MAP & FILE DATA */
+/*
+	- file	-> Data file attached to program
+	- map	-> 2D Map
+	- tx_no, _so, _we & _ea -> The textures loaded from file
+	- pla	-> Player Focuss ("NSWE")
+	-----
+	- height	-> Max height of map
+	- width		-> Max width of map
+	- size		-> height * width of map
+	-----
+	- f_rgb & c_rgb -> Color background (Sky & Floor)
+	-----
+	- has_player	-> Counts num of players
+	- ply			-> Attach to player_struct
+*/
 typedef struct s_map
 {
 	char	**file;
@@ -122,8 +157,8 @@ typedef struct s_ray
 	double	scale;
 	double	delta_x;
 	double	delta_y;
-	double	atan;
-	double	ntan;
+	double	htan;
+	double	vtan;
 	double	theta;
 }			t_ray;
 
@@ -148,6 +183,12 @@ typedef struct s_game
 	t_tex		tex;
 	int32_t		c_flr;
 	int32_t		c_sky;
+	size_t		scr_w;
+	size_t		scr_h;
+	int32_t		msp_x;
+	int32_t		msp_y;
+	int			door;
+	int			gost;
 }			t_game;
 
 #endif

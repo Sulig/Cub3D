@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   consts.h                                           :+:      :+:    :+:   */
+/*   consts_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/09 13:29:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:18:15 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONSTS_H
-# define CONSTS_H
+#ifndef CONSTS_BONUS_H
+# define CONSTS_BONUS_H
 
 /*		 ## SCREEN ##		*/
-# define TITLE		"CUB3D"
-# define WIN_WIDTH	1020
-# define WIN_HEIGHT	1020
+# define TITLE		"CUB3D BONUS"
+# define WIN_WIDTH	1080
+# define WIN_HEIGHT	1080
 
-# define SCR_WIDTH	1020
-# define SCR_HEIGHT	1020
+# define SCR_WIDTH	1080
+# define SCR_HEIGHT	1080
 
-# define MINMAP_W	333
-# define MINMAP_H	250
-# define MINMAP_CW	26
-# define MINMAP_CH	26
+/*		 ## MINI MAP ##		*/
+# define MINMAP_WIDTH		250
+# define MINMAP_HEIGHT		250
 
-# define ICON		"./assets/textures/error-tile_anim/error-tile_0.png"
+# define MAP_WINDOW_X		50
+# define MAP_WINDOW_Y		50
+
+# define MINMAP_CELL_W		26
+# define MINMAP_CELL_H		26
+
+# define VIEW_RADIUS		5
+/*		## MINI MAP END ##		*/
+
+# define ICON		"./assets/textures/so-long/exit.png"
 /*		## SCREEN END ##	*/
 
 /*		 ## MATH CONSTS ##		*/
@@ -35,10 +43,10 @@
 # define P3			4.71238898
 # define DR			0.0174533
 # define RAYS		60
+# define RAYS_SUB	30
 # define VEL		5
 # define ANGLE_D	0.1
 
-# define COLL_SIZE	20
 # define CUB_SCALE	64
 /*	## MATH CONSTS END ##	*/
 
@@ -58,7 +66,9 @@
 # define PLY_TRSNMAP	"Player have traspased to an unexistent ubication\n"
 /*	## ERRORS CONSTS END ##	*/
 
-/**/
+/* OTHERS */
+# define DOOR			'D'
+# define WALLS			"1D"
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:10:03 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /*
 * Calculate how many times has to repeat a pixel
@@ -80,6 +80,8 @@ static t_game	*horizontal_wall(t_game *gm)
 		gm->mlxd->tx_ac = gm->mlxd->tx_ea;
 	else
 		gm->mlxd->tx_ac = gm->mlxd->tx_we;
+	if (gm->door)
+		gm->mlxd->tx_ac = gm->mlxd->icon;
 	return (gm);
 }
 
@@ -104,6 +106,8 @@ static t_game	*check_wall_orientation(t_game *gm)
 		else
 			gm->mlxd->tx_ac = gm->mlxd->tx_no;
 	}
+	if (gm->door)
+		gm->mlxd->tx_ac = gm->mlxd->icon;
 	return (gm);
 }
 
@@ -132,4 +136,5 @@ void	raycasting(t_game *game)
 			game->ray.ra -= 2 * PI;
 		r++;
 	}
+	printmap(game);
 }

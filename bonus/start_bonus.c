@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start.c                                            :+:      :+:    :+:   */
+/*   start_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:01:48 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/game.h"
+#include "./inc_bonus/game_bonus.h"
 
 /*
 * Start MLX and all the textures
@@ -73,31 +73,6 @@ static t_game	start_player(t_game game)
 	return (game);
 }
 
-t_game	*resize_window(t_game *gm)
-{
-	size_t	w;
-	size_t	h;
-
-	w = gm->mlxd->mlx->width;
-	h = gm->mlxd->mlx->height;
-	if (gm->scr_h == h && gm->scr_w == w)
-		return (gm);
-	if (h < w)
-		w = h;
-	while (w % RAYS)
-	{
-		if (w < 60)
-			w++;
-		else
-			w--;
-	}
-	mlx_resize_image(gm->mlxd->wimg, w, w);
-	gm->ray.scale = w / RAYS;
-	gm->scr_w = w;
-	gm->scr_h = w;
-	return (gm);
-}
-
 void	start(t_map *map)
 {
 	t_mlxd	mlxd;
@@ -106,11 +81,14 @@ void	start(t_map *map)
 	mlxd = init_mlxdata(map, mlxd);
 	if (mlx_image_to_window(mlxd.mlx, mlxd.wimg, 0, 0) < 0)
 		print_mlxerror();
+	ft_bzero(&game, sizeof(t_game));
 	game.mlxd = &mlxd;
 	game.map = map;
 	game.ply = map->ply;
 	game.scr_h = SCR_HEIGHT;
 	game.scr_w = SCR_WIDTH;
+	game.gost = 0;
+	game = *hook_rotation(&game, 0);
 	ft_bzero(&game.ray, sizeof(t_ray));
 	ft_bzero(&game.tex, sizeof(t_tex));
 	game = start_player(game);

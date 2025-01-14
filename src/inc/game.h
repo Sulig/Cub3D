@@ -6,15 +6,15 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/08 20:00:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:11:29 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GAME_H
 # define GAME_H
 
-# include "../New_Libft/inc/libft.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../../libft/inc/libft.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
 
 # include <fcntl.h>
 # include <math.h>
@@ -41,7 +41,6 @@ t_map		*parse_fileinfo_intovars(t_map *map);
 /* DEBUG */
 void		ft_print_map_t(char **map);
 void		ft_print_stat(t_map *map);
-void		printmap(t_game *gm);
 
 /* MEMORY */
 void		free_mlxd(t_mlxd *mlxd);
@@ -52,6 +51,7 @@ t_map		*new_map(t_map *map, char *file);
 int			can_move_to(t_game *gm);
 
 /* ACTIONS */
+t_game		*resize_window(t_game *gm);
 void		rotate(t_game *gm, char direction);
 void		translate(t_game *gm, char dir);
 void		hook_keyboard(void *param);
