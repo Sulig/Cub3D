@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 18:07:58 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:54:37 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,6 @@
 # define MOV_RIGHT	'3'
 # define HORZ		'H'
 # define VERT		'V'
-/* BONUS ACTION! */
-/* ## GOST MODE ##
-*	If GOST is 'A' || 'T' You can move through walls!
-*	- Gost mode can't pass through the walls at the beginning of the map
-*/
-# define GOST		'F'
 /*	## ACTIONS CONSTS END ##	*/
 
 /*		 ## ERRORS CONSTS ##		*/

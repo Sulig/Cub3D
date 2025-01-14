@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 18:19:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:59:40 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ typedef struct s_rect
 	size_t	height;
 	int32_t	fill;
 }			t_rect;
+
+/* MINIMAP */
+typedef struct s_point
+{
+	size_t	x;
+	size_t	y;
+}			t_point;
+
+typedef struct s_view_area
+{
+	t_point	start;
+	t_point	end;
+}			t_view_area;
+
+typedef struct s_draw_params
+{
+	t_rect	rect;
+	int		map_x;
+	int		map_y;
+}			t_draw_params;
 
 /* PLAYER DATA */
 /*
