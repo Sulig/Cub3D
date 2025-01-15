@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:47:20 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/05 20:12:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:42:53 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strtrim(const char *s1, const char *set);
 char	*ft_strtrim_inside(char *input, char trim);
 char	*ft_strremove(char *str, const char *rem);
 char	*ft_substr(const char*s, unsigned int start, size_t len);
+char	*my_substr(char *s, size_t start, size_t len);
 
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strjoin_free_fst(char *s1, const char *s2);

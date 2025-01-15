@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"game_bonus.h": "c"
+		"game_bonus.h": "c",
+		"array": "c"
 	}
 }

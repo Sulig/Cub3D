@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   paint_minimap_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:37:56 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 20:12:30 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:35:58 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc_bonus/game_bonus.h"
+#include <stdbool.h>
 
 t_view_area	calculate_view_area(t_game *gm, int ply_ipx, int ply_ipy)
 {
@@ -53,29 +54,51 @@ void	paint_player(t_game *gm, t_point start)
 	printrect(gm->mlxd->wimg, x, y, m);
 }
 
-void	draw_map_area(t_game *gm, t_view_area area)
+static bool	is_within_row_bounds(t_game *gm, size_t y, size_t x)
+{
+	if (y >= gm->map->height)
+		return (false);
+	return (x < ft_strlen(gm->map->map[y]));
+}
+
+t_draw_params	prepare_drawing_params(size_t x, size_t y, t_view_area area,
+		t_game *gm)
 {
 	t_draw_params	params;
-	size_t			x;
-	size_t			y;
 
 	params.rect.height = MINMAP_CELL_H;
 	params.rect.width = MINMAP_CELL_W;
+	params.map_x = (x - area.start.x) * params.rect.width + MAP_WINDOW_X;
+	params.map_y = (y - area.start.y) * params.rect.height + MAP_WINDOW_Y;
+	if (gm->map->map[y][x] == '0')
+	{
+		params.rect.fill = ft_pixel(20, 20, 20, 50);
+	}
+	else
+	{
+		params.rect.fill = ft_pixel(200, 200, 200, 50);
+	}
+	return (params);
+}
+
+void	draw_map_area(t_game *gm, t_view_area area)
+{
+	size_t			x;
+	size_t			y;
+	t_draw_params	params;
+
 	y = area.start.y;
 	while (y <= area.end.y)
 	{
 		x = area.start.x;
 		while (x <= area.end.x)
 		{
-			params.map_x = (x - area.start.x) * params.rect.width
-				+ MAP_WINDOW_X;
-			params.map_y = (y - area.start.y) * params.rect.height
-				+ MAP_WINDOW_Y;
-			if (gm->map->map[y][x] == '0')
-				params.rect.fill = ft_pixel(20, 20, 20, 50);
-			else if (ft_strchr(WALLS, gm->map->map[y][x]))
-				params.rect.fill = ft_pixel(200, 200, 200, 50);
-			printrect(gm->mlxd->wimg, params.map_x, params.map_y, params.rect);
+			if (is_within_row_bounds(gm, y, x))
+			{
+				params = prepare_drawing_params(x, y, area, gm);
+				printrect(gm->mlxd->wimg, params.map_x, params.map_y,
+					params.rect);
+			}
 			x++;
 		}
 		y++;
@@ -84,9 +107,9 @@ void	draw_map_area(t_game *gm, t_view_area area)
 
 void	printmap(t_game *gm)
 {
+	t_view_area	area;
 	int			ply_ipx;
 	int			ply_ipy;
-	t_view_area	area;
 
 	ply_ipx = (int)(gm->ply.ipx);
 	ply_ipy = (int)(gm->ply.ipy);

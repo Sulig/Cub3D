@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:00:08 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:10:38 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # define TITLE		"CUB3D"
 # define WIN_WIDTH	1080
 # define WIN_HEIGHT	1080
-
-# define SCR_WIDTH	1080
-# define SCR_HEIGHT	1080
 
 # define ICON		"./assets/textures/error-tile_anim/error-tile_0.png"
 /*		## SCREEN END ##	*/

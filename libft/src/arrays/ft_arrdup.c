@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrmap.c                                        :+:      :+:    :+:   */
+/*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:58:35 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/14 16:53:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:32:14 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * Make a copy of org
  * *Return NULL if !org || !size of org
  */
-void	**arrmap(void **org)
+void	**arrdup(void **org)
 {
 	char	**copy;
 	size_t	cnt;

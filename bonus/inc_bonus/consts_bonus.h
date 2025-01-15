@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:49:31 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 20:18:15 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:25:33 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,12 @@
 # define WIN_WIDTH	1080
 # define WIN_HEIGHT	1080
 
-# define SCR_WIDTH	1080
-# define SCR_HEIGHT	1080
-
 /*		 ## MINI MAP ##		*/
-# define MINMAP_WIDTH		250
-# define MINMAP_HEIGHT		250
-
 # define MAP_WINDOW_X		50
 # define MAP_WINDOW_Y		50
 
-# define MINMAP_CELL_W		26
 # define MINMAP_CELL_H		26
-
+# define MINMAP_CELL_W		26
 # define VIEW_RADIUS		5
 /*		## MINI MAP END ##		*/
 

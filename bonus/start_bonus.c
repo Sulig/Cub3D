@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 20:01:48 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:08:58 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_mlxd	init_mlxdata(t_map *map, t_mlxd mlxd)
 	mlxd.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, TITLE, true);
 	if (!mlxd.mlx)
 		print_mlxerror();
-	mlxd.wimg = mlx_new_image(mlxd.mlx, SCR_WIDTH, SCR_HEIGHT);
+	mlxd.wimg = mlx_new_image(mlxd.mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!mlxd.wimg)
 		print_mlxerror();
 	mlxd.tx_no = mlx_load_png(map->tx_no);
@@ -69,7 +69,7 @@ static t_game	start_player(t_game game)
 	color[1] = (int32_t)game.map->f_rgb[1];
 	color[2] = (int32_t)game.map->f_rgb[2];
 	game.c_flr = ft_pixel(color[0], color[1], color[2], 255);
-	game.ray.scale = SCR_WIDTH / RAYS;
+	game.ray.scale = WIN_WIDTH / RAYS;
 	return (game);
 }
 
@@ -78,22 +78,20 @@ void	start(t_map *map)
 	t_mlxd	mlxd;
 	t_game	game;
 
+	ft_bzero(&game, sizeof(t_game));
 	mlxd = init_mlxdata(map, mlxd);
 	if (mlx_image_to_window(mlxd.mlx, mlxd.wimg, 0, 0) < 0)
 		print_mlxerror();
-	ft_bzero(&game, sizeof(t_game));
 	game.mlxd = &mlxd;
 	game.map = map;
 	game.ply = map->ply;
-	game.scr_h = SCR_HEIGHT;
-	game.scr_w = SCR_WIDTH;
-	game.gost = 0;
-	game = *hook_rotation(&game, 0);
-	ft_bzero(&game.ray, sizeof(t_ray));
-	ft_bzero(&game.tex, sizeof(t_tex));
+	game.scr_h = WIN_HEIGHT;
+	game.scr_w = WIN_WIDTH;
 	game = start_player(game);
+	game = *hook_rotation(&game, 0);
 	mlx_loop_hook(mlxd.mlx, hook_keyboard, &game);
 	mlx_loop(mlxd.mlx);
 	mlx_terminate(mlxd.mlx);
 	free_mlxd(&mlxd);
+	ft_bzero(&game, sizeof(t_game));
 }

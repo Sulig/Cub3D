@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:20:16 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 17:10:28 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:27:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_map	*clean_file(t_map *map)
 	map->file = (char **)arrpop((void **)map->file, pos_pop);
 	pos_pop = ft_search_str(map->file, "C");
 	map->file = (char **)arrpop((void **)map->file, pos_pop);
-	map->map = (char **)arrmap((void **)map->file);
+	map->map = (char **)arrdup((void **)map->file);
 	if (!map->map)
 		print_errmalloc();
 	tmp = ft_strtrim(map->tx_no, "NO \t");

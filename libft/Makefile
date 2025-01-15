@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 11:55:07 by sadoming          #+#    #+#              #
-#    Updated: 2024/12/11 17:41:58 by sadoming         ###   ########.fr        #
+#    Updated: 2025/01/15 19:32:47 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ STR_SRC = ft_split.c ft_strchr.c ft_strcmp.c ft_strcpy.c ft_strcut.c\
 		  ft_strinter.c ft_strjoin.c ft_strlen.c ft_strstr.c ft_strtrim.c\
 		  ft_substr.c ft_apears_in.c ft_strremove.c
 
-ARR_SRC = ft_arrmap.c ft_arrpop.c ft_arrpush.c ft_arrsize.c
+ARR_SRC = ft_arrdup.c ft_arrpop.c ft_arrpush.c ft_arrsize.c
 
 LST_SRC = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c\
 		  ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c\
