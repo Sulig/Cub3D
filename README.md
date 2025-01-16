@@ -18,7 +18,7 @@ Your goal will be to make a dynamic view inside a maze, in which you’ll have t
 ## Content of this repository:
 - [The New_Libft](https://github.com/Sulig/New_Libft)
 - [MinilibX Codam](https://github.com/codam-coding-college/MLX42)
-  - // Clonned into repo when you "make"
+  - // Cloned into repo when you "make"
 - The Cub3D `src` and some bonus!
 - [Subject English](https://github.com/Sulig/Cub3D/blob/master/Cub3D_subject-en.pdf)
 **
@@ -37,21 +37,21 @@ Move the vision of player with the arrows
  - LEFT-KEYBOARD -> Rotate Left
  - RIGHT-KEYBOARD -> Rotate Right
 
-You can change the window size by just by dragging the screen or clicking on the icon to make the screen large.
+You can change the window size by just dragging the screen or clicking on the icon to make the screen large.
 
-Close the game with `esc` or close directly with cros icon.
+Close the game with `esc` or close directly with the cross icon.
 
 ### BONUS ADDED
-If you execute this comand: `make run-bonus` you can play at this game with these bonus:
+If you execute this command: `make run-bonus` you can play at this game with these bonus:
 
   - Move the camera with the mouse!
-  - Take a look on where are you in a faboluous minimap!
-  - (Yet aded in mandatory) Don't walk across the walls!
-  - GOST MODE! -> `SPACE`
+  - Take a look at where you are in a fabulous minimap!
+  - (Yet added in mandatory) Don't walk across the walls!
+  - ¡GHOST MODE! -> `SPACE`
 
 ***
 
 ***
-~          Made by sadoming            ~
+~      	Made by sadoming        	~
 ~  With the collaboration of Andmart2  ~
 ***
