@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   paint_minimap_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:37:56 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 21:35:58 by andmart2         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:37:35 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc_bonus/game_bonus.h"
-#include <stdbool.h>
 
 t_view_area	calculate_view_area(t_game *gm, int ply_ipx, int ply_ipy)
 {
@@ -54,13 +53,6 @@ void	paint_player(t_game *gm, t_point start)
 	printrect(gm->mlxd->wimg, x, y, m);
 }
 
-static bool	is_within_row_bounds(t_game *gm, size_t y, size_t x)
-{
-	if (y >= gm->map->height)
-		return (false);
-	return (x < ft_strlen(gm->map->map[y]));
-}
-
 t_draw_params	prepare_drawing_params(size_t x, size_t y, t_view_area area,
 		t_game *gm)
 {
@@ -93,7 +85,7 @@ void	draw_map_area(t_game *gm, t_view_area area)
 		x = area.start.x;
 		while (x <= area.end.x)
 		{
-			if (is_within_row_bounds(gm, y, x))
+			if (y < gm->map->height && x < ft_strlen(gm->map->map[y]))
 			{
 				params = prepare_drawing_params(x, y, area, gm);
 				printrect(gm->mlxd->wimg, params.map_x, params.map_y,

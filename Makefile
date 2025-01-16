@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2025/01/14 18:51:19 by sadoming         ###   ########.fr        #
+#    Updated: 2025/01/16 16:25:14 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,8 @@ OBJB_DIR	:=	./objb
 
 # libft DIR
 LIB_DIR		:=	./libft
-LIB_INC		:=	./$(LIB_DIR)/inc
-LIB_LIB		:=	./$(LIB_DIR)/libft.a
+LIB_INC		:=	$(LIB_DIR)/inc
+LIB_LIB		:=	$(LIB_DIR)/libft.a
 
 # MLX42 DIR:
 MLX_DIR		:=	./MLX42/
