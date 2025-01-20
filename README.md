@@ -1,6 +1,7 @@
 # Cub3D  <img align="center" src="assets/textures/error-tile_anim/error-tile.gif" height="35" alt="error tile"/>
 
-~ Started on: 13/10/2024 ~ *** ~ Ended on: IN EVAL
+~ Started on: 13/10/2024 ~ *** ~ Ended on: 16/01/2025 Ranked with 105
+-- I will re-do it! (In a minute now..)
 
 [![Stars](https://img.shields.io/github/stars/Sulig/Cub3D?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/Cub3D)
 [![Size](https://img.shields.io/github/repo-size/Sulig/Cub3D?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/Cub3D)
