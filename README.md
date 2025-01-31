@@ -1,7 +1,6 @@
 # Cub3D  <img align="center" src="assets/textures/error-tile_anim/error-tile.gif" height="35" alt="error tile"/>
 
-~ Started on: 13/10/2024 ~ *** ~ Ended on: 16/01/2025 Ranked with 105
--- I will re-do it! (In a minute now.. and for myself :>)
+~ Started on: 13/10/2024 ~ *** ~ Ended on: RE-DOING
 
 [![Stars](https://img.shields.io/github/stars/Sulig/Cub3D?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/Cub3D)
 [![Size](https://img.shields.io/github/repo-size/Sulig/Cub3D?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/Cub3D)
@@ -42,7 +41,7 @@ You can change the window size by just dragging the screen or clicking on the ic
 
 Close the game with `esc` or close directly with the cross icon.
 
-### BONUS ADDED
+## BONUS ADDED
 If you execute this command: `make run-bonus` you can play at this game with these bonus:
 
   - Move the camera with the mouse!
@@ -52,7 +51,10 @@ If you execute this command: `make run-bonus` you can play at this game with the
 
 ***
 
+> [!WARNING]\
+> This branch is in progress and reciving more changes!
+> This can cause a break or and overload on a run!
+
 ***
 ~      	Made by sadoming        	~
-~  With the collaboration of Andmart2  ~
 ***
