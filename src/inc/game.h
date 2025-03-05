@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/15 20:29:58 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:10:27 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@
 /* PRINTING ERRORS */
 void		print_err_arfor(int error);
 void		print_errmalloc(void);
-void		print_mlxerror(void);
 void		print_err_dupmiss(int error);
-void		print_other_err(char *err);
+void		print_mlxerror(void);
+void		print_custom_err(char *err);
 
 /* CHECKERS */
 int			check_format(char *file);
 int			check_dupmiss(t_map *map);
 int			check_colors(t_map *map);
-void		ft_check_valid_map(t_map *m);
+int			check_valid_symbol(t_map *map);
+int			check_player_inmap(t_map *m);
+void		check_valid_map(t_map *m);
 
 /* PARSER */
 t_map		*parse_fileinfo_intovars(t_map *map);
@@ -63,7 +65,6 @@ t_game		*check_vrtlines(t_game *gm);
 void		raycasting(t_game *game);
 
 /* UTILITIES */
-int			ft_is_valid_neighbor(char c);
 char		get_cell(t_map *map, long x, long y, int mapp);
 double		dist(double ax, double ay, double bx, double by);
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);

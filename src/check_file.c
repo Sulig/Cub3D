@@ -6,23 +6,23 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:11:07 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/game.h"
 
-/* Verifies the format of file */
+/* Verifies the format of file and check if exist */
 int	check_format(char *file)
 {
 	char	*format;
 
-	if (open(file, O_RDONLY) == -1)
-		print_err_arfor(1);
 	format = ft_strstr(file, ".cub");
 	if (!format)
-		print_err_arfor(2);
+		print_err_arfor(1);
 	format = NULL;
+	if (open(file, O_RDONLY) == -1)
+		print_err_arfor(2);
 	return (1);
 }
 
@@ -58,10 +58,46 @@ int	check_colors(t_map *map)
 	while (i < 3)
 	{
 		if (map->c_rgb[i] < 0 || map->c_rgb[i] > 255)
-			return (0);
+			print_custom_err(BAD_CCOLOR);
 		if (map->f_rgb[i] < 0 || map->f_rgb[i] > 255)
-			return (0);
+			print_custom_err(BAD_FCOLOR);
 		i++;
 	}
+	return (1);
+}
+
+/* Check if the map contains only a valid symbols */
+int	check_valid_symbol(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (!ft_strchr(MAP_CHARS, map->map[i][j]))
+				print_custom_err(INVALID_CHARS);
+			if (i == FLOOR)
+				if (map->map[i][j] != '1')
+					print_custom_err(MAP_NOTCLOSED);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+/* Check if player is not in the corners of map */
+int	check_player_inmap(t_map *m)
+{
+	if (m->ply.ipy == 0 || m->ply.ipx == 0)
+		print_custom_err(INVALID_MAP);
+	if (m->ply.ipy >= m->height - 1 || m->ply.ipx >= m->width - 1)
+		print_custom_err(INVALID_MAP);
+	if (m->ply.ipx >= ft_strlen(m->map[m->ply.ipy]) - 1)
+		print_custom_err(INVALID_MAP);
 	return (1);
 }

@@ -6,12 +6,13 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:40:39 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 17:10:53 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:29:04 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/game.h"
 
+/* Free MLX Memory Reservated */
 void	free_mlxd(t_mlxd *mlxd)
 {
 	if (!mlxd)
@@ -29,6 +30,7 @@ void	free_mlxd(t_mlxd *mlxd)
 	ft_bzero(mlxd, sizeof(t_mlxd));
 }
 
+/* Free struct Map Memory */
 void	*free_map(t_map *map)
 {
 	map->file = ft_free_arrstr(map->file);
@@ -42,6 +44,9 @@ void	*free_map(t_map *map)
 	return (NULL);
 }
 
+/* Create a new file-map with the file attached to program
+ * * If something went wrong, print an error message
+ */
 t_map	*new_map(t_map *map, char *file)
 {
 	char	*rfile;
