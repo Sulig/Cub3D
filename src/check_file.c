@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 20:12:11 by sadoming          #+#    #+#             */
-/*   Updated: 2025/03/05 18:11:07 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:47:28 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,15 @@ int	check_dupmiss(t_map *map)
 	while (++cnt < 6)
 	{
 		if (!checker[cnt])
+		{
+			map = free_map(map);
 			print_err_dupmiss(0);
+		}
 		else if (checker[cnt] > 1)
+		{
+			map = free_map(map);
 			print_err_dupmiss(1);
+		}
 	}
 	return (1);
 }
@@ -58,9 +64,15 @@ int	check_colors(t_map *map)
 	while (i < 3)
 	{
 		if (map->c_rgb[i] < 0 || map->c_rgb[i] > 255)
+		{
+			map = free_map(map);
 			print_custom_err(BAD_CCOLOR);
+		}
 		if (map->f_rgb[i] < 0 || map->f_rgb[i] > 255)
+		{
+			map = free_map(map);
 			print_custom_err(BAD_FCOLOR);
+		}
 		i++;
 	}
 	return (1);
@@ -79,10 +91,10 @@ int	check_valid_symbol(t_map *map)
 		while (map->map[i][j])
 		{
 			if (!ft_strchr(MAP_CHARS, map->map[i][j]))
-				print_custom_err(INVALID_CHARS);
-			if (i == FLOOR)
-				if (map->map[i][j] != '1')
-					print_custom_err(MAP_NOTCLOSED);
+			{
+				map = free_map(map);
+				print_custom_err(INVALID_MAP);
+			}
 			j++;
 		}
 		i++;
@@ -94,10 +106,19 @@ int	check_valid_symbol(t_map *map)
 int	check_player_inmap(t_map *m)
 {
 	if (m->ply.ipy == 0 || m->ply.ipx == 0)
+	{
+		m = free_map(m);
 		print_custom_err(INVALID_MAP);
+	}
 	if (m->ply.ipy >= m->height - 1 || m->ply.ipx >= m->width - 1)
+	{
+		m = free_map(m);
 		print_custom_err(INVALID_MAP);
+	}
 	if (m->ply.ipx >= ft_strlen(m->map[m->ply.ipy]) - 1)
+	{
+		m = free_map(m);
 		print_custom_err(INVALID_MAP);
+	}
 	return (1);
 }

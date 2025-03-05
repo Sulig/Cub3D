@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/03/05 18:10:34 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:07:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	ft_path(char **fill, t_lcn size, size_t y, size_t x)
 /* Search the first floor cell in map
 *	* if not found return floor_cell (MAX, MAX)
 */
-static t_lcn	search_first_floor_cell(char **map, t_lcn mapsize)
+static t_lcn	search_first_floor_cell(t_map *m, t_lcn mapsize)
 {
 	t_lcn	flor_cell;
 
@@ -53,10 +53,17 @@ static t_lcn	search_first_floor_cell(char **map, t_lcn mapsize)
 	while (flor_cell.y < mapsize.y)
 	{
 		flor_cell.x = 0;
-		while (flor_cell.x < ft_strlen(map[flor_cell.y]))
+		while (flor_cell.x < ft_strlen(m->map[flor_cell.y]))
 		{
-			if (map[flor_cell.y][flor_cell.x] == FLOOR)
+			if (m->map[flor_cell.y][flor_cell.x] == FLOOR)
+			{
+				if (flor_cell.y == 0 || flor_cell.x == 0)
+				{
+					m = free_map(m);
+					print_custom_err(MAP_NOTCLOSED);
+				}
 				return (flor_cell);
+			}
 			flor_cell.x++;
 		}
 		flor_cell.y++;
@@ -76,18 +83,19 @@ static t_map	*check_closed_map(t_map *map)
 	size_t	j;
 
 	i = 0;
-	while (map->map[i])
+	while (map && map->map[i])
 	{
-		while (map->map[i][j])
+		j = 0;
+		while (map && map->map[i][j])
 		{
-			if (map->map[i][j] == '+')
+			if (map && map->map[i][j] == '+')
 			{
 				if (i == 0 || j == 0)
-					print_custom_err(MAP_NOTCLOSED);
+					map = free_map(map);
 				else if (i >= arrsize_str(map->map) - 1)
-					print_custom_err(MAP_NOTCLOSED);
+					map = free_map(map);
 				else if (j >= ft_strlen(map->map[i]))
-					print_custom_err(MAP_NOTCLOSED);
+					map = free_map(map);
 				else
 					map->map[i][j] = FLOOR;
 			}
@@ -98,6 +106,12 @@ static t_map	*check_closed_map(t_map *map)
 	return (map);
 }
 
+/* Check this things:
+*	- If the map have valid colors (0-255)
+*	- If map have valid symbols (01NSWE)
+*	- If the player is in the map
+*	- If the map is closed
+*/
 void	check_valid_map(t_map *m)
 {
 	t_lcn	map;
@@ -110,10 +124,12 @@ void	check_valid_map(t_map *m)
 	check_player_inmap(m);
 	while (42)
 	{
-		floor = search_first_floor_cell(m->map, map);
+		floor = search_first_floor_cell(m, map);
 		if (floor.y == map.y || floor.x == map.x)
 			break ;
 		ft_path(m->map, map, floor.y, floor.x);
 	}
 	m = check_closed_map(m);
+	if (!m)
+		print_custom_err(MAP_NOTCLOSED);
 }
