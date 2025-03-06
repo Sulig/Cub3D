@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:09:36 by sadoming          #+#    #+#             */
-/*   Updated: 2025/03/06 16:20:03 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:23:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		start(t_map *map);
 t_game		*check_hrzlines(t_game *gm);
 t_game		*check_vrtlines(t_game *gm);
 void		raycasting(t_game *game);
-//t_game		*texture_and_print(t_game *gm, int r);
+t_game		*draw_textured_wall(t_game *gm, size_t r);
 
 /* UTILITIES */
 char		get_cell(t_map *map, long x, long y, int mapp);

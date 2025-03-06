@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/03/05 19:05:25 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:52:17 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ typedef struct s_rect
 
 /* PLAYER DATA */
 /*
-	- px	-> Player X Position
-	- py	-> Player Y Position
+	- px	-> Player X Position in World
+	- py	-> Player Y Position in World
+	- new_px	-> New Player X Position in World
+	- new_py	-> New Player Y Position in World
 	- pdx	-> Player Delta X
 	- pdy	-> Player Delta Y
 	- pa	-> Player Angle
@@ -82,11 +84,56 @@ typedef struct s_ply
 	double	pa;
 	size_t	ipx;
 	size_t	ipy;
-	long	ipx_add_xo;
-	long	ipx_sub_xo;
-	long	ipy_add_yo;
-	long	ipy_sub_yo;
 }			t_ply;
+
+/* RAYCAST DATA */
+/*
+	** This can change, by the way i don't know how to implement it
+*/
+typedef struct s_ray
+{
+	size_t	dof_x;
+	size_t	dof_y;
+	size_t	mx;
+	size_t	my;
+	size_t	mp;
+	double	hx;
+	double	hy;
+	double	vx;
+	double	vy;
+	double	rx;
+	double	ry;
+	double	ra;
+	double	xo;
+	double	yo;
+	double	dis_h;
+	double	dis_v;
+	double	dist;
+	double	line_h;
+	double	line_o;
+	double	line_t;
+	double	scale;
+	double	delta_x;
+	double	delta_y;
+	double	htan;
+	double	vtan;
+	double	theta;
+}			t_ray;
+
+/* DATA OF A CUB-RECT TEXTURED */
+/*
+	** Same as t_ray struct
+*/
+typedef struct s_tex
+{
+	double	wall_x;
+	double	step;
+	double	x;
+	double	y;
+	int		tx;
+	int		ty;
+	t_rect	rc;
+}		t_tex;
 
 /* MAP & FILE DATA */
 /*
@@ -122,49 +169,18 @@ typedef struct s_map
 	t_ply	ply;
 }			t_map;
 
-/* RAYCAST DATA */
-typedef struct s_ray
-{
-	size_t	dof_x;
-	size_t	dof_y;
-	size_t	mx;
-	size_t	my;
-	size_t	mp;
-	double	hx;
-	double	hy;
-	double	vx;
-	double	vy;
-	double	rx;
-	double	ry;
-	double	ra;
-	double	xo;
-	double	yo;
-	double	dis_h;
-	double	dis_v;
-	double	dist;
-	double	line_h;
-	double	line_o;
-	double	line_t;
-	double	scale;
-	double	delta_x;
-	double	delta_y;
-	double	htan;
-	double	vtan;
-	double	theta;
-}			t_ray;
-
-/* DATA OF A CUB-RECT TEXTURED */
-typedef struct s_tex
-{
-	double	wall_x;
-	double	x;
-	double	y;
-	int		tx;
-	int		ty;
-	t_rect	rc;
-}		t_tex;
-
 /* THE PRINCIPAL STRUCTURE */
+/*
+	- mlxd	-> The MLX Data
+	- map	-> The Map Data
+	- ply	-> The Player Data
+	- ray	-> The Ray Data
+	- tex	-> The Texture Data
+	- c_flr	-> The Floor Color
+	- c_sky	-> The Sky Color
+	- scr_w	-> The Screen Width
+	- scr_h	-> The Screen Height
+*/
 typedef struct s_game
 {
 	t_mlxd		*mlxd;

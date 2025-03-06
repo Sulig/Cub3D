@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/03/05 20:28:20 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:26:04 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ static t_mlxd	init_mlxdata(t_map *map, t_mlxd mlxd)
 	return (mlxd);
 }
 
-/*
-* Start player vars and set bgcolor
+/* Start player vars and set bgcolor
+*	* Set player angle
+*	* Set player position
+*	* Set player direction
+*	* Set sky color
+*	* Set floor color
 */
 static t_game	start_player(t_game game)
 {
@@ -86,7 +90,7 @@ t_game	*resize_window(t_game *gm)
 		w = h;
 	while (w % RAYS)
 	{
-		if (w < FVIEW)
+		if (w < FOV)
 			w++;
 		else
 			w--;
