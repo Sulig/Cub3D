@@ -6,7 +6,7 @@
 #    By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 17:25:36 by sadoming          #+#    #+#              #
-#    Updated: 2025/01/16 16:25:14 by sadoming         ###   ########.fr        #
+#    Updated: 2025/03/05 20:30:08 by sadoming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ BONUS		:=	cub3D_bonus
 
 # Default map to run
 MAP_DIR		:=	./assets/maps/
-MAP_NAME	:=	$(MAP_DIR)other-map.cub
+MAP_NAME	:=	$(MAP_DIR)example-map2.cub
 
 RUN_MAP_NAME:=	$(MAPS)$(MAP_NAME)
 # ------------------ #
@@ -75,7 +75,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
 			print_errors.c ft_print_map_t.c parse_info.c\
 			start.c action.c raycasting.c raycollision.c\
-			utilities.c collisions.c
+			textures.c utilities.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
@@ -125,8 +125,7 @@ mlx42:
 #-------------------------------------------------------------#
 author:
 	@echo "$(P)~ **************************************** ~\n"
-	@echo " ~\t      Made by Sadoming \t         ~"
-	@echo " ~   With the collaboration of Andmart2  ~"
+	@echo " ~\t      Made by Sadoming \t         ~\n"
 	@echo "~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 bonus: mlx42 $(LIB_LIB) $(BONUS)
@@ -211,17 +210,17 @@ $(BONUS): $(OBJSB) $(LIB_LIB) $(MLX_LIB)
 # ********************************************************************************* #
 # Debug region
 
-val: $(NAME)
+val: all $(NAME)
 	@valgrind --leak-check=full --track-origins=yes ./$(NAME) $(RUN_MAP_NAME)
 
-val_s: $(NAME)
+val_s: all $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(RUN_MAP_NAME)
 
 #-----------#
-val-b: $(BONUS)
+val-b: bonus $(BONUS)
 	@valgrind --leak-check=full --track-origins=yes ./$(BONUS) $(RUN_MAP_NAME)
 
-val_s-b: $(BONUS)
+val_s-b: bonus $(BONUS)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(BONUS) $(RUN_MAP_NAME)
 
 #-----------#

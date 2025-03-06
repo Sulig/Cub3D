@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:38:17 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:30:22 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ double	dist(double ax, double ay, double bx, double by)
 */
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-/* Get the pixel color in texture */
-uint32_t	get_rgba(mlx_texture_t *texture, size_t x, size_t y)
-{
-	int	r;
-	int	g;
-	int	b;
-	int	a;
-
-	r = texture->pixels[y * texture->width * 4 + (x * 4)];
-	g = texture->pixels[y * texture->width * 4 + (x * 4) + 1];
-	b = texture->pixels[y * texture->width * 4 + (x * 4) + 2];
-	a = texture->pixels[y * texture->width * 4 + (x * 4) + 3];
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 

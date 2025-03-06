@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:01:29 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:15:50 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	raycasting(t_game *game)
 	int	r;
 
 	r = 0;
-	game->ray.ra = game->ply.pa - DR * RAYS_SUB;
+	game->ray.ra = game->ply.pa - DR * (RAYS / 2);
 	if (game->ray.ra < 0)
 		game->ray.ra += 2 * PI;
 	if (game->ray.ra > 2 * PI)

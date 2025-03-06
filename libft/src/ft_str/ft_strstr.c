@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:57:36 by sadoming          #+#    #+#             */
-/*   Updated: 2024/10/01 17:05:12 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:23:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
  * if !to_search || !arr -> return 0
  * if coincidence, return the arr pos on encountered
  * if no coincidence, return arr len
+ * ** arr must be NULL terminated
+ * ** It will return the first coincidence
 */
 size_t	ft_search_str(char **arr, char *to_search)
 {

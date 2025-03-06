@@ -5,65 +5,131 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 20:51:50 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/14 19:20:56 by sadoming         ###   ########.fr       */
+/*   Created: 2025/02/28 13:38:36 by sadoming          #+#    #+#             */
+/*   Updated: 2025/03/05 19:07:21 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/game.h"
 
-int	ft_is_valid_neighbor(char c)
+/* Flood fill Method to see if map is closed */
+/** Fill with '+' wherever is possible to go
+*	- fill -> The map
+*	- size -> The size of the map
+*	- y -> The y position to start filling
+*	- x -> The x position to start filling
+*/
+static void	ft_path(char **fill, t_lcn size, size_t y, size_t x)
 {
-	return (c == ' ' || c == '1');
+	if (y >= size.y)
+		return ;
+	if (y >= size.y && x >= size.x)
+	{
+		if (fill[y][x])
+			fill[y][x] = '+';
+		return ;
+	}
+	if (x >= size.x || x >= ft_strlen(fill[y]))
+		return ;
+	if (fill[y][x] != FLOOR && fill[y][x] != ' ')
+		return ;
+	if (fill[y])
+		if (fill[y][x])
+			fill[y][x] = '+';
+	ft_path(fill, size, y, x + 1);
+	ft_path(fill, size, y, x - 1);
+	ft_path(fill, size, y - 1, x);
+	ft_path(fill, size, y + 1, x);
 }
 
-static int	ft_check_map_spaces(t_map *m, size_t i, size_t j)
+/* Search the first floor cell in map
+*	* if not found return floor_cell (MAX, MAX)
+*/
+static t_lcn	search_first_floor_cell(t_map *m, t_lcn mapsize)
 {
-	if (i > 0 && !ft_is_valid_neighbor(m->map[i - 1][j]))
-		return (0);
-	if (i < m->height - 1 && !ft_is_valid_neighbor(m->map[i + 1][j]))
-		return (0);
-	if (j > 0 && !ft_is_valid_neighbor(m->map[i][j - 1]))
-		return (0);
-	if (j < m->width - 1 && !ft_is_valid_neighbor(m->map[i][j + 1]))
-		return (0);
-	return (1);
+	t_lcn	flor_cell;
+
+	flor_cell.y = 0;
+	while (flor_cell.y < mapsize.y)
+	{
+		flor_cell.x = 0;
+		while (flor_cell.x < ft_strlen(m->map[flor_cell.y]))
+		{
+			if (m->map[flor_cell.y][flor_cell.x] == FLOOR)
+			{
+				if (flor_cell.y == 0 || flor_cell.x == 0)
+				{
+					m = free_map(m);
+					print_custom_err(MAP_NOTCLOSED);
+				}
+				return (flor_cell);
+			}
+			flor_cell.x++;
+		}
+		flor_cell.y++;
+	}
+	flor_cell.y = mapsize.y;
+	flor_cell.x = mapsize.x;
+	return (flor_cell);
 }
 
-static int	ft_check_map_chars(t_map *m, size_t i, size_t j)
-{
-	char	c;
-
-	c = m->map[i][j];
-	if (c == ' ' || c == '0' || c == '1' || c == '\0')
-		return (1);
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (1);
-	return (0);
-}
-
-void	ft_check_valid_map(t_map *m)
+/* Check if the map is closed
+*	- if not closed print error
+*	- if closed replace '+' with '0'
+*/
+static t_map	*check_closed_map(t_map *map)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (i < m->height)
+	while (map && map->map[i])
 	{
 		j = 0;
-		while (m->map[i][j])
+		while (map && map->map[i][j])
 		{
-			if (m->map[i][j] == ' ')
+			if (map && map->map[i][j] == '+')
 			{
-				if (!ft_check_map_spaces(m, i, j))
-					print_other_err("Invalid map, not closed properly\n");
+				if (i == 0 || j == 0)
+					map = free_map(map);
+				else if (i >= arrsize_str(map->map) - 1)
+					map = free_map(map);
+				else if (j >= ft_strlen(map->map[i]))
+					map = free_map(map);
+				else
+					map->map[i][j] = FLOOR;
 			}
-			if (!ft_check_map_chars(m, i, j))
-				print_other_err("Invalid map, wrong characters!\n");
 			j++;
 		}
 		i++;
 	}
-	if (!check_colors(m))
-		print_other_err("Invalid ceiling or floor colors\n");
+	return (map);
+}
+
+/* Check this things:
+*	- If the map have valid colors (0-255)
+*	- If map have valid symbols (01NSWE)
+*	- If the player is in the map
+*	- If the map is closed
+*/
+void	check_valid_map(t_map *m)
+{
+	t_lcn	map;
+	t_lcn	floor;
+
+	map.x = m->width - 1;
+	map.y = m->height - 1;
+	check_colors(m);
+	check_valid_symbol(m);
+	check_player_inmap(m);
+	while (42)
+	{
+		floor = search_first_floor_cell(m, map);
+		if (floor.y == map.y || floor.x == map.x)
+			break ;
+		ft_path(m->map, map, floor.y, floor.x);
+	}
+	m = check_closed_map(m);
+	if (!m)
+		print_custom_err(MAP_NOTCLOSED);
 }

@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:48:59 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/13 20:00:14 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:05:25 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ typedef struct s_mlxd
 	mlx_texture_t	*tx_ea;
 	mlx_texture_t	*tx_ac;
 }					t_mlxd;
+
+/* LOCATION STRUCT */
+/*
+	- x -> X Position
+	- y -> Y Position
+*/
+typedef struct s_lcn
+{
+	size_t	x;
+	size_t	y;
+}			t_lcn;
 
 /* RECTANGLE STRUCT */
 /*
@@ -69,8 +80,8 @@ typedef struct s_ply
 	double	pdx;
 	double	pdy;
 	double	pa;
-	long	ipx;
-	long	ipy;
+	size_t	ipx;
+	size_t	ipy;
 	long	ipx_add_xo;
 	long	ipx_sub_xo;
 	long	ipy_add_yo;

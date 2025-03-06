@@ -6,7 +6,7 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:47:42 by sadoming          #+#    #+#             */
-/*   Updated: 2025/01/15 16:59:12 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:28:20 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_game	*resize_window(t_game *gm)
 		w = h;
 	while (w % RAYS)
 	{
-		if (w < 60)
+		if (w < FVIEW)
 			w++;
 		else
 			w--;

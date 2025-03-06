@@ -1,6 +1,6 @@
 # Cub3D  <img align="center" src="assets/textures/error-tile_anim/error-tile.gif" height="35" alt="error tile"/>
 
-~ Started on: 13/10/2024 ~ *** ~ Ended on: RE-DOING
+~ Started on: 13/10/2024 ~ *** ~ Ended on: Re-Doing
 
 [![Stars](https://img.shields.io/github/stars/Sulig/Cub3D?color=ffff00&label=Stars&logo=Stars&style=?style=flat)](https://github.com/Sulig/Cub3D)
 [![Size](https://img.shields.io/github/repo-size/Sulig/Cub3D?color=blue&label=Size&logo=Size&style=?style=flat)](https://github.com/Sulig/Cub3D)
@@ -19,9 +19,10 @@ Your goal will be to make a dynamic view inside a maze, in which you’ll have t
 - [The New_Libft](https://github.com/Sulig/New_Libft)
 - [MinilibX Codam](https://github.com/codam-coding-college/MLX42)
   - // Cloned into repo when you "make"
-- The Cub3D `src` and some bonus!
+- The Cub3D `src` (Re-Doing)
 - [Subject English](https://github.com/Sulig/Cub3D/blob/master/Cub3D_subject-en.pdf)
-**
+
+***
 
 ## CONTROLS
 Move on the map with: `W A S D`
@@ -41,19 +42,11 @@ You can change the window size by just dragging the screen or clicking on the ic
 
 Close the game with `esc` or close directly with the cross icon.
 
-## BONUS ADDED
-If you execute this command: `make run-bonus` you can play at this game with these bonus:
-
-  - Move the camera with the mouse!
-  - Take a look at where you are in a fabulous minimap!
-  - (Yet added in mandatory) Don't walk across the walls!
-  - ¡GHOST MODE! -> `SPACE`
+### NO BONUS IN THIS BRANCH!
+There's no bonus in this branch, because i'm re-doing the Raycast in mandatory.
+When finished, i will do bonus.
 
 ***
-
-> [!WARNING]\
-> This branch is in progress and reciving more changes!
-> This can cause a break or and overload on a run!
 
 ***
 ~      	Made by sadoming        	~

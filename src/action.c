@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 19:05:22 by andmart2          #+#    #+#             */
-/*   Updated: 2025/01/14 16:18:54 by sadoming         ###   ########.fr       */
+/*   Created: 2024/12/16 19:05:22 by sadoming          #+#    #+#             */
+/*   Updated: 2025/03/05 19:12:57 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void	translate(t_game *gm, char dir)
 		move_player(gm, gm->ply.pa, 1);
 	else if (dir == MOV_DOWN)
 		move_player(gm, gm->ply.pa, -1);
-	if (can_move_to(gm))
-	{
-		gm->ply.px = gm->ply.new_px;
-		gm->ply.py = gm->ply.new_py;
-	}
+	gm->ply.px = gm->ply.new_px;
+	gm->ply.py = gm->ply.new_py;
 	gm->ply.ipx = gm->ply.px / CUB_SCALE;
 	gm->ply.ipy = gm->ply.py / CUB_SCALE;
-	if (gm->ply.ipx < 0 || gm->ply.ipy < 0)
-		print_other_err(PLY_TRSNMAP);
+	gm->map->ply = gm->ply;
+	if (gm->ply.ipx > MAX || gm->ply.ipy > MAX)
+		print_custom_err(PLY_TRSNMAP);
 }
 
 void	hook_keyboard(void *param)

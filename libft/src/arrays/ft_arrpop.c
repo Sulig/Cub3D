@@ -6,19 +6,22 @@
 /*   By: sadoming <sadoming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:42:13 by sadoming          #+#    #+#             */
-/*   Updated: 2024/12/18 20:01:32 by sadoming         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:20:11 by sadoming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/arrays.h"
 #include "../../inc/memory.h"
 
-/*
- * Pop `add` into a new array (on last position)
- * And free the original array.
- * *Free the original if !size || size >= arrsize(org)
- * *Return Original if pop >= arrsize(org)
- */
+/* Pop an element from an array
+ * - Return a new array without the element
+ * ** Free the original if !size || size >= arrsize(org)
+ * *** `size` is the size of the new array
+ * *** (If size is 0, the array will be freed)
+ * ** Return Original if pop >= arrsize(org)
+ * *** `pop` is the index of the element to pop
+ * ** Return NULL if !new_arr (Memory Allocation Error)
+*/
 void	**arrpop(void **org, size_t pop)
 {
 	char	**new_arr;
