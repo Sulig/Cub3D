@@ -75,7 +75,7 @@ MLX_BUILD_DIR	:=	./MLX42/build/
 SRC_SRC	:=	cub_main.c man_memory.c check_file.c check_map.c\
 			print_errors.c ft_print_map_t.c parse_info.c\
 			start.c action.c raycasting.c raycollision.c\
-			utilities.c collisions.c
+			utilities.c
 
 SRC := $(addprefix $(SRC_DIR), $(SRC_SRC))
 
