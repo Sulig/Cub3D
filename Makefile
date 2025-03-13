@@ -126,7 +126,7 @@ mlx42:
 author:
 	@echo "$(P)~ **************************************** ~\n"
 	@echo " ~\t      Made by Sadoming \t         ~"
-	@echo " ~   With the collaboration of Andmart2  ~"
+	@echo " ~   With Andmart2's help  ~"
 	@echo "~ **************************************** ~\n$(DEF)\n"
 #-------------------------------------------------------------#
 bonus: mlx42 $(LIB_LIB) $(BONUS)
